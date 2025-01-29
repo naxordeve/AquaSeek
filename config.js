@@ -13,6 +13,7 @@ const CONFIG = {
         env: process.env.NODE_ENV || 'development',
         PREFIX: process.env.COMMAND || '.',
         MODE: toBool(process.env.MODE || "true"),
+        CALL: toBool(process.env.CALL || "true"),
         WELCOME: toBool(process.env.WELCOME) || true,
         GOODBYE: toBool(process.env.GOODBYE) || true,
         WELCOME_MSG: process.env.WELCOME_MSG || "@user\nWelcome to @group!\nEnjoy your stay",
