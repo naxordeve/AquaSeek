@@ -1,1 +1,31 @@
-
+{
+	"name": "",
+	"stack": "container",
+	"success_url": "/",
+	"buildpacks": [
+		{
+			"url": "heroku/nodejs"
+		}
+	],
+	"env": {
+	"SESSION_NAME": {
+		"description": "Session ID key",
+		"required": true
+	},
+	 "MODE": {
+            "description": "public or private mode",
+            "required": false,
+            "value":"true"
+        },
+   "COMMAND": {
+      "description": "prefa for bot",
+      "required": false,
+      "value": "."
+    },
+	"MODS": {
+		"description": "User ID with sudo permissions for the bot",
+		"value": "27686881509",
+		"required": false
+	}
+}
+   }
