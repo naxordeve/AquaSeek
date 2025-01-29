@@ -5,8 +5,7 @@ CreatePlug({
     category: 'admin',
     desc: 'Block a user',
     execute: async (message, conn) => {
-        const owner = CONFIG.app.me;
-        if(!owner) return;
+        if(!message.isFromMe) return;
         let target = message.quoted ? message.quoted.participant : message.mentions.length > 0 ? message.mentions[0] : message.sender;
         if (!target) return conn.sendMessage(message.user, { text: 'Please reply to a user' });
         await conn.updateBlockStatus(target, 'block');
@@ -19,8 +18,7 @@ CreatePlug({
     category: 'admin',
     desc: 'Unblock a user',
     execute: async (message, conn) => {
-        const owner = CONFIG.app.me;
-        if(!owner) return;
+        if(!message.isFromMe) return;
         let target = message.quoted ? message.quoted.participant : message.mentions.length > 0 ? message.mentions[0] : message.sender;
         if (!target) return conn.sendMessage(message.user, { text: 'Please reply to a user' });
         await conn.updateBlockStatus(target, 'unblock');
