@@ -9,6 +9,7 @@ const http = require('http');
 const { getPlugins } = require('./lib/plugins');
 const { serialize } = require('./lib/serialize');
 const { commands } = require('./lib/commands');
+const GreetingsDB = require("./lib/SQL/GreetingsDB");
 const CONFIG = require('./config');
 const store = makeInMemoryStore({logger: P({ level: 'silent' }).child({ level: 'silent' }),});
 const fetch = require('node-fetch');
@@ -123,7 +124,25 @@ async function startBot() {
         }
     }
 });
-    
+
+conn.ev.on("group-participants.update", async ({ id, participants, action }) => {
+  const group = await GreetingsDB.findOne({ where: { chatId: id } });
+  if (!group) return;
+  const s = action === "add", o = action === "remove";
+  if (!(s && group.switchs) && !(o && group.switcho)) return;
+  const text = (s ? group.w_msg : group.g_msg) || 
+               (s ? CONFIG.APP.WELCOME_MSG : CONFIG.APP.GOODBYE_MSG);
+  const title = (await conn.groupMetadata(id)).subject;
+  for (const user of participants) {
+    const ppUrl = await conn.profilePictureUrl(user, "image").catch(() => null);
+    await conn.sendMessage(id, {
+      text: text.replace(/@user/g, `@${user.split("@")[0]}`).replace(/@group/g, title),
+      mentions: [user],
+      ...(ppUrl ? { image: { url: ppUrl } } : {}),
+    });
+  }
+});
+ 
     conn.ev.on('connection.update', async (update) => {
         const { connection } = update;
         if (connection === 'open') {
