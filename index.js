@@ -130,7 +130,7 @@ async function startBot() {
             console.log('Connection established ✅');
             await getPlugins();
             console.log('Wabot is online now ✅');
-            const v = `\`\`\`\n[ AquaSeek Configur ]\n----------------------------\nVersion   : ${CONFIG.APP.VERSION}\nPrefix  : ${CONFIG.APP.PREFIX}\nMode : ${CONFIG.APP.MODE}\n----------------------------\n\`\`\``;
+            const v = `\`\`\`\n[ AquaSeek Configur ]\n------------------------\nVersion   : ${CONFIG.APP.VERSION}\nPrefix  : ${CONFIG.APP.PREFIX}\nMode : ${CONFIG.APP.MODE}\n------------------------\n\`\`\``;
             await conn.sendMessage(conn.user.id, { text: v });
        
         }
