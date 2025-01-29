@@ -1,5 +1,5 @@
 const { commands, CreatePlug } = require('../lib/commands');
-const { monospace } = require('../lib/monospace');
+const { monospace } = require('../lib/fancy');
 const CONFIG = require('../config');
 
 CreatePlug({
@@ -10,7 +10,7 @@ CreatePlug({
         await message.react('✅');
         if (!Array.isArray(commands)) return;
         const gorized = commands.reduce((acc, cmd) => {
-            if (!cmd || !cmd.category || !cmd.command) return acc; // Skip invalid commands
+            if (!cmd || !cmd.category || !cmd.command) return acc; 
             if (!acc[cmd.category]) acc[cmd.category] = [];
             acc[cmd.category].push(cmd.command);
             return acc;
@@ -21,13 +21,13 @@ CreatePlug({
             const date = now.toLocaleDateString('en-ZA', { timeZone: 'Africa/Johannesburg' });
             const time = now.toLocaleTimeString('en-ZA', { timeZone: 'Africa/Johannesburg' });
 
-            return `╭──╼【 ${monospace((CONFIG.app.botname || 'BOT').toUpperCase())} 】\n` +
-                   `┃ ✦ Prefix  : ${CONFIG.app.prefix}\n` +
+            return `╭──╼【 ${monospace((CONFIG.APP.BOTNAME).toUpperCase())} 】\n` +
+                   `┃ ✦ Prefix  : ${CONFIG.APP.PREFIX}\n` +
                    `┃ ✦ User    : ${message.pushName}\n` +
-                   `┃ ✦ Mode    : ${process.env.MODE}\n` +
+                   `┃ ✦ Mode    : ${CONFIG.APP.MODE}\n` +
                    `┃ ✦ Date    : ${date}\n` +
                    `┃ ✦ Time    : ${time}\n` +
-                   `┃ ✦ Version : ${CONFIG.app.version}\n` +
+                   `┃ ✦ Version : ${CONFIG.APP.VERSION}\n` +
                    `╰──────────╼`;
         };
 
@@ -65,4 +65,39 @@ CreatePlug({
     }
 });
 
-                                                                                 
+
+CreatePlug({
+    command: 'alive',
+    category: 'general',
+    desc: 'alive',
+    execute: async (message, conn) => {
+        await message.react('✅');
+        const platform = process.platform;
+        const runtime = process.version;
+        const uptime = process.uptime();
+        const usage = (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2);
+        const status = `\`\`\`
+Bot Status:
+
+Platform: ${platform}
+Uptime: ${Math.floor(uptime / 60)}m ${Math.floor(uptime % 60)}s
+Memory Usage: ${usage}MB\n\nMade with❣️
+\`\`\``;
+        await conn.sendMessage(message.user, { text: status }, {quoted: message});
+    }
+});                     
+
+CreatePlug({
+    command: 'ping',
+    category: 'Utility',
+    desc: 'latency',
+    execute: async (message, conn) => {
+        const start = Date.now();
+        await message.reply('ping');
+        const end = Date.now();
+        await message.react('✅');
+        await conn.sendMessage(message.user, { text: `\`\`\`Pong! ${end - start}ms\`\`\`` });
+    }
+});
+
+    
