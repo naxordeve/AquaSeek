@@ -13,6 +13,10 @@ const CONFIG = {
         env: process.env.NODE_ENV || 'development',
         PREFIX: process.env.COMMAND || '.',
         MODE: toBool(process.env.MODE || "true"),
+        WELCOME: toBool(process.env.WELCOME) || true,
+        GOODBYE: toBool(process.env.GOODBYE) || true,
+        WELCOME_MSG: process.env.WELCOME_MSG || "@user\nWelcome to @group!\nEnjoy your stay",
+        GOODBYE_MSG: process.env.GOODBYE_MSG || "@user\nLeft the group\nDusted!", 
         MODS: process.env.MODS || '27686881509,27686567257, 919446072492',
         OWNER: process.env.ME || '27686881509,27686567257',
         POST_GET: DATABASE_URL === "./database.db" ? new Sequelize({ dialect: "sqlite", storage: DATABASE_URL, logging: false }) : new Sequelize(DATABASE_URL, {
