@@ -36,7 +36,7 @@ CreatePlug({
         if (!message.quoted || (!message.quoted.message))
          return await message.reply('_Reply to an audio or video message to identify the song_');
          const buffer = await message.quoted.download();
-         const result = await whatmusic(buffer);
+         const result = await Shazam(buffer);
          if (!result || result.length === 0) return;
          for (const song of result) {
             const voidi = ` *Title:* ${song.title}\n` +
