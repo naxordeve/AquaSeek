@@ -74,7 +74,10 @@ async function startBot() {
         await message.reply(Fek);
        }catch(e){message.reply(util.format(e));
      }}
-    console.log("------------------\n" +`user: ${message.sender}\n` +`chat: ${message.isGroup ? "group" : "private"}\n` +`message: ${message.fromBot && message.body.startsWith(process.env.COMMAND_PREFIX) ? message.body : "Ignored"}\n` +"------------------");
+     console.log("------------------\n" +`User: ${message.sender}\n` +`Message: ${message.body}\n` +
+      `From: ${message.isGroup ? message.subject : "Private Chat"}\n` +
+      "------------------"
+    );
     if (isCmd) {
     const pattern = new RegExp(`^(${CONFIG.APP.PREFIX})(\\S+)`);
     const commando = mek.match(pattern);
