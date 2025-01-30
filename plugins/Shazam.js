@@ -7,28 +7,18 @@ const acr = new acrcloud({
     access_secret: "ya9OPe8onFAnNkyf9xMTK8qRyMGmsghfuHrIMmUI",
 });
 
-async function whatmusic(buffer) {
+async function Shazam(buffer) {
     let data = (await acr.identify(buffer)).metadata;
     if (!data.music) return null;
     return data.music.map((a) => ({
         title: a.title,
-        artist: a.artists?.[0]?.name || "unknown",
+        artist: a.artists?.[0]?.name || "Unknown",
         score: a.score,
         release: a.release_date ? new Date(a.release_date).toLocaleDateString("id-ID") : "N/A",
         duration: toTime(a.duration_ms),
-        url: a.external_metadata
-            ? Object.keys(a.external_metadata)
-                  .map((i) =>
-                      i === "youtube"
-                          ? "https://youtu.be/" + a.external_metadata[i].vid
-                          : i === "deezer"
-                          ? "https://www.deezer.com/us/track/" + a.external_metadata[i].track.id
-                          : i === "spotify"
-                          ? "https://open.spotify.com/track/" + a.external_metadata[i].track.id
-                          : ""
-                  )
-                  .filter(Boolean)
-            : [],
+        youtubeUrl: a.external_metadata?.youtube
+            ? "https://youtu.be/" + a.external_metadata.youtube.vid
+            : null,
     }));
 }
 
@@ -43,19 +33,32 @@ CreatePlug({
     category: 'search',
     desc: 'Identify a song from an audio message.',
     execute: async (message, conn, match) => {
-        if (!message.quoted || (!message.quoted.message)) 
-        return await message.reply('_Reply to an audio or video message to identify the song_');
-        const buffer = await message.quoted.download();
-        const result = await whatmusic(buffer);
-        if (!result || result.length === 0) return;
-        let res = result.map((song, index) => 
-            `*Title:* ${song.title}\n` +
-            `*Artist:* ${song.artist}\n` +
-            `*Duration:* ${song.duration}\n` +
-            `*Release:* ${song.release}\n` +
-            `*Links:* ${song.url.join(", ")}\n\n`
-        ).join("");
-
-        await message.reply(res);
+        if (!message.quoted || (!message.quoted.message))
+         return await message.reply('_Reply to an audio or video message to identify the song_');
+         const buffer = await message.quoted.download();
+         const result = await whatmusic(buffer);
+         if (!result || result.length === 0) return;
+         for (const song of result) {
+            const voidi = ` *Title:* ${song.title}\n` +
+                                `*Artist:* ${song.artist}\n` +
+                                `*Duration:* ${song.duration}\n` +
+                                `*Release:* ${song.release}\n`;
+            if (song.youtubeUrl) {
+                await conn.sendMessage(message.user, {
+                    text: voidi,
+                    contextInfo: {
+                        externalAdReply: {
+                            title: song.title,
+                            body: `By: ${song.artist}`,
+                            thumbnailUrl: 'https://i.ytimg.com/vi/' + song.youtubeUrl.split('youtu.be/')[1] + '/hqdefault.jpg',
+                            mediaType: 1,
+                            renderLargerThumbnail: true,
+                            mediaUrl: song.youtubeUrl,
+                            sourceUrl: song.youtubeUrl
+                        }
+                    }
+                });
+            } else {}
+        }
     }
 });
