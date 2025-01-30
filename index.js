@@ -38,7 +38,7 @@ auth();
 
 async function startBot() {
     await CONFIG.APP.POST_GET.sync();
-    console.log('Sequelize connected ✅');
+    console.log('Database connected ✅');
     const auth_creds = path.join(__dirname, 'lib', 'session');
     let { state, saveCreds } = await useMultiFileAuthState(auth_creds);
     const conn = makeWASocket({
@@ -151,7 +151,7 @@ conn.ev.on("group-participants.update", async ({ id, participants, action }) => 
         if (connection === 'open') {
             console.log('Connection established ✅');
             await getPlugins();
-            console.log('Wabot is online now ✅');
+            console.log('AquaSeek is online now ✅');
             const v = `\`\`\`\n[ AquaSeek Configur ]\n------------------------\nVersion   : ${CONFIG.APP.VERSION}\nPrefix  : ${CONFIG.APP.PREFIX}\nMode : ${CONFIG.APP.MODE}\n------------------------\n\`\`\``;
             await conn.sendMessage(conn.user.id, { text: v });
        
