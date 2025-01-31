@@ -33,7 +33,7 @@ CreatePlug({
         if (!message.quoted || (!message.quoted.message)) return await message.reply('_Reply to_sticker_');
         let [pack, author] = match.split('|').map((v) => v.trim());
         pack = pack || CONFIG.APP.PACKNAME; 
-        author = author || 'NaxorDevi'; 
+        author = author || 'NaxorDevi💦'; 
         const buffer = await message.quoted.download();
         if (!buffer) return;
         const sticker = new Sticker(buffer, {
