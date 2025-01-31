@@ -30,7 +30,7 @@ CreatePlug({
     category: 'tools',
     desc: 'Convert an image, GIF, or video into a sticker',
     execute: async (message, conn, match) => {
-        if (!message.quoted || (!message.quoted.message)) return await message.reply('_Reply to_sticker_');
+        if (!message.quoted || (!message.quoted.message)) return await message.reply('_Reply to_sticker , take naxordevi|aquaseek_');
         let [pack, author] = match.split('|').map((v) => v.trim());
         pack = pack || CONFIG.APP.PACKNAME; 
         author = author || 'NaxorDevi💦'; 
