@@ -1,5 +1,5 @@
 const { CreatePlug } = require('../lib/commands');
-const ZenlessZone = require('./functions/zenlesszone');
+const ZenlessZone = require('./functions/zonelesszero');
 
 CreatePlug({
     command: 'zzzlist',
