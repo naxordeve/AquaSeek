@@ -129,21 +129,14 @@ async function startBot() {
 });
 
 conn.ev.on("group-participants.update", async ({ id, participants, action }) => {
-  const group = await GreetingsDB.findOne({ where: { chatId: id } });
-  if (!group) return;
-  const s = action === "add", o = action === "remove";
-  if (!(s && group.switchs) && !(o && group.switcho)) return;
-  const text = (s ? group.w_msg : group.g_msg) || 
-               (s ? CONFIG.APP.WELCOME_MSG : CONFIG.APP.GOODBYE_MSG);
-  const title = (await conn.groupMetadata(id)).subject;
-  for (const user of participants) {
-    const ppUrl = await conn.profilePictureUrl(user, "image").catch(() => null);
-    await conn.sendMessage(id, {
-      text: text.replace(/@user/g, `@${user.split("@")[0]}`).replace(/@group/g, title),
-      mentions: [user],
-      ...(ppUrl ? { image: { url: ppUrl } } : {}),
-    });
-  }
+    for (const user of participants) {
+        if ((action === "add" && !CONFIG.APP.WELCOME) || (action === "remove" && !CONFIG.APP.GOODBYE)) return;
+        const o = `@${user.split("@")[0]}`, groupMetadata = await conn.groupMetadata(id), title = groupMetadata.subject || "this group";
+        const text = action === "add" ? CONFIG.APP.WELCOME_MSG.replace('@user', o).replace('@group', title) 
+                   : CONFIG.APP.GOODBYE_MSG.replace('@user', o).replace('@group', title);
+        const ppUrl = await conn.profilePictureUrl(user, 'image').catch(() => 'https://via.placeholder.com/500');
+        await conn.sendMessage(id, { image: { url: ppUrl }, caption: text, mentions: [user], footer: action === "add" ? "Welcome" : "Goodbye" });
+    }
 });
  
     conn.ev.on('connection.update', async (update) => {
