@@ -9,7 +9,6 @@ const http = require('http');
 const { getPlugins } = require('./lib/plugins');
 const { serialize } = require('./lib/serialize');
 const { commands } = require('./lib/commands');
-const GreetingsDB = require("./lib/SQL/GreetingsDB");
 const CONFIG = require('./config');
 const store = makeInMemoryStore({logger: P({ level: 'silent' }).child({ level: 'silent' }),});
 const fetch = require('node-fetch');
