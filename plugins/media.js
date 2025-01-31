@@ -3,6 +3,35 @@ const { CreatePlug } = require('../lib/commands');
 const CONFIG = require('../config');
 const axios = require("axios");
 
+async function Upscale(imageBuffer) {
+    const response = await fetch("https://lexica.qewertyy.dev/upscale", {
+        body: JSON.stringify({
+        image_data: Buffer.from(imageBuffer, "base64"),
+        format: "binary",
+        }),
+        headers: {
+        "Content-Type": "application/json",
+        },
+        method: "POST",
+    });
+    if (!response.ok) return null;
+    return Buffer.from(await response.arrayBuffer());
+}
+
+CreatePlug({
+    command: 'upscale',
+    category: 'tools',
+    desc: 'Upscales an image to higher resolution',
+    execute: async (message, conn, match) => {
+        if (!message.quoted || !message.quoted.message.imageMessage) return await message.reply('_Reply to an image to upscale it_');
+        await message.reply('_Processing image, please wait..._');
+        const buffer = await message.quoted.download();
+        const ups = await Upscale(buffer).catch(() => null);
+        if (!ups) return;
+        await conn.sendMessage(message.user, { image: ups, caption: '_Image upscaled_' });
+    }
+});
+            
 async function removebg(buffer) {
     return new Promise(async (resolve, reject) => {
         const image = buffer.toString("base64");
