@@ -10,7 +10,7 @@ CreatePlug({
         if (!message.quoted || (!message.quoted.message)) return await message.reply('_Reply to an image, GIF, or video to create a sticker_');
         const buffer = await message.quoted.download();
         if (!buffer) return;
-        var pack = CONFIG.APP.PACKNAME;
+        var pack = CONFIG.APP.STICKER_PACKNAME;
         const sticker = new Sticker(buffer, {
             pack, 
             type: 'full',             
@@ -32,7 +32,7 @@ CreatePlug({
     execute: async (message, conn, match) => {
         if (!message.quoted || (!message.quoted.message)) return await message.reply('_Reply to_sticker , take naxordevi|aquaseek_');
         let [pack, author] = match.split('|').map((v) => v.trim());
-        pack = pack || CONFIG.APP.PACKNAME; 
+        pack = pack || CONFIG.APP.STICKER_PACKNAME; 
         author = author || 'NaxorDevi💦'; 
         const buffer = await message.quoted.download();
         if (!buffer) return;
