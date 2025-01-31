@@ -3,6 +3,41 @@ const { CreatePlug } = require('../lib/commands');
 const CONFIG = require('../config');
 const axios = require("axios");
 
+async function translate(query = "", lang) {
+    if (!query.trim()) return "";
+    const url = new URL("https://translate.googleapis.com/translate_a/single");
+    url.searchParams.append("client", "gtx");
+    url.searchParams.append("sl", "auto");
+    url.searchParams.append("dt", "t");
+    url.searchParams.append("tl", lang);
+    url.searchParams.append("q", query);
+    const response = await fetch(url.href);
+    const data = await response.json();
+    if (data) {
+        return [data[0]].map(([
+        [a]
+        ]) => a).join(" ");
+    } else {
+        return "";
+    }
+}
+
+CreatePlug({
+    command: 'translate',
+    category: 'tools',
+    desc: 'Translater',
+    execute: async (message, conn, match) => {
+        if (!message.quoted || !message.quoted.message.conversation) return await message.reply('_translate language_');
+        const text = message.quoted.message.conversation;
+        if (!match) return await message.reply('_Specify a language code. Example: translate zu_');
+        const lang = match.trim();
+        await message.reply('_Translating..._');
+        const voidi = await translate(text, lang).catch(() => null);
+        if (!voidi) return;
+        await message.reply(`*${voidi}*`);
+    }
+});
+
 async function Upscale(imageBuffer) {
     const response = await fetch("https://lexica.qewertyy.dev/upscale", {
         body: JSON.stringify({
