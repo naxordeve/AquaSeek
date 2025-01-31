@@ -1,6 +1,39 @@
 const { CreatePlug } = require('../lib/commands');
+const axios = require("axios");
 const ZenlessZone = require('./functions/zonelesszero');
 const Steam = require('./functions/steam'); 
+const fakeUserAgent = require("fake-useragent");
+const FormData = require("form-data");
+const { fromBuffer } = require("file-type");
+
+const uploadToCatbox = async (content) => {
+    const { ext } = (await fromBuffer(content)) || {};
+    const formData = new FormData();
+    formData.append("fileToUpload", content, `file.${ext}`);
+    formData.append("reqtype", "fileupload");
+    const response = await axios.post("https://catbox.moe/user/api.php", formData, {
+        headers: {
+            ...formData.getHeaders(),
+            "User-Agent": fakeUserAgent(),
+        },
+    });
+
+    return response.data.trim();
+};
+
+CreatePlug({
+    command: 'tourl',
+    category: 'tools',
+    desc: 'Uploads media and returns a URL',
+    execute: async (message, conn) => {
+        if (!message.quoted || !message.quoted.message) return await message.reply('_Reply to an image, video, or document or mp3_');
+        const buffer = await message.quoted.download();
+        if (!buffer) return;
+        await message.reply('_Uploading..._');
+        const url = await uploadToCatbox(buffer);
+        await message.reply(`${url}`);
+    }
+});
 
 CreatePlug({
     command: 'steam',
