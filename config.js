@@ -1,4 +1,4 @@
-require('dotenv');
+require('dotenv').config();
 const path = require('path');
 dotenv.config({ path: path.resolve(__dirname, `${process.env.NODE_ENV || 'development'}.env`) });
 const toBool = (x) => (x && (x.toLowerCase() === 'true' || x.toLowerCase() === 'on')) || false;
