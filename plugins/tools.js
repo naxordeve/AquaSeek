@@ -18,3 +18,20 @@ CreatePlug({
   },
 });
       
+CreatePlug({
+  command: "mrbeast",
+  category: "tools",
+  desc: "",
+  execute: async (message, conn, match) => {
+    await message.react("⏳");
+    if (!match) return message.reply("_Please provide text_");
+    const ctx = `https://bk9.fun/tools/tts-beast?q=${match}`;
+    const voidi = await axios.get(ctx, { responseType: "arraybuffer" });
+    if (!voidi || voidi.status !== 200) return;
+    await conn.sendMessage(message.user, {
+      audio: voidi.data,
+      mimetype: "audio/mp4",
+      ptt: false,
+    });
+  },
+});
