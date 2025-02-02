@@ -33,34 +33,35 @@ CreatePlug({
   },
 });
 
+const { spotify } = require("./functions/spotifydl"); 
+
 CreatePlug({
   command: "spotifydl",
   category: "download",
   desc: "Download a Spotify track",
   execute: async (message, conn, match) => {
-    await message.react("⏳");
+    await message.react("✅");
     if (!match || !match.includes("spotify.com/track/")) return message.reply("_Please provide a valid Spotify track url_");
-    const track = await downloadSpotify(match);
-    if (!track || !track.download) return;
-    await conn.sendMessage(
-      message.user,
-      {
-        audio: { url: track.download },
-        mimetype: "audio/mp4",
-        ptt: false,
-        contextInfo: {
-          externalAdReply: {
-            title: "Spotify Downloader",
-            body: "Download", 
-            thumbnailUrl: track.cover, 
-            renderLargerThumbnail: true,
-            mediaType: 1, 
-            mediaUrl: track.url, 
-            sourceUrl: track.url, 
-          },
+    const trackInfo = await spotify(match);
+    if (!trackInfo.music) return;
+    await conn.sendMessage(message.user, {
+      audio: { url: trackInfo.music },
+      mimetype: "audio/mp4",
+      ptt: false,
+      contextInfo: {
+        externalAdReply: {
+          title: trackInfo.title || "Spotify Downloader",
+          body: trackInfo.author || "Download",
+          thumbnailUrl: trackInfo.thumbnail || "",
+          mediaType: 1,
+          renderLargerThumbnail: true,
+          mediaUrl: trackInfo.link,
+          sourceUrl: trackInfo.link,
         },
-      }
-    );
+      },
+    });
+
+    await message.react("✅");
   },
 });
-  
+      
