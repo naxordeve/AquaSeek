@@ -32,25 +32,6 @@ CreatePlug({
 });
 
 CreatePlug({
-  command: 'twitter',
-  category: 'download',
-  desc: 'Download media from Twitter',
-  execute: async (message, conn, match) => {
-    await message.react('🗣️');
-    if (!match) return message.reply('_Please provide a valid Twitter url_');
-    const voidi = await APIUtils.twitt(match);
-    if (voidi) {
-      await conn.sendMessage(message.user, {
-        video: { url: voidi.downloadLink,
-           },
-        caption: `${voidi.videoTitle}\n${voidi.videoDescription}\n\nMade with❣️`,
-      });
-    } else {
-    }
-  },
-});
-
-CreatePlug({
   command: 'snackvideo',
   category: 'download',
   desc: 'Download media from SnackVideo',
