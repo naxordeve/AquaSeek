@@ -11,6 +11,7 @@ const { getPlugins } = require('./lib/plugins');
 const { serialize } = require('./lib/client');
 const { commands } = require('./lib/commands');
 const CONFIG = require('./config');
+var { useMongoAuthState } = require('./lib/MONGO/localdb');
 const store = makeInMemoryStore({logger: P({ level: 'silent' }).child({ level: 'silent' }),});
 const fetch = require('node-fetch');
 globalThis.fetch = fetch;
@@ -37,8 +38,9 @@ async function auth() {
 auth();
 
 async function startBot() {
-    await CONFIG.APP.POST_GET.sync();
-    console.log('Database connected ✅');
+    const mongO = CONFIG.APP.DATABASE_URL;
+    if (mongoO && /mongo/.test(mongO)) {
+        await useMongoAuthState(mongO); }
     const auth_creds = path.join(__dirname, 'lib', 'session');
     let { state, saveCreds } = await useMultiFileAuthState(auth_creds);
     const conn = makeWASocket({
