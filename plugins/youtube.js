@@ -34,7 +34,6 @@ CreatePlug({
   },
 });
 
-// Command to search and download YouTube audio
 CreatePlug({
   command: 'play',
   category: 'download',
