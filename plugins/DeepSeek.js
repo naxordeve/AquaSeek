@@ -15,9 +15,7 @@ CreatePlug({
         messages: [{ role: "user", content: match }],
       })
       .catch((e) => e.response);
-    const voidi = data?.choices?.[0]?.message?.content || "aquaseek";
-    await conn.sendMessage(message.user, {
-      caption: `\n\n${voidi}`,
-    });
-  },
+       let voidi = data.data.response.split("</think>").pop().trim();
+       await message.reply(voidi);
+  }
 });
