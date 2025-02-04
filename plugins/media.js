@@ -124,18 +124,21 @@ CreatePlug({
     category: 'tools',
     desc: 'Convert an image, GIF, or video into a sticker',
     execute: async (message, conn, match) => {
-        if (!message.quoted || !message.quoted.message) return await message.reply('_Reply to a sticker with the format `take packname|author`_');
-        if (!match || !match.includes('|')) {
-            return await message.reply('_You must provide a packname and author in the format `packname|author`_');
+        if (!message.quoted || !message.quoted.message) return await message.reply('_Reply to a sticker_');
+        let pack = CONFIG.APP.STICKER_PACKNAME || 'Diego';
+        let author = 'NaxorDevi💦';
+        if (match) {
+            if (!match.includes('|')) return await message.reply('_Use the correct format: `packname|author`_');
+            let [userPack, userAuthor] = match.split('|').map((v) => v.trim());
+            if (!userPack || !userAuthor) return await message.reply('_Both packname and author must be provided in the format: `packname|author`_');
+            pack = userPack;
+            author = userAuthor;
         }
-        let [pack, author] = match.split('|').map((v) => v.trim());
-        if (!pack) pack = CONFIG.APP.STICKER_PACKNAME; 
-        if (!author) author = 'NaxorDevi💦'; 
         const buffer = await message.quoted.download();
         if (!buffer) return;
         const sticker = new Sticker(buffer, {
-            pack,     
-            author,   
+            pack,
+            author,
             type: 'full',
             quality: 80,
             id: 'sticker_cmd',
@@ -146,4 +149,3 @@ CreatePlug({
         await conn.sendMessage(message.user, { sticker: voidi });
     }
 });
-    
