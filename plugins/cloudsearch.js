@@ -24,7 +24,7 @@ const search = async function search(query) {
 };
 
 CreatePlug({
-  command: "soundcloudsearch",
+  command: "cloudsearch",
   category: "music",
   desc: "Search for SoundCloud tracks",
   execute: async (message, conn, match) => {
@@ -35,9 +35,7 @@ CreatePlug({
     const voidi = results
       .map((track, index) => `${index + 1}. [${track.title}\n${track.url}`)
       .join("\n");
-    await conn.sendMessage(message.user, {
-      caption: `SoundCloud Search:\n\n${voidi}`,
-    });
-  },
+    await message.reply(voidi);
+  }
 });
     
