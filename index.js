@@ -13,6 +13,8 @@ const { commands } = require('./lib/commands');
 const CONFIG = require('./config');
 var useMongoAuthState  = require('./lib/models/localdb');
 const store = makeInMemoryStore({logger: P({ level: 'silent' }).child({ level: 'silent' }),});
+const NodeCache = require('node-cache');
+const cartel = new NodeCache({ stdTTL: 3600, checkperiod: 600 });
 const fetch = require('node-fetch');
 globalThis.fetch = fetch;
 
@@ -51,6 +53,37 @@ async function startBot() {
         emitOwnEvents: true,
         auth: state,
         version: (await fetchLatestBaileysVersion()).version,
+        getMessage: async (key) => {
+            if (store) {
+                const jid = key.remoteJid;
+                const msg_id = key.id;
+                const chat = store.messages[jid];
+                if (chat) {
+                    const msg = chat.get(msg_id);
+                    return (
+                        msg.message?.conversation ||
+                        msg.message?.extendedTextMessage?.text || 
+                        msg.message?.imageMessage?.caption ||     
+                        msg.message?.videoMessage?.caption ||     
+                        msg.message || null
+                    );
+                }
+            }
+            return null;
+        },
+        getGroupMetadata: async (jid) => {
+            let metadata = cartel.get(jid);
+            if (metadata) {
+                return metadata;
+            }try {
+                metadata = await conn.groupMetadata(jid);
+                cartel.set(jid, metadata); 
+                return metadata;
+            } catch (error) {
+                console.error(error);
+                return null;
+            }
+        }
     });
 
     store.bind(conn.ev);
