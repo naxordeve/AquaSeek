@@ -113,37 +113,40 @@ async function startBot() {
       `From: ${message.isGroup ? message.subject : "Private Chat"}\n` +
       "------------------"
     );
+    const match = isCmd 
+        ? mek.replace(new RegExp(`^${CONFIG.APP.PREFIX}\\S+`), '').trim() 
+        : mek;
     if (isCmd) {
-    const pattern = new RegExp(`^(${CONFIG.APP.PREFIX})(\\S+)`);
-    const commando = mek.match(pattern);
-    if (commando) {
-        const command = commando[2];
-        const match = message.body.trim().split(/ +/).slice(1).join(" ");
-        const args = match;
-        const Func = commands.find((c) => c.command.toLowerCase() === command);
-        if (Func) {
-            try {
-                await Func.execute(message, conn, match, args);
-            } catch (err) {
-                console.error(err);
-            }
-        } else if (message.body && Func?.on) {  
-            if (
-                (message.type === "text" && conversation) ||
-                message.type === "videoMessage" ||
-                message.type === "audioMessage" ||
-                message.type === "stickerMessage" ||
-                message.type === "imageMessage"
-            ) {
+        const pattern = new RegExp(`^(${CONFIG.APP.PREFIX})(\\S+)`);
+        const commando = mek.match(pattern);
+        if (commando) {
+            const command = commando[2];
+            const Func = commands.find((c) => c.command.toLowerCase() === command);
+            if (Func) {
                 try {
-                    await Func.execute(message, conn, match, args);
+                    await Func.execute(message, conn, match);
                 } catch (err) {
                     console.error(err);
                 }
-            }
-        }}
-   }
-    });
+            }}
+    }
+    for (const Func of commands) {
+        if (Func.on) {
+            if (
+                (Func.on === "text" && message.type === "conversation") ||
+                (Func.on === "video" && message.type === "videoMessage") ||
+                (Func.on === "audio" && message.type === "audioMessage") ||
+                (Func.on === "sticker" && message.type === "stickerMessage") ||
+                (Func.on === "image" && message.type === "imageMessage")
+            ) {
+                try {
+                    await Func.execute(message, conn, match);
+                } catch (err) {
+                    console.error(err);
+                }
+            }}
+         }
+   });
 
     conn.ev.on("call", async (callUpdate) => {
     for (const call of callUpdate) {
