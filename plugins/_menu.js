@@ -51,19 +51,18 @@ CreatePlug({
 CreatePlug({
     command: 'list',
     category: 'general',
-    desc: 'Display commands list_',
+    desc: 'Displays all available commands.',
     execute: async (message, conn) => {
         await message.react('✅');
-        if (!Array.isArray(commands)) return;
-        let _cmd = `\`\`\`*Commands:*\n\n\`\`\``;
-        commands.forEach(cmd => {
-        _cmd += `\`\`\`∘ ${cmd.command.toLowerCase()}\n\n${cmd.desc}\n\`\`\``;});
-        const sent = await conn.sendMessage(message.user, { text: _cmd.trim() }, { quoted: message });
-        if (!sent) {
-            await message.reply('err');
-        }
+        if (!commands?.length) return;
+        const voidi = `╭─── *COMMANDS LIST* ─\n\n` + 
+            Object.values(commands).reduce((acc, { command, desc }) => 
+                acc + `│ ✦ *${command.toLowerCase()}*\n│   ${desc}\n│\n`, '') + 
+            `╰─`;
+        await conn.sendMessage(message.user, { text: voidi.trim() }, { quoted: message });
     }
 });
+
 
 
 CreatePlug({
