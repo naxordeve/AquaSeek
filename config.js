@@ -3,6 +3,8 @@ const { Sequelize } = require('sequelize')
 const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, `${process.env.NODE_ENV || 'development'}.env`) });
 const toBool = (x) => (x && (x.toLowerCase() === 'true' || x.toLowerCase() === 'on')) || false;
+var DATABASE_URL = process.env.DATABASE_URL || "./lib/database.db";
+
 
 
 const CONFIG = {
