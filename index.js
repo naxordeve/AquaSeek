@@ -40,9 +40,7 @@ async function auth() {
 auth();
 
 async function startBot() {
-    const mongO = CONFIG.APP.DATABASE_URL;
-    if (mongoO && /mongo/.test(mongO)) {
-        await useMongoAuthState(mongO); }
+    if (CONFIG.APP.MONGODB_URL && /mongo/.test(CONFIG.APP.MONGODB_URL)) await useMongoAuthState(CONFIG.APP.MONGODB_URL); if (CONFIG.APP.SQLDB_URL) console.log("Configur Loaded");
     const auth_creds = path.join(__dirname, 'lib', 'session');
     let { state, saveCreds } = await useMultiFileAuthState(auth_creds);
     const conn = makeWASocket({
