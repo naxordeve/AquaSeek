@@ -10,7 +10,7 @@ const CONFIG = {
         SESSION_NAME: process.env.SESSION_NAME || 'Naxor~0NYSjTwJ#fZl6Hvrhnxu369syaYqdZ35YeTSmMkP32L3ByLYYJ7U',
         BOTNAME: 'AQUASEEK',
         MONGODB_URL: process.env.MONGODB_URL || '', // MongoDB URL
-        SQLDB_URL: DATABASE_URL === databasePath
+        SQLDB_URL: DATABASE_URL == "./lib/database.db"
          ? new Sequelize({dialect: 'sqlite',storage: DATABASE_URL, logging: false, })
          : new Sequelize(DATABASE_URL, {dialect: 'postgres',ssl: true,protocol: 'postgres',dialectOptions: {native: true,
             ssl: { require: true, rejectUnauthorized: false },
