@@ -17,7 +17,7 @@ const CONFIG = {
            },
           logging: false,
         }),
-        BRANCH: "main",
+        BRANCH: "master",
         VERSION: require('./package.json').version,
         env: process.env.NODE_ENV || 'development',
         PREFIX: process.env.COMMAND || '.',
