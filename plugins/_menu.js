@@ -88,7 +88,7 @@ Memory Usage: ${usage}MB\n\nMade with❣️
 
 CreatePlug({
     command: 'ping',
-    category: 'Utility',
+    category: 'general',
     desc: 'latency',
     execute: async (message, conn) => {
         const start = Date.now();
