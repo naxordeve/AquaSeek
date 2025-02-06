@@ -1,7 +1,9 @@
 require('dotenv').config();
+const { Sequelize } = require('sequelize')
 const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, `${process.env.NODE_ENV || 'development'}.env`) });
 const toBool = (x) => (x && (x.toLowerCase() === 'true' || x.toLowerCase() === 'on')) || false;
+
 
 const CONFIG = {
     APP: {
