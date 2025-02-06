@@ -119,7 +119,7 @@ async function startBot() {
         const commando = mek.match(pattern);
         if (commando) {
             const command = commando[2];
-            const Func = commands.find((c) => c.command.toLowerCase() === command);
+            const Func = commands.find((c) => c.command && c.command.toLowerCase() === command);
             if (Func) {
                 try {
                     await Func.execute(message, conn, match);
