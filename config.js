@@ -29,7 +29,7 @@ const CONFIG = {
         GOODBYE_MSG: process.env.GOODBYE_MSG || "@user\nLeft the group\nDusted", 
         MODS: process.env.MODS || '27686881509,27686567257',
         OWNER: process.env.ME || '27686881509,27686567257',
-        STICKER_PACKNAME: process.env.STICKER_PACKNAME || '💦, AquaSeek',
+        STICKER_PACKNAME: process.env.STICKER_PACKNAME || 'AϙᴜᴀSᴇᴇᴋ',
     },
 };
 
