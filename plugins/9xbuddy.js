@@ -1,88 +1,38 @@
-const axios = require("axios");
-const cheerio = require("cheerio");
 const { CreatePlug } = require("../lib/commands"); 
+const TikTokS = require("./functions/tiktoks"); 
 
-module.exports = {
-  async parseMediaResults(media) {
-    return media.map((item) => {
-      const { quality, size, link } = item;
-      const baseUrl = "https://9xbuddy.online";
-      let formattedLink = link;
-      if (link.startsWith("//")) {
-        formattedLink = `https:${link}`;
-      } else if (!link.startsWith("https:")) {
-        formattedLink = `${baseUrl}${link}`;
-      }
-      return {
-        quality: quality.split("Extract")[0].trim().replace("Download Now", ""),
-        size: size === "-" ? "Unknown" : size,
-        link: formattedLink,
-      };
-    });
-  },
-
-  async scrapeData(url) {
-    let mediaResults = [];
-    let info = {};
-    while (mediaResults.length === 0) {
-      const { data } = await axios.get(
-        `https://${process.env.DOMAIN_URL}/api/tools/web/html?url=https://9xbuddy.online/process?url=${encodeURIComponent(url)}`,
-        {
-          headers: {
-            "User-Agent": "Mozilla/5.0",
-          },
-        }
-      );
-
-      const $ = cheerio.load(data);
-      info = {
-        title: $("div.text-gray-500.dark\\:text-gray-200").first().text().trim(),
-        uploader: $("p:contains('Uploader') span.text-blue-500").text().trim(),
-        duration: $("p:contains('Duration') span.text-blue-500").text().trim(),
-      };
-      const results = [];
-      $("div.lg\\:flex.lg\\:justify-center.items-center").each((_, el) => {
-        const [quality, size, link] = [
-          $(el).find("div:nth-child(2)").text().trim(),
-          $(el).find("div:nth-child(3)").text().trim(),
-          $(el).find("a").attr("href"),
-        ];
-        if (quality && size && link) {
-          results.push({ quality, size, link });
-        }
-      });
-      if (results.length > 0) {
-        mediaResults = await module.exports.parseMediaResults(results);
-      }
-    }
-    return {
-      media: mediaResults,
-      info: info,
-    };
-  },
-};
 
 CreatePlug({
-  command: "9xbuddy",
-  category: "download",
-  desc: "download",
+  command: "tiktoksearch",
+  category: "search",
+  desc: "Search for TikToker",
   execute: async (message, conn, match) => {
-    if (!match) return await message.reply("Please provide a valid URL");
-    await message.react("⏳");
-    await message.reply("_Processing..._");
-    const { media, info } = await module.exports.scrapeData(match);
-    if (media.length === 0) return;
-    let med = media.map(
-      (item, index) =>
-        `${index + 1}. Quality: ${item.quality}, Size: ${item.size}, Link: ${item.link}`);
-    const media = med.join("\n");
-    const txt = `
-    Title: ${info.title || "unknown"}
-    Uploader: ${info.uploader || "unknown"}
-    Duration: ${info.duration || "unknown"}`;
-    await conn.sendMessage(message.user, {
-      video: { url: media[0].link ,
-      caption: `${media}\n\n${txt}`,
-    });
-  },
+    await message.react("🔍");
+    if (!match) return message.reply("_Please provide a search query_");
+    const searcher = new TikTokS("https://api.diioffc.web.id/api/search/tiktok");
+    const results = await searcher.search(match);
+    if (results.error) return;
+    const video = results[0]; 
+    const caption =
+      + `*Title:* ${video.title}\n`
+      + `*Duration:* ${video.duration} seconds\n`
+      + `*Region:* ${video.region}\n`
+      + `*Uploaded:* ${video.createdAt}\n`
+      + `*Likes:* ${video.stats.like}\n`
+      + `*Comments:* ${video.stats.comment}\n`
+      + `*Shares:* ${video.stats.share}\n`
+      + `*Audio:* ${video.music.title} by ${video.music.author}`;
+    await conn.sendMessage(message.user, { image: { url: video.thumbnail }, caption: caption },
+      { quoted: message }
+    );
+
+    await conn.sendMessage(
+      message.user, { video: { url: video.media.no_watermark }, mimetype: "video/mp4" },
+      { quoted: message }
+    );
+    await conn.sendMessage(message.user,
+       { audio: { url: video.music.play }, mimetype: "audio/mp4" },
+      { quoted: message }
+    );
+  }
 });
