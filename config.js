@@ -7,7 +7,7 @@ const CONFIG = {
     APP: {
         SESSION_NAME: process.env.SESSION_NAME || 'Naxor~0NYSjTwJ#fZl6Hvrhnxu369syaYqdZ35YeTSmMkP32L3ByLYYJ7U',
         BOTNAME: 'AQUASEEK',
-        DATABASE_URL: process.env.DATABASE_URL || '', // MongoDB URL
+        MONGODB_URL: process.env.MONGODB_URL || '', // MongoDB URL
         VERSION: require('./package.json').version,
         env: process.env.NODE_ENV || 'development',
         PREFIX: process.env.COMMAND || '.',
