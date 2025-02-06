@@ -16,15 +16,7 @@ CreatePlug({
       + `📌 *Title:* ${title}\n`
       + `🎤 *Artist:* ${artists}\n`
       + `📅 *Release Date:* ${releaseDate}`;
-    await conn.sendMessage(
-      message.user,
-      { image: { url: thumbnail }, caption: caption },
-      { quoted: message }
-    );
-
-    await conn.sendMessage(message.user,
-      { audio: { url: audioUrl }, mimetype: "audio/mp4", ptt: false },
-      { quoted: message }
-    );
+    await conn.sendMessage(message.user,{ image: { url: thumbnail }, caption: caption },{ quoted: message });
+    await conn.sendMessage(message.user,{ audio: { url: audioUrl }, mimetype: "audio/mp4", ptt: false },{ quoted: message });
   }
 });
