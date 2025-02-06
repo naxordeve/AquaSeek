@@ -19,7 +19,7 @@ const fetch = require('node-fetch');
 globalThis.fetch = fetch;
 
 if (process.env.PLATFORM === 'koyeb') require('http').createServer((req, res) => {
-req.method === 'GET' && req.url === '/' ? res.writeHead(200, { 'Content-Type': 'text/html' }) && res.end('<h1>X Astral running👍</h1>') : res.writeHead(404) && res.end('not found');
+req.method === 'GET' && req.url === '/' ? res.writeHead(200, { 'Content-Type': 'text/html' }) && res.end('<h1>AquaSeek running 💦</h1>') : res.writeHead(404) && res.end('not found');
 }).listen(process.env.PORT || 8080, () => console.log(`running at http://localhost:${process.env.PORT || 8080}`));
 async function auth() {
     const credz = path.join(__dirname, 'lib', 'session', 'creds.json');
