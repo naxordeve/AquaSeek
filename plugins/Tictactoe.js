@@ -6,15 +6,9 @@ CreatePlug({
     desc: "",
     execute: async (message, conn, match) => {
       this.game = this.game || {};
-    if (
-      Object.values(this.game).find(
-        (room) =>
-          room.id.startsWith("tictactoe") &&
+    if (Object.values(this.game).find((room) => room.id.startsWith("tictactoe") &&
           [room.game.playerX, room.game.playerO].includes(message.sender))
-    ) {
-      return message.reply("_You're already in a game_");
-    }
-
+    ) { return message.reply("_You're already in a game_");}
     let room = Object.values(this.game).find(
       (room) => room.state === "WAITING" && (match ? room.name === match : true)
     );
