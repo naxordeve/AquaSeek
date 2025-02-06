@@ -3,7 +3,7 @@ const TikTokS = require("./functions/tiktoks");
 
 
 CreatePlug({
-  command: "tiktoksearch",
+  command: "ttsearch",
   category: "search",
   desc: "Search for TikToker",
   execute: async (message, conn, match) => {
@@ -22,17 +22,8 @@ CreatePlug({
       + `*Comments:* ${video.stats.comment}\n`
       + `*Shares:* ${video.stats.share}\n`
       + `*Audio:* ${video.music.title} by ${video.music.author}`;
-    await conn.sendMessage(message.user, { image: { url: video.thumbnail }, caption: caption },
-      { quoted: message }
-    );
-
-    await conn.sendMessage(
-      message.user, { video: { url: video.media.no_watermark }, mimetype: "video/mp4" },
-      { quoted: message }
-    );
-    await conn.sendMessage(message.user,
-       { audio: { url: video.music.play }, mimetype: "audio/mp4" },
-      { quoted: message }
-    );
+    await conn.sendMessage(message.user, { image: { url: video.thumbnail }, caption: caption },{ quoted: message });
+    await conn.sendMessage(message.user, { video: { url: video.media.no_watermark }, mimetype: "video/mp4" },{ quoted: message });
+    await conn.sendMessage(message.user,{ audio: { url: video.music.play }, mimetype: "audio/mp4" },{ quoted: message });
   }
 });
