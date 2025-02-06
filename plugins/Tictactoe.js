@@ -1,3 +1,4 @@
+const { CreatePlug } = require("../lib/commands");
 const TicTacToe = require("../lib/tictactoe");
 
 CreatePlug({
