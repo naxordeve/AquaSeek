@@ -1,3 +1,4 @@
+const { CreatePlug } = require("../lib/commands");
 const ConnectFour = require("../lib/connectfour");
 
 CreatePlug({
