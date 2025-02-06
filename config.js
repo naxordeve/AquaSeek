@@ -5,8 +5,6 @@ require('dotenv').config({ path: path.resolve(__dirname, `${process.env.NODE_ENV
 const toBool = (x) => (x && (x.toLowerCase() === 'true' || x.toLowerCase() === 'on')) || false;
 var DATABASE_URL = process.env.DATABASE_URL || "./lib/database.db";
 
-
-
 const CONFIG = {
     APP: {
         SESSION_NAME: process.env.SESSION_NAME || 'Naxor~0NYSjTwJ#fZl6Hvrhnxu369syaYqdZ35YeTSmMkP32L3ByLYYJ7U',
@@ -19,6 +17,7 @@ const CONFIG = {
            },
           logging: false,
         }),
+        BRANCH: "main",
         VERSION: require('./package.json').version,
         env: process.env.NODE_ENV || 'development',
         PREFIX: process.env.COMMAND || '.',
