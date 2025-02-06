@@ -126,7 +126,7 @@ CreatePlug({
     execute: async (message, conn, match) => {
         if (!message.quoted || !message.quoted.message) return await message.reply('_Reply to a sticker_');
         let pack = CONFIG.APP.STICKER_PACKNAME || 'Diego';
-        let author = 'NaxorDevi💦';
+        let author = 'NᴀxᴏʀDᴇᴠɪ';
         if (match) {
             if (!match.includes('|')) return await message.reply('_Use the correct format: `packname|author`_');
             let [userPack, userAuthor] = match.split('|').map((v) => v.trim());
