@@ -2,11 +2,12 @@ const { CreatePlug } = require('../lib/commands');
 const SpotifyDL = require("./functions/Sdl");
 
 CreatePlug({
-  command: "spotifydl",
+  command: "spotify",
   category: "download",
   desc: "Download a Spotify track",
   execute: async (message, conn, match) => {
     await message.react("✅");
+    match = match || message.message.text;
     if (!match) return message.reply("_provides spotify url_");
     const get = new SpotifyDL("https://api.diioffc.web.id/api/download/spotify");
     const voidi = await get.toAudio(match);
