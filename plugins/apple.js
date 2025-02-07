@@ -19,7 +19,7 @@ CreatePlug({
     const voidi = await download(track.song);
     await message.react('✅');
    // const audioFile = await toAudio(voidi.download);
-    await conn.sendMessage(message.user, { audio:{ur: voidi.download}, mimetype: 'audio/mp3' });
+    await conn.sendMessage(message.user, { audio:{ur: voidi.download}, mimetype: 'audio/mpeg' });
   },
 });
         
