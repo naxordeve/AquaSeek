@@ -17,6 +17,7 @@ CreatePlug({
   execute: async (message, conn, match) => {
     await message.react('❣️');
     const me = /(?:https?:\/\/|git@)github\.com[\/:]([^\/\s]+)\/([^\/\s]+)(?:\.git)?/;
+    match = match || message.message.text;
     const eg = me.exec(match);
     if (!eg) return message.reply('_invalid repo_');
     const [_, username, repo] = eg;
@@ -37,6 +38,7 @@ CreatePlug({
   desc: 'Download media from SnackVideo',
   execute: async (message, conn, match) => {
     await message.react('🗣️');
+    match = match || message.message.text;
     if (!match) return message.reply('_Please provide a valid url_');
     const voidi = await APIUtils.SnackVideo(match);
     if (voidi) {
@@ -55,6 +57,7 @@ CreatePlug({
   desc: 'Download media from SeeGore',
   execute: async (message, conn, match) => {
     await message.react('🗣️');
+    match = match || message.message.text;
     if (!match) return message.reply('_Please provide a valid SeeGore url_');
     const voidi = await APIUtils.SeeGore(match);
     if (voidi) {
@@ -64,29 +67,6 @@ CreatePlug({
       });
     } else {
         }
-  },
-});
-
-CreatePlug({
-  command: 'spotify',
-  category: 'download',
-  desc: 'Download media from Spotify',
-  execute: async (message, conn, match) => {
-    await message.react('🗣️');
-    if (!match) return message.reply('Please provide a valid Spotify URL');
-    const result = await APIUtils.Spotify(match);
-    if (!result) return;
-    await conn.sendMessage(message.user, {
-      audio: { url: result.downloadLink},mimetype: 'audio/mpeg',
-      contextInfo: {
-        externalAdReply: {
-          title: 'Spotify',
-          body: 'spotify',
-          thumbnailUrl: '',
-          showAdAttribution: true,
-        },
-      },
-    });
   },
 });
 
@@ -129,6 +109,7 @@ CreatePlug({
   desc: 'Download',
   execute: async (message, conn, match) => {
     if (!match) return message.reply('_Please provide app name_');
+    match = match || message.message.text;
     await message.react('❣️');
     const search = `https://bk9.fun/search/apk?q=${match}`;
     const smd = await fetch(search).then((res) => res.json());
@@ -146,6 +127,7 @@ CreatePlug({
   category: 'download',
   desc: 'Download Facebook videos',
   execute: async (message, conn, match) => {
+    match = match || message.message.text;
     if (!match) return message.reply('_Please provide a Facebook video URL_');
     await message.react('❣️');
     const voidi = await Func(match);
@@ -163,6 +145,7 @@ CreatePlug({
   desc: 'soundcloud audio dl',
   execute: async (message, conn, match) => {
     await message.react('🎧');
+    match = match || message.message.text;
     if(!match) return message.reply('_provide SoundCloud url_');
     const result = await SoundCloud(match);
     if (!result.success) return;
@@ -181,34 +164,12 @@ CreatePlug({
 });
 
 CreatePlug({
-  command: 'applemusic',
-  category: 'download',
-  desc: 'Fetches Apple Music details',
-  execute: async (message, conn, match) => {
-    await message.react('🎵');
-    if (!match) return message.reply('Provide an Apple Music url');
-    const result = await MusicApple(match);
-    if (!result.success) return;
-    await conn.sendMessage(message.user, {
-      audio: { url: result.mp3DownloadLink},mimetype: 'audio/mpeg',
-      contextInfo: {
-        externalAdReply: {
-          title: `${result.appleTitle}`,
-          body: result.appleTitle,
-          thumbnailUrl: result.artworkUrl,
-          showAdAttribution: true,
-        },
-      },
-    });
-  },
-});
-
-CreatePlug({
   command: 'ytpost',
   category: 'download',
   desc: 'Fetches YouTube post details',
   execute: async (message, conn, match) => {
     await message.react('📹');
+    match = match || message.message.text;
     if (!match) return message.reply('Provide a YouTube url');
     const result = await YtPost(match);
     if (!result.success) return;
@@ -226,6 +187,7 @@ CreatePlug({
   desc: 'Fetches Pinterest video details.',
   execute: async (message, conn, match) => {
     await message.react('📌');
+    match = match || message.message.text;
     if (!match) return message.reply('Provide a Pinterest url');
     const result = await Pinterest(match);
     if (!result.success) return;
@@ -243,6 +205,7 @@ CreatePlug({
   desc: 'Fetches video download options from SaveFrom.',
   execute: async (message, conn, match) => {
     await message.react('📥');
+    match = match || message.message.text;
     if (!match) return message.reply('Provide a video url');
     const result = await SaveFrom(match);
     if (!result.success) return;
@@ -304,6 +267,7 @@ CreatePlug({
   desc: 'Fetches CapCut video details',
   execute: async (message, conn, match) => {
     await message.react('🎥');
+    match = match || message.message.text;
     if (!match) return message.reply('Provide a CapCut url');
     const result = await CapCut(match);
     if (!result.success) return;
