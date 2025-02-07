@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 const tiktokdl = async (url) => {
-  const api = `https://diegoson-naxor-api.hf.space/tiktok?url=${encodeURIComponent(url)}`;
+  const api = `https://diegoson-naxordeve.hf.space/tiktok?url=${url}`;
   try {
     const res = await axios.get(api);
     if (res.status !== 200) {
