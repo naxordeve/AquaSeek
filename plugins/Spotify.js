@@ -1,5 +1,5 @@
 const { CreatePlug } = require('../lib/commands');
-const SpotifyDL = require("./functions/Sdl");
+const SpotifyDL = require("./functions/spotify");
 
 CreatePlug({
   command: "spotify",
