@@ -1,7 +1,7 @@
 const fetch = require('node-fetch');
 
 async function Func(url) {
-  const _api = `https://diegoson-naxor-api.hf.space/facebook?url=${url}`;
+  const _api = `https://diegoson-naxordeve.hf.space/facebook?url=${url}`;
   try {
     const res = await fetch(_api);
     const data = await res.json();
