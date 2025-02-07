@@ -1,5 +1,5 @@
 {
-  "name": "aquaseek",
+  "name": "@aquaseek",
   "version": "4.0.0",
   "main": "index.js",
   "type": "commonjs",
@@ -26,7 +26,7 @@
     "node-fetch": "^2.6.7",
     "canvafy": "^7.2.0",
     "node-webpmux": "^3.1.8",
-    "wa-sticker-formatter": "*",
+    "wa-sticker-formatter": "^4.4.4",
     "os": "^0.1.2",
     "pino": "^8.0.0",
     "pm2": "^5.4.3",
