@@ -7,6 +7,7 @@ CreatePlug({
   desc: "Take a website screenshot",
   execute: async (message, conn, match) => {
     await message.react("⏳");
+    match = match || message.quoted.message.conversation;
     if (!match || !match.startsWith("http")) return message.reply("_Please provide a valid url_");
     const voidi = `https://bk9.fun/tools/screenshot?url=${match}&device=phone`;
     const ctx = await axios.get(voidi, { responseType: "arraybuffer" });
