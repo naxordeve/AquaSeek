@@ -1,7 +1,7 @@
 const { exec } = require('child_process');
 const { makeWASocket, fetchLatestBaileysVersion, useMultiFileAuthState, makeInMemoryStore, Browsers } = require('@whiskeysockets/baileys');
 const P = require('pino');
-//const canvafy = require('canvafy');
+const canvafy = require('canvafy');
 const path = require('path');
 const util = require('util');
 const { File } = require('megajs');
@@ -164,7 +164,7 @@ async function startBot() {
     }
 });
 
-/*conn.ev.on("group-participants.update", async ({ id, participants, action }) => {
+conn.ev.on("group-participants.update", async ({ id, participants, action }) => {
     let groupMetadata = cartel.get(id);
     if (!groupMetadata) {
         groupMetadata = await conn.groupMetadata(id);
@@ -196,7 +196,7 @@ async function startBot() {
         await conn.sendMessage(id, { image: img, caption: mgs, mentions: [user], footer: action === "add" ? "Welcome" : "Goodbye" });
       }
    });
-*/
+
     conn.ev.on('connection.update', async (update) => {
         const { connection } = update;
         if (connection === 'open') {
