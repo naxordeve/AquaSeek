@@ -29,10 +29,8 @@ CreatePlug({
     const ctx = `https://bk9.fun/tools/tts-beast?q=${match}`;
     const voidi = await axios.get(ctx, { responseType: "arraybuffer" });
     if (!voidi || voidi.status !== 200) return;
-    await conn.sendMessage(message.user, {
-      audio: voidi.data,
-      mimetype: "audio/mp4",
-      ptt: false,
+    await message.react('🗨️');
+    await conn.sendMessage(message.user, {audio: voidi.data,mimetype: "audio/mpeg",ptt: false,
     });
   },
 });
