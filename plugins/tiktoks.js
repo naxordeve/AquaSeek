@@ -8,6 +8,7 @@ CreatePlug({
   desc: "Search for TikToker",
   execute: async (message, conn, match) => {
     await message.react("🔍");
+    match = match || message.message.text;
     if (!match) return message.reply("_Please provide a search query_");
     const searcher = new TikTokS("https://api.diioffc.web.id/api/search/tiktok");
     const results = await searcher.search(match);
