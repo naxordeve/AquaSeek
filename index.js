@@ -1,7 +1,7 @@
 const { exec } = require('child_process');
 const { makeWASocket, fetchLatestBaileysVersion, useMultiFileAuthState, makeInMemoryStore, Browsers } = require('@whiskeysockets/baileys');
 const P = require('pino');
-const canvafy = require("canvafy");
+const canvafy = require('canvafy');
 const path = require('path');
 const util = require('util');
 const { File } = require('megajs');
