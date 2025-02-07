@@ -1,4 +1,3 @@
-const { toAudio } = require('../lib/functions');
 const { search, download } = require('./functions/appleMusic');
 
 CreatePlug({
