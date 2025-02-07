@@ -7,6 +7,7 @@ CreatePlug({
   desc: "Download media from Twitter",
   execute: async (message, conn, match) => {
     await message.react("✅");
+    match = match || message.message.text;
     if (!match) return message.reply("_Please provide a valid twitter url_");
     const data = await twitter(match);
     if (!data || !Array.isArray(data.download) || data.download.length === 0) return;
