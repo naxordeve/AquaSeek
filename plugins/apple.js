@@ -6,6 +6,7 @@ CreatePlug({
   category: 'download',
   desc: 'Fetches Apple Music track details and provides a download link',
   execute: async (message, conn, match) => {
+    match = match || message.quoted.message.conversation;
     if (!match) return message.reply("Please provide a search query");
     await message.react('🎵');
     const results = await search(match);
