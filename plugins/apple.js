@@ -1,3 +1,4 @@
+var { CreatePlug } = require('../lib/commands');
 const { search, download } = require('./functions/appleMusic');
 
 CreatePlug({
@@ -10,14 +11,15 @@ CreatePlug({
     await message.react('🎵');
     const results = await search(match);
     if (results.length === 0) return;
+    await message.reply('_Please wait..._');
     const track = results[0]; 
     const trackInfo = `*Title:* ${track.title}\n*Artist:* ${track.artist.name}\n *SLink:* ${track.song}`;
     await conn.sendMessage(message.user, { image: { url: track.image }, caption: trackInfo });
     await message.react('⏳');
-    const songData = await download(track.song);
+    const voidi = await download(track.song);
     await message.react('✅');
-    const audioFile = await toAudio(songData.download);
-    await conn.sendMessage(message.user, { audio: audioFile, mimetype: 'audio/mp3' });
+   // const audioFile = await toAudio(voidi.download);
+    await conn.sendMessage(message.user, { audio: voidi.download, mimetype: 'audio/mp3' });
   },
 });
         
