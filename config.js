@@ -9,7 +9,7 @@ const CONFIG = {
     APP: {
         SESSION_NAME: process.env.SESSION_NAME || 'Naxor~0NYSjTwJ#fZl6Hvrhnxu369syaYqdZ35YeTSmMkP32L3ByLYYJ7U',
         BOTNAME: 'AQUASEEK',
-        MONGODB_URL: process.env.MONGODB_URL || '', // MongoDB URL
+        MONGODB_URL: process.env.MONGODB_URL || 'mongodb+srv://whatsbixby:whatsbixby@cluster0.idp3t.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', // MongoDB URL
         SQLDB_URL: DATABASE_URL == "./lib/database.db"
          ? new Sequelize({dialect: 'sqlite',storage: DATABASE_URL, logging: false, })
          : new Sequelize(DATABASE_URL, {dialect: 'postgres',ssl: true,protocol: 'postgres',dialectOptions: {native: true,
