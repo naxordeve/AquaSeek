@@ -5,7 +5,7 @@ const { Func } = require("./functions/fbdl");
 CreatePlug({
   on: "text",
   execute: async (message, conn, match) => {
-    await message.react("🔍");
+    await message.react('✅');
     if (!match.includes("facebook.com") && !match.includes("fb.watch")) return message.reply('_Provide valid url lol_');
     const get = await Func(match);
     if (!get) return;
