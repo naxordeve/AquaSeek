@@ -9,6 +9,7 @@ CreatePlug({
     if (!match.includes("facebook.com") && !match.includes("fb.watch")) return message.reply('_Provide valid url lol_');
     const get = await Func(match);
     if (!get) return;
+    await message.reply('_Please wait..._');
     const q = get["720p"] ? "720p (HD)" : "360p (SD)";
     const voidi = get["720p"] || get["360p"];
     if (!voidi) return;
