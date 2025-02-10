@@ -6,7 +6,7 @@ CreatePlug({
     category: 'search',
     desc: 'lyrics based on the query',
     execute: async (message, conn, match) => {
-        if (!match) return message.reply('Please provide a song name.');
+        if (!match) return message.reply('_Please provide a song name_');
         const voidi = await fetch(`https://diegoson-naxordeve.hf.space/api/lyrics?q=${match}`);
         const data = await voidi.json();
         if (!data?.[0]) return;
