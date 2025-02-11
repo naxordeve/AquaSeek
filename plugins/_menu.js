@@ -54,14 +54,20 @@ CreatePlug({
     desc: 'Displays all available commands.',
     execute: async (message, conn) => {
         await message.react('✅');
-        if (!commands?.length) return;
+
+        if (!commands || typeof commands !== 'object' || !Object.values(commands).length) return;
+
         const voidi = `╭─── *COMMANDS LIST* ─\n\n` + 
-            Object.values(commands).reduce((acc, { command, desc }) => 
-                acc + `│ ✦ *${command.toLowerCase()}*\n│   ${desc}\n│\n`, '') + 
-            `╰─`;
+            Object.values(commands)
+                .map(({ command, desc }) => 
+                    `│ ✦ *${(command || "").toString().toLowerCase()}*\n│   ${desc || "No"}\n│\n`
+                ).join('') +
+            `╰──────`;
+
         await conn.sendMessage(message.user, { text: voidi.trim() }, { quoted: message });
     }
 });
+
 
 
 
@@ -80,7 +86,7 @@ Bot Status:
 
 Platform: ${platform}
 Uptime: ${Math.floor(uptime / 60)}m ${Math.floor(uptime % 60)}s
-Memory Usage: ${usage}MB\n\nMade with❣️
+Memory Usage: ${usage}MB\n\nMade with💦
 \`\`\``;
         await conn.sendMessage(message.user, { text: status }, {quoted: message});
     }
