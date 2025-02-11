@@ -172,7 +172,7 @@ conn.ev.on("group-participants.update", async ({ id, participants, action }) => 
     for (const user of participants) {
         if ((action === "add" && !CONFIG.APP.WELCOME) || (action === "remove" && !CONFIG.APP.GOODBYE)) {
             return; }
-        const e = `@${user.split("@")[0]} || ${message.pushName}`;
+        const e = `@${user.split("@")[0]}`;
         const a = groupMetadata.subject || "this group";
         const count = groupMetadata.participants.length;
         const ppUrl = await conn.profilePictureUrl(user, "image").catch(() => "https://via.placeholder.com/500");
