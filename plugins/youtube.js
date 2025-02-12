@@ -1,8 +1,6 @@
 var { CreatePlug } = require('../lib/commands');
 var fetch = require('node-fetch');
 
-var { CreatePlug } = require('../lib/commands');
-var fetch = require('node-fetch');
 
 CreatePlug({
     command: 'song',
