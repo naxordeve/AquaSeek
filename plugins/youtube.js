@@ -20,7 +20,7 @@ CreatePlug({
         if (!toAudio.media || !toAudio.media.length) return;
         let naxor_api = toAudio.media.find(m => m.type === 'download')?.link;
         if (!naxor_api) return;
-        let cover = await getBuffer(toBuffer.thumbnail);
+      //  let cover = await getBuffer(toBuffer.thumbnail);
         //let toMetadata = await AddMetaData(naxor_api, toBuffer.title, toBuffer.author);
         await conn.sendMessage(message.user, { 
             audio: { url: naxor_api }, 
@@ -30,7 +30,7 @@ CreatePlug({
                 externalAdReply: {
                     title: toBuffer.title,
                     body: `${toBuffer.duration}`, 
-                    thumbnailUrl: cover, 
+                    thumbnailUrl: toBuffer.thumbnail, 
                     mediaType: 1,
                     renderLargerThumbnail: true,
                     mediaUrl: toBuffer.link,  
