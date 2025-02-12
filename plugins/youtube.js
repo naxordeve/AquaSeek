@@ -30,7 +30,7 @@ CreatePlug({
                 externalAdReply: {
                     title: toBuffer.title,
                     body: `${toBuffer.duration}`, 
-                    thumbnailUrl: cover, 
+                    thumbnail: cover, 
                     mediaType: 1,
                     renderLargerThumbnail: true,
                     mediaUrl: toBuffer.link,  
