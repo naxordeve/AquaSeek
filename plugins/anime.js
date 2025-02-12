@@ -1,7 +1,7 @@
 const { CreatePlug } = require('../lib/commands');
 const axios = require("axios");
 const ZenlessZone = require('./functions/zonelesszero');
-const Steam = require('./functions/steam'); 
+const Steam = require('./functions/stream'); 
 const fakeUserAgent = require("fake-useragent");
 const FormData = require("form-data");
 const { fromBuffer } = require("file-type");
