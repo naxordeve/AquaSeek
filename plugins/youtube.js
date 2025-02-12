@@ -57,7 +57,7 @@ CreatePlug({
         let res2 = await fetch(vidl);
         let data = await res2.json();
         if (!data.media || !data.media.length) return;
-        let dlink = data.media.find(m => m.type === 'video')?.link;
+        let dlink = data.media.find(m => m.type === 'download')?.link;
         if (!dlink) return;
         await conn.sendMessage(message.user, { 
             video: { url: dlink }, 
