@@ -1,5 +1,25 @@
 const id3 = require("browser-id3-writer");
 const { fromBuffer } = require("file-type");
+const axios = require('axios')
+const fs = require('fs');
+
+async function getBuffer(url, options = {}) {
+  try {
+    const res = await axios({
+      method: "GET",
+      url,
+      headers: {
+        DNT: 1,
+        "Upgrade-Insecure-Request": 1,
+      },
+      ...options,
+      responseType: "arraybuffer",
+    });
+    return res.data;
+  } catch (error) {
+    throw new Error(`Error: ${error.message}`);
+  }
+}
 
 AddMetaData: async (
     songbuffer,
@@ -23,3 +43,8 @@ AddMetaData: async (
     writer.addTag();
     return Buffer.from(writer.arrayBuffer);
   },
+
+    module.exports = {
+        getBuffer,
+        AddMetaData
+    };
