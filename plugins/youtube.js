@@ -1,4 +1,4 @@
-var { CreatePlug } = require('./lib/commands');
+var { CreatePlug } = require('../lib/commands');
 var fetch = require('node-fetch');
 
 CreatePlug({
