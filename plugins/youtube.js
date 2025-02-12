@@ -29,7 +29,7 @@ CreatePlug({
                     body: `Duration: ${find.duration}`, 
                     thumbnailUrl: find.thumbnail, 
                     mediaType: 1,
-                    renderLargerThumbnailUrl: true,
+                    renderLargerThumbnail: true,
                     mediaUrl: find.link,  
                     sourceUrl: find.link 
                 }
