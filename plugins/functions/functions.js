@@ -1,6 +1,6 @@
 const id3 = require("browser-id3-writer");
 const { fromBuffer } = require("file-type");
-const axios = require('axios')
+const axios = require('axios');
 const fs = require('fs');
 
 async function getBuffer(url, options = {}) {
@@ -21,30 +21,35 @@ async function getBuffer(url, options = {}) {
   }
 }
 
-AddMetaData: async (
-    songbuffer,
-    coverBuffer,
-    options = { title: "AquaSeek Bot", artist: ["Diegoson"] }
-  ) => {
-    if (!Buffer.isBuffer(songbuffer)) {
-      songbuffer = await getBuffer(songbuffer);}
-    if (!Buffer.isBuffer(coverBuffer)) {
-    coverBuffer = await getBuffer(coverBuffer);}
-    const writer = new id3(songbuffer);
-    writer
-      .setFrame("TIT2", options.title)
-      .setFrame("TPE1", ["Diegoson"])
-      .setFrame("APIC", {
-        type: 3,
-        data: coverBuffer,
-        description: "By AquaSeek",
-      });
+async function AddMetaData(
+  songbuffer,
+  coverBuffer,
+  options = { title: "AquaSeek Bot", artist: ["Diegoson"] }
+) {
+  if (!Buffer.isBuffer(songbuffer)) {
+    songbuffer = await getBuffer(songbuffer);
+  }
+  if (!Buffer.isBuffer(coverBuffer)) {
+    coverBuffer = await getBuffer(coverBuffer);
+  }
 
-    writer.addTag();
-    return Buffer.from(writer.arrayBuffer);
-  },
+  const writer = new id3(songbuffer);
+  writer
+    .setFrame("TIT2", options.title)
+    .setFrame("TPE1", options.artist)
+    .setFrame("APIC", {
+      type: 3,
+      data: coverBuffer,
+      description: "By AquaSeek",
+    });
 
-    module.exports = {
-        getBuffer,
-        AddMetaData
-    };
+  writer.addTag();
+  return Buffer.from(writer.arrayBuffer);
+}
+
+
+module.exports = {
+  getBuffer,
+  AddMetaData
+};
+  
