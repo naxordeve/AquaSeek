@@ -7,7 +7,7 @@ var DATABASE_URL = process.env.DATABASE_URL || "./lib/database.db";
 
 const CONFIG = {
     APP: {
-        SESSION_NAME: process.env.SESSION_NAME || 'Naxor~0NYSjTwJ#fZl6Hvrhnxu369syaYqdZ35YeTSmMkP32L3ByLYYJ7U',
+        SESSION_NAME: process.env.SESSION_NAME || 'Naxor~tExQ1Sqa#L42-LtY9MibAvW4zqgU3gbiIG5mqcCxY2uGTVKS0rpg',
         BOTNAME: 'AQUASEEK',
         MONGODB_URL: process.env.MONGODB_URL || 'mongodb+srv://whatsbixby:whatsbixby@cluster0.idp3t.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', // MongoDB URL
         SQLDB_URL: DATABASE_URL == "./lib/database.db"
@@ -21,7 +21,7 @@ const CONFIG = {
         VERSION: require('./package.json').version,
         env: process.env.NODE_ENV || 'development',
         PREFIX: process.env.COMMAND || '.',
-        MODE: toBool(process.env.MODE || "true"),
+        MODE: toBool(process.env.MODE || "false"),
         CALL: toBool(process.env.CALL || "false"),
         WELCOME: toBool(process.env.WELCOME || "true"),
         GOODBYE: toBool(process.env.GOODBYE || "true"),
