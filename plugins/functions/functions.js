@@ -1,4 +1,5 @@
 const id3 = require("browser-id3-writer");
+const { fromBuffer } = require("file-type");
 
 AddMetaData: async (
     songbuffer,
