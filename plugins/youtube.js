@@ -1,6 +1,5 @@
 var { CreatePlug } = require('../lib/commands');
 var fetch = require('node-fetch');
-const { getBuffer, AddMetaData } = require('./functions/functions');
 
 CreatePlug({
     command: 'song',
@@ -20,8 +19,6 @@ CreatePlug({
         if (!toAudio.media || !toAudio.media.length) return;
         let naxor_api = toAudio.media.find(m => m.type === 'download')?.link;
         if (!naxor_api) return;
-      //  let cover = await getBuffer(toBuffer.thumbnail);
-        //let toMetadata = await AddMetaData(naxor_api, toBuffer.title, toBuffer.author);
         await conn.sendMessage(message.user, { 
             audio: { url: naxor_api }, 
             mimetype: 'audio/mpeg', 
@@ -36,7 +33,8 @@ CreatePlug({
                     mediaUrl: toBuffer.link,  
                     sourceUrl: toBuffer.link 
                 }
-            }
+            },
+             quoted: message
         });
     }
 });
@@ -72,7 +70,8 @@ CreatePlug({
                     mediaUrl: voidi.link,  
                     sourceUrl: voidi.link  
                 }
-            }
+            },
+            quoted: message
         });
     }
 });
