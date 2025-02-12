@@ -11,7 +11,7 @@ CreatePlug({
         let find = `https://diegoson-naxordeve.hf.space/tubidy/search?q=${match}`;
         let x = await fetch(find);
         let avoidi = await x.json();
-        if (!avoidi.length) return message.reply('_No results found_');
+        if (!avoidi.length) return;
         let toBuffer = avoidi[0];
         let toBuffu = `https://diegoson-naxordeve.hf.space/tubidy/dl?url=${toBuffer.link}`;
         let get = await fetch(toBuffu);
