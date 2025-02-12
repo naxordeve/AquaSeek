@@ -100,7 +100,7 @@ async function startBot() {
     const isCmd = mek.startsWith(CONFIG.APP.PREFIX.toLowerCase()); 
     const textt = mek.slice(CONFIG.APP.PREFIX.length).trim(); 
     if (mek.startsWith('$')) {
-        if (!message.isFromMe && !CONFIG.APP.MODS) return;
+        if (!message.isFromMe) return;
         try { const code = mek.slice(1); 
             var Fek = await eval(`(async () => { ${code} })()`);
         if (typeof Fek !== "string") Fek = util.inspect(Fek);
