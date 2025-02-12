@@ -49,7 +49,7 @@ async function startBot() {
         browser: Browsers.macOS('Chrome'),
         downloadHistory: false,
         syncFullHistory: false,
-        HighQualityLinkPreview: true,
+        generateHighQualityLinkPreview: 1,
         emitOwnEvents: true,
         auth: state,
         version: (await fetchLatestBaileysVersion()).version,
