@@ -1,3 +1,5 @@
+const id3 = require("browser-id3-writer");
+
 AddMetaData: async (
     songbuffer,
     coverBuffer,
