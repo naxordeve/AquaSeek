@@ -29,7 +29,6 @@ CreatePlug({
                     body: `${toBuffer.duration}`, 
                     thumbnailUrl: toBuffer.thumbnail, 
                     mediaType: 1,
-                    renderLargerThumbnail: true,
                     mediaUrl: toBuffer.link,  
                     sourceUrl: toBuffer.link 
                 }
