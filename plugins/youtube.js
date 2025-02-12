@@ -1,6 +1,9 @@
 var { CreatePlug } = require('../lib/commands');
 var fetch = require('node-fetch');
 
+var { CreatePlug } = require('../lib/commands');
+var fetch = require('node-fetch');
+
 CreatePlug({
     command: 'song',
     category: 'download',
@@ -12,7 +15,7 @@ CreatePlug({
         let x = await fetch(find);
         let avoidi = await x.json();
         if (!avoidi.length) return;
-        let toBuffer = avoidi[0];
+        let toBuffer = avoidi[0]; 
         let toBuffu = `https://diegoson-naxordeve.hf.space/tubidy/dl?url=${toBuffer.link}`;
         let get = await fetch(toBuffu);
         let toAudio = await get.json();
@@ -22,21 +25,22 @@ CreatePlug({
         await conn.sendMessage(message.user, { 
             audio: { url: naxor_api }, 
             mimetype: 'audio/mpeg', 
-            fileName: `${find.title}.mp3`,
+            fileName: `${toBuffer.title}.mp3`,
             contextInfo: {
                 externalAdReply: {
-                    title: find.title,
-                    body: `${find.duration}`, 
-                    thumbnailUrl: find.thumbnail, 
+                    title: toBuffer.title,
+                    body: `${toBuffer.duration}`, 
+                    thumbnailUrl: toBuffer.thumbnail, 
                     mediaType: 1,
                     renderLargerThumbnail: true,
-                    mediaUrl: find.link,  
-                    sourceUrl: find.link 
+                    mediaUrl: toBuffer.link,  
+                    sourceUrl: toBuffer.link 
                 }
             }
         });
     }
 });
+
       
 CreatePlug({
     command: 'video',
