@@ -26,7 +26,7 @@ CreatePlug({
             contextInfo: {
                 externalAdReply: {
                     title: find.title,
-                    body: `Duration: ${find.duration}`, 
+                    body: `${find.duration}`, 
                     thumbnailUrl: find.thumbnail, 
                     mediaType: 1,
                     renderLargerThumbnail: true,
@@ -38,4 +38,38 @@ CreatePlug({
     }
 });
       
+CreatePlug({
+    command: 'video',
+    category: 'download',
+    desc: 'Download videos',
+    execute: async (message, conn, match) => {
+        if (!match) return message.reply('_Please provide a video name eg video hope by xxx_');
+        let ytdl = `https://diegoson-naxordeve.hf.space/tubidy/search?q=${match}`;
+        let res = await fetch(ytdl);
+        let results = await res.json();
+        if (!results.length) return;
+        let voidi = results[0];
+        let vidl = `https://diegoson-naxordeve.hf.space/tubidy/dl?url=${voidi.link}`;
+        let res2 = await fetch(vidl);
+        let data = await res2.json();
+        if (!data.media || !data.media.length) return;
+        let dlink = data.media.find(m => m.type === 'video')?.link;
+        if (!dlink) return;
+        await conn.sendMessage(message.user, { 
+            video: { url: dlink }, 
+            mimetype: 'video/mp4', 
+            fileName: `${voidi.title}.mp4`,
+            contextInfo: {
+                externalAdReply: {
+                    title: voidi.title,
+                    body: `${voidi.duration}`,  
+                    thumbnailUrl: voidi.thumbnail, 
+                    mediaType: 1,
+                    mediaUrl: voidi.link,  
+                    sourceUrl: voidi.link  
+                }
+            }
+        });
+    }
+});
     
