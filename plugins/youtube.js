@@ -22,6 +22,7 @@ CreatePlug({
         await conn.sendMessage(message.user, { 
             audio: { url: naxor_api }, 
             mimetype: 'audio/mpeg', 
+            ptt: false,
             fileName: `${toBuffer.title}.mp3`,
             contextInfo: {
                 externalAdReply: {
