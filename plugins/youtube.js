@@ -7,38 +7,42 @@ CreatePlug({
     desc: 'Download songs',
     execute: async (message, conn, match) => {
         if (!match) return message.reply('_Please provide a song name_');
+
         await message.react("✅");
-        let find = `https://diegoson-naxordeve.hf.space/tubidy/search?q=${match}`;
+        let find = `https://diegoson-naxordeve.hf.space/tubidy/search?q=${encodeURIComponent(match)}`;
         let x = await fetch(find);
         let avoidi = await x.json();
-        if (!avoidi.length) return;
-        let toBuffer = avoidi[0]; 
-        let toBuffu = `https://diegoson-naxordeve.hf.space/tubidy/dl?url=${toBuffer.link}`;
+
+        if (!avoidi || !avoidi.length) return message.reply('_No results found_');
+        let toBuffer = avoidi[0];  
+        if (!toBuffer.link) return message.reply('_Invalid song data_');
+
+        let toBuffu = `https://diegoson-naxordeve.hf.space/tubidy/dl?url=${encodeURIComponent(toBuffer.link)}`;
         let get = await fetch(toBuffu);
         let toAudio = await get.json();
         if (!toAudio.media || !toAudio.media.length) return;
+
         let naxor_api = toAudio.media.find(m => m.type === 'download')?.link;
         if (!naxor_api) return;
+
         await conn.sendMessage(message.user, { 
-            audio: { url: naxor_api }, 
-            mimetype: 'audio/mpeg', 
-            ptt: false,
+            audio: naxor_api, 
+            mimetype: 'audio/mpeg',
             contextInfo: {
                 externalAdReply: {
-                    title: toBuffer.title,
-                    body: `${toBuffer.duration}`, 
-                    thumbnailUrl: toBuffer.thumbnail, 
+                    title: toBuffer.title || 'Unknown Title',
+                    body: toBuffer.duration || 'Unknown Duration',
+                    thumbnailUrl: toBuffer.thumbnail || '',
                     mediaType: 1,
                     mediaUrl: toBuffer.link,  
                     sourceUrl: toBuffer.link 
                 }
-            },
-             quoted: message
-        });
+            }
+        }, { quoted: message });
     }
 });
+        
 
-      
 CreatePlug({
     command: 'video',
     category: 'download',
