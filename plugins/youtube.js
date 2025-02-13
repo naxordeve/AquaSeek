@@ -20,7 +20,7 @@ CreatePlug({
         let naxor_api = toAudio.media.find(m => m.type === 'download')?.link;
         if (!naxor_api) return;
         await conn.sendMessage(message.user, { 
-            document: { url: naxor_api }, 
+            audio: { url: naxor_api }, 
             mimetype: 'audio/mpeg', 
             fileName: `${toBuffer.title}.mp3`,
             contextInfo: {
