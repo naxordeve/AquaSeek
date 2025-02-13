@@ -23,7 +23,6 @@ CreatePlug({
             audio: { url: naxor_api }, 
             mimetype: 'audio/mpeg', 
             ptt: false,
-            fileName: `${toBuffer.title}.mp3`,
             contextInfo: {
                 externalAdReply: {
                     title: toBuffer.title,
