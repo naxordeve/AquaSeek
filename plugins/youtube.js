@@ -7,17 +7,15 @@ CreatePlug({
     desc: 'Download songs',
     execute: async (message, conn, match) => {
         if (!match) return message.reply('_Please provide a song name_');
-
         await message.react("✅");
-        let find = `https://diegoson-naxordeve.hf.space/tubidy/search?q=${encodeURIComponent(match)}`;
+        let find = `https://diegoson-naxordeve.hf.space/tubidy/search?q=${match}`;
         let x = await fetch(find);
         let avoidi = await x.json();
-
-        if (!avoidi || !avoidi.length) return message.reply('_No results found_');
+        if (!avoidi || !avoidi.length) return;
         let toBuffer = avoidi[0];  
         if (!toBuffer.link) return message.reply('_Invalid song data_');
 
-        let toBuffu = `https://diegoson-naxordeve.hf.space/tubidy/dl?url=${encodeURIComponent(toBuffer.link)}`;
+        let toBuffu = `https://diegoson-naxordeve.hf.space/tubidy/dl?url=${toBuffer.link}`;
         let get = await fetch(toBuffu);
         let toAudio = await get.json();
         if (!toAudio.media || !toAudio.media.length) return;
@@ -26,12 +24,12 @@ CreatePlug({
         if (!naxor_api) return;
 
         await conn.sendMessage(message.user, { 
-            audio: naxor_api, 
+            audio: { url: naxor_api}, 
             mimetype: 'audio/mpeg',
             contextInfo: {
                 externalAdReply: {
-                    title: toBuffer.title || 'Unknown Title',
-                    body: toBuffer.duration || 'Unknown Duration',
+                    title: toBuffer.title || '_',
+                    body: toBuffer.duration || '_',
                     thumbnailUrl: toBuffer.thumbnail || '',
                     mediaType: 1,
                     mediaUrl: toBuffer.link,  
