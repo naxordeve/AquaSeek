@@ -3,6 +3,7 @@ const { Func } = require("./functions/fbdl");
 const { extractUrlFromText } = require("../lib/index.js");
 const { getInstagramReelDownloadURL } = require("./functions/insta_reels"); 
 const { getTikV3 } = require("./functions/tiktokv3"); 
+const axios = require("axios");
 
 CreatePlug({
   on: "text",
@@ -12,8 +13,9 @@ CreatePlug({
     var igrex = /(?:https?:\/\/)?(?:www\.)?instagram\.com\/[^\s]+/i;
     var fbrex = /(?:https?:\/\/)?(?:www\.)?(?:facebook\.com|fb\.watch)\/[^\s]+/i;
     var tikrex = /(?:https?:\/\/)?(?:www\.)?tiktok\.com\/[^\s]+/i;
-    var url = urls[0], isIg = url.match(igrex), isFB = url.match(fbrex), isTik = url.match(tikrex);
-
+    var ytrex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be)\/[^\s]+/i;
+    
+    var url = urls[0], isIg = url.match(igrex), isFB = url.match(fbrex), isTik = url.match(tikrex), isYT = url.match(ytrex);
     if (isIg) {
         await message.reply('_Please wait..._');
         const insta = await getInstagramReelDownloadURL(isIg[0]);
@@ -41,6 +43,19 @@ CreatePlug({
             caption: `*Title:* ${tiktok.title}\n*Source:* ${isTik[0]}\n\n💦` 
         }, { quoted: message });
     }
+    if (isYT) {
+        await message.reply('_Please wait..._');
+        try { const voidi = await axios.get(`https://diegoson-naxordeve.hf.space/tomp3?url=${isYT[0]}`);
+            if (voidi.data && voidi.data.link) {
+                return conn.sendMessage(message.user, { 
+                    audio: { url: voidi.data.link }, 
+                    mimetype: "audio/mpeg", 
+                 }, { quoted: message });
+            }
+        } catch (error) {
+            return message.reply('_err_');
+        }
+    }
   }
 });
-      
+  
