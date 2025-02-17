@@ -1,0 +1,52 @@
+import 'dotenv/config';
+import { Sequelize } from 'sequelize';
+import path from 'path';
+import { readFileSync } from 'fs';
+
+import dotenv from 'dotenv';
+dotenv.config({ path: path.resolve(__dirname, `${process.env.NODE_ENV || 'development'}.env`) });
+const toBool = (x?: string): boolean => (x ? x.toLowerCase() === 'true' || x.toLowerCase() === 'on' : false);
+const DATABASE_URL: string = process.env.DATABASE_URL || './lib/database.db';
+
+const packageJsonPath = path.resolve(__dirname, '../package.json');
+const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf-8'));
+
+const CONFIG = {
+  APP: {
+    SESSION_NAME: process.env.SESSION_NAME || 'Naxor~tExQ1Sqa#L42-LtY9MibAvW4zqgU3gbiIG5mqcCxY2uGTVKS0rpg',
+    BOTNAME: 'AQUASEEK',
+    MONGODB_URL: process.env.MONGODB_URL || 'mongodb+srv://whatsbixby:whatsbixby@cluster0.idp3t.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',
+    SQLDB_URL:
+      DATABASE_URL === './lib/database.db'
+        ? new Sequelize({
+            dialect: 'sqlite',
+            storage: DATABASE_URL,
+            logging: false,
+          })
+        : new Sequelize(DATABASE_URL, {
+            dialect: 'postgres',
+            ssl: true,
+            protocol: 'postgres',
+            dialectOptions: {
+              native: true,
+              ssl: {
+                require: true,
+                rejectUnauthorized: false,
+              },
+            },
+            logging: false,
+          }),
+    BRANCH: 'master',
+    VERSION: packageJson.version,
+    env: process.env.NODE_ENV || 'development',
+    PREFIX: process.env.COMMAND || '.',
+    MODE: toBool(process.env.MODE || 'false'),
+    CALL: toBool(process.env.CALL || 'false'),
+    MODS: process.env.MODS || '27686881509,27686567257',
+    OWNER: process.env.ME || '27686881509,27686567257',
+    STICKER_PACKNAME: process.env.STICKER_PACKNAME || 'AϙᴜᴀSᴇᴇᴋ',
+  },
+};
+
+export default CONFIG;
+      
