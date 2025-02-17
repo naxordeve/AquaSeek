@@ -223,33 +223,30 @@ CreatePlug({
 });
 
 CreatePlug({
-  command: 'mute',
+  command: 'group',
   category: 'group',
-  desc: 'Mute the group',
+  desc: 'Open or close the group',
   execute: async (message: any, conn: any, args: string[]) => {
-    if (!message.isGroup) return;
-    if (!message.isBotAdmin) return message.reply('_not_admin_');
-    if (!message.isAdmin) return;
+    if (!message.isGroup) return message.reply('_This command can only be used in groups_');
+    if (!message.isBotAdmin) return message.reply('_I need to be an admin to perform this action_');
+    if (!message.isAdmin) return message.reply('_You must be an admin to use this command_');
+    if (!args || args.length === 0) return message.reply('_Usage: group open/close_');
+    const action = args[0].toLowerCase();
     const data = await conn.groupMetadata(message.user);
-    if (data.announce) return message.reply('_The group is already muted_');
-    await conn.groupSettingUpdate(message.user, 'announcement');
-    message.reply('_The group now_muted_');
+    if (action === 'close') {
+      if (data.announce) return message.reply('_The group is already closed_');
+      await conn.groupSettingUpdate(message.user, 'announcement');
+      message.reply('_The group has been muted (closed)_');
+    } else if (action === 'open') {
+      if (!data.announce) return message.reply('_The group is already open_');
+      await conn.groupSettingUpdate(message.user, 'not_announcement');
+      message.reply('_The group has been unmuted (opened)_');
+    } else {
+      message.reply('_Invalid option. Use: group open/close_');
+    }
   },
 });
 
-CreatePlug({
-  command: 'unmute',
-  category: 'group',
-  desc: 'Unmute the group',
-  execute: async (message: any, conn: any) => {
-    if (!message.isGroup) return;
-    if (!message.isBotAdmin) return message.reply('_not an admin_');
-    if (!message.isAdmin) return;
-    const data = await conn.groupMetadata(message.user);
-    if (!data.announce) return message.reply('_The group already opened_');
-    await conn.groupSettingUpdate(message.user, 'not_announcement');
-  },
-});
 
 CreatePlug({
   command: 'remove',
