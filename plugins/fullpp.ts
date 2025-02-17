@@ -1,19 +1,17 @@
-const { CreatePlug } = require('../lib/commands');
-const Jimp = require('jimp');
+import { CreatePlug } from '../lib/commands';
+import * as Jimp from 'jimp';
 
 CreatePlug({
-
   command: 'fullpp',
-
   category: 'owner',
-
   desc: 'fullpp profile',
-execute: async (message, conn, match) => {
-if (!message.isFromMe) return;
-if(!message.quoted || (!message.quoted.message.imageMessage)) return await message.reply('_Please provide an image_');
+  execute: async (message: any, conn: any, match: string) => {
+    if (!message.isFromMe) return;
+    if (!message.quoted || !message.quoted.message.imageMessage) {
+      return await message.reply('_Please provide an image_');
+    }
 
     const sk = await message.quoted.download();
-
     const v = await Jimp.read(sk);
 
     const min = v.getWidth();
@@ -22,35 +20,25 @@ if(!message.quoted || (!message.quoted.message.imageMessage)) return await messa
     const s = await c.scaleToFit(720, 720);
 
     const proUrl = await s.getBufferAsync(Jimp.MIME_JPEG);
+
     await conn.query({
-
       tag: 'iq',
-
       attrs: {
         to: '@s.whatsapp.net',
         type: 'set',
-
         xmlns: 'w:profile:picture',
       },
-
       content: [
-
         {
-
           tag: 'picture',
-
           attrs: {
             type: 'image',
-
           },
-
           content: proUrl,
-
         },
       ],
-
     });
 
-    return await message.reply('Profile picture updated successfully');
-}
+    return await message.reply('_Profile picture updated_');
+  },
 });
