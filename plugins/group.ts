@@ -1,5 +1,5 @@
 import { CreatePlug } from '../lib/commands';
-import CONFIG from '../config';
+import CONFIG from '../tsconfig';
 
 CreatePlug({
   command: 'setgpp',
