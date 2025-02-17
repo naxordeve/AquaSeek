@@ -166,39 +166,6 @@ async function startBot() {
     }
 });
 
-conn.ev.on("group-participants.update", async ({ id, participants, action }) => {
-    let groupMetadata = cartel.get(id);
-    if (!groupMetadata) {
-        groupMetadata = await conn.groupMetadata(id);
-        cartel.set(id, groupMetadata);}
-    for (const user of participants) {
-        if ((action === "add" && !CONFIG.APP.WELCOME) || (action === "remove" && !CONFIG.APP.GOODBYE)) {
-            return; }
-        const e = `@${user.split("@")[0]}`;
-        const a = groupMetadata.subject || "this group";
-        const count = groupMetadata.participants.length;
-        const ppUrl = await conn.profilePictureUrl(user, "image").catch(() => "https://via.placeholder.com/500");
-        let img;
-        let tt = action === "add" ? "WELCOME" : "GOODBYE";
-        let des = action === "add"
-            ? `Hello ${e}, welcome to **${a}**`
-            : `Goodbye ${e}, **${a}**`;
-        img = await new canvafy.WelcomeLeave()
-            .setAvatar(ppUrl)
-            .setBackground("image", "https://png.pngtree.com/thumb_back/fw800/background/20240911/pngtree-surreal-moonlit-panorama-pc-wallpaper-image_16148136.jpg")
-            .setTitle(tt)
-            .setDescription(des)
-            .setBorder("#2a2e35")
-            .setAvatarBorder("#2a2e35")
-            .setOverlayOpacity(0.3)
-            .build();
-        const mgs = action === "add"
-            ? CONFIG.APP.WELCOME_MSG.replace('@user', e).replace('@group', a)
-            : CONFIG.APP.GOODBYE_MSG.replace('@user', e).replace('@group', a);
-        await conn.sendMessage(id, { image: img, caption: mgs, mentions: [user], footer: action === "add" ? "Welcome" : "Goodbye" });
-      }
-   });
-
     conn.ev.on('connection.update', async (update) => {
         const { connection } = update;
         if (connection === 'open') {
