@@ -1,0 +1,24 @@
+import axios from "axios";
+import { CreatePlug } from "../lib/commands";
+
+CreatePlug({
+  command: "deepseek",
+  category: "Artificial",
+  desc: "Chat with DeepSeek AI",
+  execute: async (message: any, conn: any, match: string) => {
+    if (!match) {
+      await message.reply("_Please provide a message_");
+      return;
+    }
+    await message.react("⏳");
+    await message.reply("_Thinking..._");
+    const { data } = await axios
+      .post("https://ai.clauodflare.workers.dev/chat", {
+        model: "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b",
+        messages: [{ role: "user", content: match }],
+      })
+      .catch((e) => e.response);
+    const v = data?.data?.response?.split("</think>").pop()?.trim() || "_No response received_";
+    await message.reply(v);
+  },
+});
