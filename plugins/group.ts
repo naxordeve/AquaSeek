@@ -227,9 +227,9 @@ CreatePlug({
   category: 'group',
   desc: 'Open or close the group',
   execute: async (message: any, conn: any, args: string[]) => {
-    if (!message.isGroup) return message.reply('_This command can only be used in groups_');
+    if (!message.isGroup) return;
     if (!message.isBotAdmin) return message.reply('_I need to be an admin to perform this action_');
-    if (!message.isAdmin) return message.reply('_You must be an admin to use this command_');
+    if (!message.isAdmin) return;
     if (!args || args.length === 0) return message.reply('_Usage: group open/close_');
     const action = args[0].toLowerCase();
     const data = await conn.groupMetadata(message.user);
@@ -297,19 +297,3 @@ CreatePlug({
     await message.reply(`*Group Link*:\nhttps://chat.whatsapp.com/${_invites}`);
   }
 });
-
-CreatePlug({
-  command: 'leave',
-  category: 'group',
-  desc: 'gc_leave',
-  execute: async (message: any, conn: any) => {
-    const isAdmin = message.isOwner;
-    if (!isAdmin) return;
-    const owners = message.isOwner ? [...message.isOwner, CONFIG.app.me] : [CONFIG.app.me];
-    if (!owners.includes(message.user)) {
-      return;
-    }
-    await conn.groupLeave(message.user);
-  }
-});
-
