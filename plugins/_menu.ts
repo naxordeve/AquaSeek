@@ -6,11 +6,10 @@ CreatePlug({
   command: "menu",
   category: "general",
   desc: "types",
-  execute: async (message: any, conn: any) => {
+  execute: async (message: any, conn: any): Promise<void> => {
     await message.react("✅");
 
     if (!Array.isArray(commands)) return;
-
     const gorized: Record<string, string[]> = commands.reduce((acc: Record<string, string[]>, cmd: any) => {
       if (!cmd || !cmd.category || !cmd.command) return acc;
       if (!acc[cmd.category]) acc[cmd.category] = [];
@@ -55,7 +54,7 @@ CreatePlug({
   command: "list",
   category: "general",
   desc: "Displays all available commands.",
-  execute: async (message: any, conn: any) => {
+  execute: async (message: any, conn: any): Promise<void> => {
     await message.react("✅");
 
     if (!commands || typeof commands !== "object" || !Object.values(commands).length) return;
@@ -76,7 +75,7 @@ CreatePlug({
   command: "alive",
   category: "general",
   desc: "alive",
-  execute: async (message: any, conn: any) => {
+  execute: async (message: any, conn: any): Promise<void> => {
     await message.react("✅");
 
     const platform = process.platform;
@@ -99,7 +98,7 @@ CreatePlug({
   command: "ping",
   category: "general",
   desc: "latency",
-  execute: async (message: any, conn: any) => {
+  execute: async (message: any, conn: any): Promise<void> => {
     const start = Date.now();
     await message.reply("ping");
     const end = Date.now();
