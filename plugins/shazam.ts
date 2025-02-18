@@ -42,7 +42,7 @@ CreatePlug({
   command: "find",
   category: "search",
   desc: "Identify a song from an audio message.",
-  execute: async (message: any, conn: any) => {
+  execute: async (message: any, conn: any): Promise<void> => {
     if (!message.quoted || !message.quoted.message) {
       return await message.reply("_Reply to an audio or video message to identify the song_");
     }
