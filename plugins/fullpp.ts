@@ -5,7 +5,7 @@ CreatePlug({
   command: 'fullpp',
   category: 'owner',
   desc: 'fullpp profile',
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     if (!message.isFromMe) return;
     if (!message.quoted || !message.quoted.message.imageMessage) {
       return await message.reply('_Please provide an image_');
@@ -20,7 +20,6 @@ CreatePlug({
     const s = await c.scaleToFit(720, 720);
 
     const proUrl = await s.getBufferAsync(Jimp.MIME_JPEG);
-
     await conn.query({
       tag: 'iq',
       attrs: {
