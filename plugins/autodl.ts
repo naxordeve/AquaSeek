@@ -7,7 +7,7 @@ import axios from "axios";
 
 CreatePlug({
   on: "text",
-  execute: async (message: any, conn: any) => {
+  execute: async (message: any, conn: any): Promise<void> => {
     const urls: string[] = extractUrlFromText(message.body);
     if (!urls.length) return;
 
@@ -21,7 +21,6 @@ CreatePlug({
     const isFB = url.match(fbrex);
     const isTik = url.match(tikrex);
     const isYT = url.match(ytrex);
-
     if (isIg) {
       await message.reply("_Please wait..._");
       const insta = await getInstagramReelDownloadURL(isIg[0]);
