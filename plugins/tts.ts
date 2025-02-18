@@ -5,7 +5,7 @@ CreatePlug({
     command: 'tts',
     category: 'convert',
     desc: 'speech',
-    execute: async (message: any, conn: any, match: string) => {
+    execute: async (message: any, conn: any, match: string): Promise<void> => {
         if (!match) return await message.reply('_Need text_');
         const tts = new gTTS(match, 'en');
         const path = '/tmp/tts.mp3';
