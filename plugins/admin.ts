@@ -4,7 +4,7 @@ CreatePlug({
   command: "block",
   category: "admin",
   desc: "Block a user",
-  execute: async (message: any, conn: any) => {
+  execute: async (message: any, conn: any): Promise<void> => {
     if (!message.isFromMe) return;
     const target = message.quoted
       ? message.quoted.sender
@@ -24,7 +24,7 @@ CreatePlug({
   command: "unblock",
   category: "admin",
   desc: "Unblock a user",
-  execute: async (message: any, conn: any) => {
+  execute: async (message: any, conn: any): Promise<void> => {
     if (!message.isFromMe) return;
     const target = message.quoted
       ? message.quoted.sender
