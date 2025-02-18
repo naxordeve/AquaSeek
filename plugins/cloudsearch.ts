@@ -38,7 +38,7 @@ CreatePlug({
   command: 'cloudsearch',
   category: 'music',
   desc: 'Search for SoundCloud tracks',
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     if (!match) return await message.reply('Please provide a search term');
     await message.react('⏳');
     const results = await search(match);
