@@ -6,7 +6,7 @@ CreatePlug({
   command: "setgcpp",
   category: "group",
   desc: "Set a new group profile picture",
-  execute: async (message: any, conn: any) => {
+  execute: async (message: any, conn: any): Promise<void> => {
     if (!message.isGroup) return;
     if (!message.isBotAdmin) return message.reply("_I need to be an admin to perform this action_");
     if (!message.isAdmin) return;
@@ -33,7 +33,7 @@ CreatePlug({
   command: 'setdesc',
   category: 'group',
   desc: 'Change the group description',
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     if (!message.isGroup) return;
     if (!message.isBotAdmin) return message.reply('_Im not admin_');
     if (!message.isAdmin) return;
@@ -48,7 +48,7 @@ CreatePlug({
   command: 'add',
   category: 'group',
   desc: 'Add a user to the group',
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     if (!message.isGroup) return;
     if (!message.isBotAdmin) return message.reply('_Bot is not an admin_');
     if (!message.isAdmin) return;
@@ -77,7 +77,7 @@ CreatePlug({
   command: 'approve',
   category: 'group',
   desc: 'Approve users from group joining',
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     if (!message.isGroup) return;
     if (!message.isBotAdmin) return message.reply('_not admin_');
     if (!message.isAdmin) return;
@@ -95,7 +95,7 @@ CreatePlug({
   command: 'reject',
   category: 'group',
   desc: 'Rejects users from group joining',
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     if (!message.isGroup) return;
     if (!message.isBotAdmin) return message.reply('_not admin_');
     if (!message.isAdmin) return;
@@ -113,7 +113,7 @@ CreatePlug({
   command: 'kick',
   category: 'group',
   desc: 'Kick members by country code or kick all members',
-  execute: async (message: any, conn: any, args: string[]) => {
+  execute: async (message: any, conn: any, args: string[]): Promise<void> => {
     if (!message.isGroup || !message.isBotAdmin || !message.isAdmin) return;
     const arg = args[1];
     if (arg === 'all') {
@@ -145,7 +145,7 @@ CreatePlug({
   command: 'kickall',
   category: 'group',
   desc: 'kick all_',
-  execute: async (message: any, conn: any, args: string[]) => {
+  execute: async (message: any, conn: any, args: string[]): Promise<void> => {
     if (!message.isGroup) return;
     if (!message.isBotAdmin) return;
     if (!message.isAdmin) return;
@@ -164,7 +164,7 @@ CreatePlug({
   command: 'lockinvite',
   category: 'group',
   desc: 'Lock the group invite',
-  execute: async (message: any, conn: any) => {
+  execute: async (message: any, conn: any): Promise<void> => {
     if (!message.isGroup) return;
     if (!message.isBotAdmin) return message.reply('_um not admin_');
     if (!message.isAdmin) return;
@@ -177,7 +177,7 @@ CreatePlug({
   command: 'tagall',
   category: 'group',
   desc: 'Tag all users in the group',
-  execute: async (message: any, conn: any, args: string[]) => {
+  execute: async (message: any, conn: any, args: string[]): Promise<void> => {
     if (!message.isGroup) return;
     var data = await conn.groupMetadata(message.user);
     var participants = data.participants.map(p => p.id.replace('@s.whatsapp.net', ''));
@@ -195,7 +195,7 @@ CreatePlug({
   command: 'promote',
   category: 'group',
   desc: 'Promote members',
-  execute: async (message: any, conn: any, args: string[]) => {
+  execute: async (message: any, conn: any, args: string[]): Promise<void> => {
     if (!message.isGroup) return;
     if (!message.isBotAdmin) return message.reply('_not an admin_');
     if (!message.isAdmin) return;
@@ -216,7 +216,7 @@ CreatePlug({
   command: 'demote',
   category: 'group',
   desc: 'Demote members',
-  execute: async (message: any, conn: any, args: string[]) => {
+  execute: async (message: any, conn: any, args: string[]): Promise<void> => {
     if (!message.isGroup) return;
     if (!message.isBotAdmin) return message.reply('_um not an admin_');
     if (!message.isAdmin) return;
@@ -237,7 +237,7 @@ CreatePlug({
   command: 'group',
   category: 'group',
   desc: 'Open or close the group',
-  execute: async (message: any, conn: any, args: string[]) => {
+  execute: async (message: any, conn: any, args: string[]): Promise<void> => {
     if (!message.isGroup) return;
     if (!message.isBotAdmin) return message.reply('_I need to be an admin to perform this action_');
     if (!message.isAdmin) return;
@@ -263,7 +263,7 @@ CreatePlug({
   command: 'remove',
   category: 'group',
   desc: 'Remove a member from the group',
-  execute: async (message: any, conn: any, args: string[]) => {
+  execute: async (message: any, conn: any, args: string[]): Promise<void> => {
     if (!message.isGroup) return;
     if (!message.isBotAdmin) return message.reply('_um not admin_');
     if (!message.isAdmin) return;
@@ -283,7 +283,7 @@ CreatePlug({
   command: 'info',
   category: 'group',
   desc: 'Get information about the group',
-  execute: async (message: any, conn: any) => {
+  execute: async (message: any, conn: any): Promise<void> => {
     if (!message.isGroup) return;
     const groupMetadata = await conn.groupMetadata(message.user);
     const name = groupMetadata.subject;
@@ -301,7 +301,7 @@ CreatePlug({
   command: 'invite',
   category: 'group',
   desc: 'group_invites',
-  execute: async (message: any, conn: any) => {
+  execute: async (message: any, conn: any): Promise<void> => {
     const isAdmin = message.isAdmin;
     if (!isAdmin) return;
     const _invites = await conn.groupInviteCode(message.user);
