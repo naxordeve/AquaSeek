@@ -8,7 +8,7 @@ CreatePlug({
   command: 'tinyurl',
   category: 'tools',
   desc: 'Shorten a URL using TinyURL API',
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     if (!match) return message.reply("Please provide a url");
     const tin = new TinyURL('https://api.diioffc.web.id/api/tools/tinyurl?url=');
     const msg = await tin.shortenUrl(match);
@@ -20,7 +20,7 @@ CreatePlug({
   command: 'bingsearch',
   category: 'search',
   desc: 'Searches via bing for a given query',
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     if (!match) return message.reply('You need to provide a query to search');
     const voidi = new BingSearch('https://apiikann.vercel.app/api/bingsrc?q=');
     const results = await voidi.Res(match);
@@ -36,7 +36,7 @@ CreatePlug({
   command: 'wpkid',
   category: 'search',
   desc: 'Searches Wikipedia for a given query',
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     const query = match;
     if (!query) return message.reply('_Please provide a search query_');
     const wiki = await searchWikipedia(query);
@@ -48,7 +48,7 @@ CreatePlug({
   command: 'searchpint',
   category: 'search',
   desc: 'Search on Pinterest by a query',
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     await message.react('❣️');
     if (!match) return message.reply('_Please provide a query to search for_');
     const voidi = await searchPinterest(match);
