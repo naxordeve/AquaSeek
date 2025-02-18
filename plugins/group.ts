@@ -1,23 +1,34 @@
 import { CreatePlug } from '../lib/commands';
 import CONFIG from '../tsconfig';
+import * as Jimp from "jimp";
 
 CreatePlug({
-  command: 'setgcpp',
-  category: 'group',
-  desc: 'Set a new group profile picture',
+  command: "setgcpp",
+  category: "group",
+  desc: "Set a new group profile picture",
   execute: async (message: any, conn: any) => {
     if (!message.isGroup) return;
-    if (!message.isBotAdmin) return message.reply('_I need to be an admin to perform this action_');
+    if (!message.isBotAdmin) return message.reply("_I need to be an admin to perform this action_");
     if (!message.isAdmin) return;
-    if (!message.quoted || !message.quoted.message.imageMessage) return await message.reply('_Please provide an image_');
+    if (!message.quoted || !message.quoted.message.imageMessage) return message.reply("_Please provide an image_");
     const buffer = await message.quoted.download();
-    if (!buffer) return;
-    await conn.updateGroupPicture(message.user, buffer)
-      .then(() => message.reply('_Group profile picture updated_'))
-      .catch(() => message.reply('_err_'));
+    if (!buffer) return message.reply("_Failed to download image_");
+    const jimp = await Jimp.read(buffer);
+    const min = Math.min(jimp.getWidth(), jimp.getHeight());
+    const cropped = jimp.crop(0, 0, min, min);
+    const img = await cropped.scaleToFit(720, 720).getBufferAsync(Jimp.MIME_JPEG);
+    const preview = await cropped.scaleToFit(100, 100).getBufferAsync(Jimp.MIME_JPEG);
+    await conn.query({
+      tag: "iq",
+      attrs: { to: message.user, type: "set", xmlns: "w:profile:picture" },
+      content: [{ tag: "picture", attrs: { type: "image" }, content: preview }],
+    });
+    await conn.updateGroupPicture(message.user, img)
+      .then(() => message.reply("_Group profile picture updated_"))
+      .catch(() => message.reply("_err_"));
   },
 });
-      
+
 CreatePlug({
   command: 'setdesc',
   category: 'group',
