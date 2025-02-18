@@ -8,7 +8,7 @@ CreatePlug({
   command: 'diffuser',
   category: 'Artificial',
   desc: 'Generate an image based on a prompt',
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     await message.react('🎨');
     if (!match) return message.reply('Please provide a prompt');
     const voidi = await Diffuser(match);
@@ -20,7 +20,7 @@ CreatePlug({
   command: 'morphic',
   category: 'Artificial',
   desc: 'morphic ai hehe',
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     await message.react('🗣️');
     if (!match) return message.reply('_Need a prompt_');
     const voidi = await getMorphic(match);
@@ -34,7 +34,7 @@ CreatePlug({
   command: 'gemini',
   category: 'Artificial',
   desc: 'Ask Gemini AI anything',
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     await message.react('🗣️');
     if (!match) return message.reply('_Please provide a query_');
     const voidi = await GeminiAI(match);
@@ -46,7 +46,7 @@ CreatePlug({
   command: 'ai',
   category: 'Artificial',
   desc: 'Ask ChatGPT anything',
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     if (!match) return message.reply('_Please provide a prompt_');
     await message.react('🗣️');
     const voidi = await ChatGPT(match);
@@ -58,7 +58,7 @@ CreatePlug({
   command: 'yousearch',
   category: 'Artificial',
   desc: '',
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     await message.react('💡');
     if (!match) return message.reply('Please provide a query');
     const voidi = await Yousearch(match);
@@ -70,7 +70,7 @@ CreatePlug({
   command: 'venice',
   category: 'Artificial',
   desc: 'Interact with the Venice AI',
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     await message.react('💬');
     if (!match) return message.reply('Please provide a prompt');
     const voidi = await Venice(match);
@@ -82,7 +82,7 @@ CreatePlug({
   command: 'blackbox',
   category: 'Artificial',
   desc: 'bbb_',
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     await message.react('📦');
     if (!match) return message.reply('_Please provide content_');
     const voidi = await BlackBox(match);
@@ -94,7 +94,7 @@ CreatePlug({
   command: 'aoyo',
   category: 'Artificial',
   desc: 'Fetch information using the Aoyo',
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     await message.react('📜');
     if (!match) return message.reply('Please provide content');
     const voidi = await AoyoContent(match);
@@ -106,7 +106,7 @@ CreatePlug({
   command: 'mistral',
   category: 'Artificial',
   desc: 'Interact with the Mistral-7B Instruct',
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     await message.react('🤖');
     if (!match) return message.reply('Please provide content');
     const res = await Mistral(match);
