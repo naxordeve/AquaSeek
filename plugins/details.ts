@@ -8,7 +8,7 @@ CreatePlug({
   command: 'tnews',
   category: 'news',
   desc: 'Get the latest telecom news',
-  execute: async (message: any, conn: any) => {
+  execute: async (message: any, conn: any): Promise<void> => {
     await message.react('🗣️');
     const voidi = await TNewsDetails();
     if (!voidi) return message.reply('_oops_');
@@ -23,7 +23,7 @@ CreatePlug({
   command: 'tiktokstalk',
   category: 'Utility',
   desc: 'Get TikTok profile details',
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     if (!match) return message.reply('_Please provide a TikTok username_');  
     const p = await TKAnnis(match);
     if (!p) return;
@@ -38,7 +38,7 @@ CreatePlug({
   command: 'npmstalk',
   category: 'Utility',
   desc: 'Fetch information about an NPM package.',
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     await message.react('📦');
     if (!match) return message.reply('_Please provide the name of the npm package_');
     const p = await APIS.npmSearch(match);
@@ -61,7 +61,7 @@ CreatePlug({
   command: 'githubstalk',
   category: 'Utility',
   desc: 'Fetch information about a GitHub user',
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     await message.react('👤');
     if (!match) return message.reply('Please provide the git username');
     const xastral = await APIS.GIT(match);
@@ -94,7 +94,7 @@ CreatePlug({
   command: 'animesh', 
   category: 'Anime',
   desc: 'Search for anime details',
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     await message.reply('🗣️');
     if (!match) return message.reply('_Please provide the name of the anime_');
     const voidi = await AnimeS(match, 'anime');
@@ -110,7 +110,7 @@ CreatePlug({
   command: 'charactersh',  
   category: 'Anime',
   desc: 'Search for character details',
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     await message.react('🗣️');
     if (!match) return message.reply('_Please provide the name of the character_');
     const voidi = await AnimeS(match, 'character');
@@ -126,7 +126,7 @@ CreatePlug({
   command: 'mangash',  
   category: 'Anime',
   desc: 'Search for manga details',
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     await message.react('🗣️');
     if (!match) return message.reply('_Please provide the name of the manga_');
     const magas = await AnimeS(match, 'manga');
