@@ -29,7 +29,7 @@ CreatePlug({
   command: "song",
   category: "download",
   desc: "Download a song by name",
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     if (!match) return message.reply("_Please provide a song name_");
     const results = await searchSong(match);
     if (!results[0]) return;
