@@ -27,7 +27,7 @@ CreatePlug({
     command: 'tourl',
     category: 'tools',
     desc: 'Uploads media and returns a URL',
-    execute: async (message: any, conn: any) => {
+    execute: async (message: any, conn: any): Promise<void> => {
         if (!message.quoted || !message.quoted.message) {
             return await message.reply('_Reply to an image, video, document, or mp3_');
         }
@@ -43,7 +43,7 @@ CreatePlug({
     command: 'steam',
     category: 'game',
     desc: 'Search for games on Steam',
-    execute: async (message: any, conn: any, match: string) => {
+    execute: async (message: any, conn: any, match: string): Promise<void> => {
         if (!match) return await message.reply('_Use: steam game_name_');
         await message.reply('_Searching for game..._');
         const results = await Steam.search(match).catch(() => null);
@@ -62,7 +62,7 @@ CreatePlug({
     command: 'steaminfo',
     category: 'game',
     desc: 'Get detailed info of a Steam game by ID',
-    execute: async (message: any, conn: any, match: string) => {
+    execute: async (message: any, conn: any, match: string): Promise<void> => {
         if (!match) return await message.reply('_Use: steaminfo game_id_');
         await message.reply('_Fetching game details..._');
         const gameDetails = await Steam.detail(match).catch(() => null);
@@ -95,7 +95,7 @@ CreatePlug({
     command: 'zzzlist',
     category: 'game',
     desc: 'Lists all Zenless Zone Zero characters',
-    execute: async (message: any, conn: any) => {
+    execute: async (message: any, conn: any): Promise<void> => {
         await message.reply('_Fetching character list..._');
         const charList = await ZenlessZone.list().catch(() => null);
         if (!charList || charList.length === 0) return;
@@ -108,7 +108,7 @@ CreatePlug({
     command: 'zzzchara',
     category: 'game',
     desc: 'Get details of a specific Zenless Zone Zero character',
-    execute: async (message: any, conn: any, match: string) => {
+    execute: async (message: any, conn: any, match: string): Promise<void> => {
         if (!match) return await message.reply('_Use: zzzchara character_name_');
         await message.reply('_Fetching character info..._');
         const charData = await ZenlessZone.chara(match).catch(() => null);
@@ -118,8 +118,7 @@ CreatePlug({
             charInfo += '\n*Stats:*\n' + charData.stats.map((s: any) => `${s.name}: ${s.value}`).join('\n');
         }
         if (charData.skills.length > 0) {
-            charInfo += '\n\n*Skills:*\n' + charData.skills.map((s: any) => `_${s.name}_ - ${s.description}`).join('\n');
-        }
+            charInfo += '\n\n*Skills:*\n' + charData.skills.map((s: any) => `_${s.name}_ - ${s.description}`).join('\n');}
         await conn.sendMessage(message.user, { image: { url: charData.info.image }, caption: charInfo });
     },
 });
