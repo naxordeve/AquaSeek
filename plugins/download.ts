@@ -11,7 +11,7 @@ CreatePlug({
   command: 'gitclone',
   category: 'download',
   desc: 'Clone a GitHub repository as a zip file',
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     await message.react('❣️');
     const me = /(?:https?:\/\/|git@)github\.com[\/:]([^\/\s]+)\/([^\/\s]+)(?:\.git)?/;
     match = match || message.message.text;
@@ -31,7 +31,7 @@ CreatePlug({
   command: 'snackvideo',
   category: 'download',
   desc: 'Download media from SnackVideo',
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     await message.react('🗣️');
     match = match || message.message.text;
     if (!match) return message.reply('_Please provide a valid url_');
@@ -51,7 +51,7 @@ CreatePlug({
   command: 'seegore',
   category: 'download',
   desc: 'Download media from SeeGore',
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     await message.react('🗣️');
     match = match || message.message.text;
     if (!match) return message.reply('_Please provide a valid SeeGore url_');
@@ -71,7 +71,7 @@ CreatePlug({
   command: 'ringtone',
   category: 'download',
   desc: 'send ringtones based on a query',
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     if (!match) return message.reply('Please provide a search query');
     await message.react('❣️');
     const results = await Ring(match);
@@ -87,7 +87,7 @@ CreatePlug({
   command: 'apk',
   category: 'download',
   desc: 'Download APK',
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     if (!match) return message.reply('_Please provide app name_');
     match = match || message.message.text;
     await message.react('❣️');
@@ -106,7 +106,7 @@ CreatePlug({
   command: 'facebook',
   category: 'download',
   desc: 'Download Facebook videos',
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     match = match || message.message.text;
     if (!match) return message.reply('_Please provide a Facebook video URL_');
     await message.react('❣️');
@@ -123,7 +123,7 @@ CreatePlug({
   command: 'soundcloud',
   category: 'download',
   desc: 'SoundCloud audio download',
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     await message.react('🎧');
     match = match || message.message.text;
     if (!match) return message.reply('_provide SoundCloud url_');
@@ -147,7 +147,7 @@ CreatePlug({
   command: 'ytpost',
   category: 'download',
   desc: 'Fetches YouTube post details',
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     await message.react('📹');
     match = match || message.message.text;
     if (!match) return message.reply('Provide a YouTube url');
@@ -165,7 +165,7 @@ CreatePlug({
   command: 'pinterest',
   category: 'download',
   desc: 'Fetches Pinterest video details.',
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     await message.react('📌');
     match = match || message.message.text;
     if (!match) return message.reply('Provide a Pinterest url');
@@ -183,7 +183,7 @@ CreatePlug({
   command: 'savefrom',
   category: 'download',
   desc: 'Fetches video download options from SaveFrom.',
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     await message.react('📥');
     match = match || message.message.text;
     if (!match) return message.reply('Provide a video url');
@@ -201,7 +201,7 @@ CreatePlug({
   command: 'lahelu',
   category: 'download',
   desc: 'Fetches Lahelu post details',
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     await message.react('📑');
     if (!match) return message.reply('Provide a Lahelu url');
     const result = await Lahelu(match);
@@ -230,7 +230,7 @@ CreatePlug({
   command: 'searchapplemusic',
   category: 'search',
   desc: 'Searches for music on Apple Music',
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     await message.react('🔍');
     if (!match) return message.reply('Provide a query to search');
     const result = await AppleMusicSearch(match);
@@ -245,7 +245,7 @@ CreatePlug({
   command: 'capcut',
   category: 'download',
   desc: 'Fetches CapCut video details',
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     await message.react('🎥');
     match = match || message.message.text;
     if (!match) return message.reply('Provide a CapCut url');
