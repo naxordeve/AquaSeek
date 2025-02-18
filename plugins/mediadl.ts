@@ -7,7 +7,7 @@ CreatePlug({
   command: 'lepton',
   category: 'Artificial',
   desc: 'lepton ai',
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     await message.react('❣️');
     if (!match) return message.reply('Please provide a prompt');
     const apiKey = 'jawa';
@@ -26,7 +26,7 @@ CreatePlug({
   command: 'tiktok',
   category: 'download',
   desc: 'Download TikTok videos',
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     await message.react('❣️');
     if (!match) return message.reply('_Please provide a TikTok URL_');
     const videos = await tiktokdl(match).catch((error: Error) => message.reply(`${error.message}`));
@@ -43,7 +43,7 @@ CreatePlug({
   command: 'instagram',
   category: 'download',
   desc: 'Download Instagram videos',
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     await message.react('❣️');
     if (!match) return message.reply('_Please provide an Instagram video URL_');
     const result = await Func(match, 'instagram');
