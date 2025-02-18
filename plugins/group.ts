@@ -2,22 +2,22 @@ import { CreatePlug } from '../lib/commands';
 import CONFIG from '../tsconfig';
 
 CreatePlug({
-  command: 'setgpp',
+  command: 'setgcpp',
   category: 'group',
-  desc: 'Set group profile picture',
+  desc: 'Set a new group profile picture',
   execute: async (message: any, conn: any) => {
     if (!message.isGroup) return;
-    if (!message.isBotAdmin) return message.reply('_Im not admin_');
+    if (!message.isBotAdmin) return message.reply('_I need to be an admin to perform this action_');
     if (!message.isAdmin) return;
-    if (!message.quoted) return message.reply('_Reply to an image_');
-    const q = message.quoted.imageMessage;
-    if (!q.image) return message.reply('_Only images are supported_');
-    const media = await q.downloadMedia();
-    await conn.updateGroupPicture(message.user, media);
-    message.reply('_Group picture has been updated_');
+    if (!message.quoted || !message.quoted.message.imageMessage) return await message.reply('_Please provide an image_');
+    const buffer = await message.quoted.download();
+    if (!buffer) return;
+    await conn.updateGroupPicture(message.user, buffer)
+      .then(() => message.reply('_Group profile picture updated_'))
+      .catch(() => message.reply('_err_'));
   },
 });
-
+      
 CreatePlug({
   command: 'setdesc',
   category: 'group',
