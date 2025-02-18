@@ -153,4 +153,38 @@ CreatePlug({
         await conn.sendMessage(message.user, { sticker: stickerBuffer });
     }
 });
-        
+
+CreatePlug({
+    command: 'flux',
+    category: 'media',
+    desc: 'Flux image generator',
+    execute: async (message: any, conn: any, match: string) => {
+        await message.react('❣️');
+        if (!match) return message.reply('_Please provide a prompt_');
+        const imageUrl = `https://api.siputzx.my.id/api/ai/flux?prompt=${encodeURIComponent(match)}`;
+        await message.reply('_Loading..._');
+
+        await conn.sendMessage(message.user, {
+            image: { url: imageUrl },
+            caption: '**FluxImg**\nMade with ❣️',
+        });
+    },
+});
+
+CreatePlug({
+    command: 'diffusion',
+    category: 'media',
+    desc: 'Stable Diffusion image generator',
+    execute: async (message: any, conn: any, match: string) => {
+        await message.react('❣️');
+        if (!match) return message.reply('_Please provide a prompt_');
+        const imageUrl = `https://api.siputzx.my.id/api/ai/stable-diffusion?prompt=${encodeURIComponent(match)}`;
+        await message.reply('_Loading..._');
+
+        await conn.sendMessage(message.user, {
+            image: { url: imageUrl },
+            caption: '**Diffuser**\nMade with ❣️',
+        });
+    },
+});
+
