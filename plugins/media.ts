@@ -114,7 +114,7 @@ CreatePlug({
             categories: ['🤖', '🎉', '💦'],
             quality: 80,
             id: 'sticker_cmd',
-            background: '#FFFFFF',
+            background: null,
         });
 
         const stickerBuffer = await sticker.toBuffer();
