@@ -5,7 +5,7 @@ CreatePlug({
   command: "twitter",
   category: "download",
   desc: "Download media from Twitter",
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     await message.react("✅");
     match = match || message.quoted.text;
     if (!match) {
