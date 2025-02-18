@@ -5,7 +5,7 @@ CreatePlug({
   command: "ttsearch",
   category: "search",
   desc: "Search for TikToker",
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     await message.react("🔍");
     match = match || message.message.text;
     if (!match) return message.reply("_Please provide a search query_");
@@ -13,7 +13,6 @@ CreatePlug({
     const results = await searcher.search(match);
 
     if (results.error) return;
-
     const video = results[0];
     const caption = 
       `*Title:* ${video.title}\n` +
