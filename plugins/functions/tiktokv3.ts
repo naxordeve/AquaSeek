@@ -9,14 +9,14 @@ interface TikTokData {
   }>;
 }
 
-interface TikTokResponse {
+interface TTTT {
   title: string;
   thumbnail: string;
   dlv3: string | null;
   dlmp3: string | null;
 }
 
-async function getTikV3(voidi: string): Promise<TikTokResponse | { error: string }> {
+async function getTikV3(voidi: string): Promise<TTTT | { error: string }> {
   const x = `https://diegoson-naxordeve.hf.space/tiktok/v3?url=${voidi}`;
   const y = await fetch(x);
   if (!y.ok) {
