@@ -20,7 +20,7 @@ CreatePlug({
     command: 'translate',
     category: 'tools',
     desc: 'Translator',
-    execute: async (message: any, conn: any, match: string) => {
+    execute: async (message: any, conn: any, match: string): Promise<void> => {
         if (!message.quoted?.message?.conversation) 
             return await message.reply('_translate language_');
         const text = message.quoted.message.conversation;
@@ -52,7 +52,7 @@ CreatePlug({
     command: 'upscale',
     category: 'tools',
     desc: 'Upscales an image to higher resolution',
-    execute: async (message: any, conn: any) => {
+    execute: async (message: any, conn: any): Promise<void> => {
         if (!message.quoted?.message?.imageMessage) 
             return await message.reply('_Reply to an image to upscale it_');
         await message.reply('_Processing image, please wait..._');
@@ -84,7 +84,7 @@ CreatePlug({
     command: 'removebg',
     category: 'tools',
     desc: 'Removes the background from an image',
-    execute: async (message: any, conn: any) => {
+    execute: async (message: any, conn: any): Promise<void> => {
         if (!message.quoted?.message?.imageMessage) 
             return await message.reply('_Reply to an image to remove its background_');
         await message.reply('_Processing image, please wait..._');
@@ -102,7 +102,7 @@ CreatePlug({
     command: 'sticker',
     category: 'tools',
     desc: 'Convert an image, GIF, or video into a sticker',
-    execute: async (message: any, conn: any) => {
+    execute: async (message: any, conn: any): Promise<void> => {
         if (!message.quoted?.message) 
             return await message.reply('_Reply to an image, GIF, or video to create a sticker_');
         const buffer = await message.quoted.download();
@@ -126,7 +126,7 @@ CreatePlug({
     command: 'take',
     category: 'tools',
     desc: 'Convert an image, GIF, or video into a sticker with custom packname and author',
-    execute: async (message: any, conn: any, match: string) => {
+    execute: async (message: any, conn: any, match: string): Promise<void> => {
         if (!message.quoted?.message) 
             return await message.reply('_Reply to a sticker_');
         let pack = CONFIG.APP.STICKER_PACKNAME || 'Diego';
@@ -158,7 +158,7 @@ CreatePlug({
     command: 'flux',
     category: 'media',
     desc: 'Flux image generator',
-    execute: async (message: any, conn: any, match: string) => {
+    execute: async (message: any, conn: any, match: string): Promise<void> => {
         await message.react('❣️');
         if (!match) return message.reply('_Please provide a prompt_');
         const imageUrl = `https://api.siputzx.my.id/api/ai/flux?prompt=${encodeURIComponent(match)}`;
@@ -175,7 +175,7 @@ CreatePlug({
     command: 'diffusion',
     category: 'media',
     desc: 'Stable Diffusion image generator',
-    execute: async (message: any, conn: any, match: string) => {
+    execute: async (message: any, conn: any, match: string): Promise<void> => {
         await message.react('❣️');
         if (!match) return message.reply('_Please provide a prompt_');
         const imageUrl = `https://api.siputzx.my.id/api/ai/stable-diffusion?prompt=${encodeURIComponent(match)}`;
