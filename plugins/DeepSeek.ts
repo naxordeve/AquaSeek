@@ -5,7 +5,7 @@ CreatePlug({
   command: "deepseek",
   category: "Artificial",
   desc: "Chat with DeepSeek AI",
-  execute: async (message: any, conn: any, match: string) => {
+  execute: async (message: any, conn: any, match: string): Promise<void> => {
     if (!match) {
       await message.reply("_Please provide a message_");
       return;
