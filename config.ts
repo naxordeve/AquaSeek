@@ -1,5 +1,4 @@
 import 'dotenv/config';
-import { Sequelize, Dialect } from 'sequelize';
 import path from 'path';
 import { readFileSync } from 'fs';
 import dotenv from 'dotenv';
