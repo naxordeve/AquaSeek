@@ -6,16 +6,13 @@ CreatePlug({
   category: "download",
   desc: "Download media from Twitter",
   execute: async (message: any, conn: any, match: string): Promise<void> => {
-    await message.react("✅");
     match = match || message.quoted.text;
-    if (!match) {
-      return message.reply("_Please provide a valid twitter url_");
-    }
+    if (!match) return void (await message.reply("_Please provide a valid twitter url_"));
+    return void (await message.react("✅"));
     const data = await twitter(match);
     if (!data || !Array.isArray(data.download) || data.download.length === 0) {
       return;
     }
-
     const caption = `*Title:* ${data.title || "unknown"}\n*Duration:* ${data.duration || "1000"}\n*Source:* ${match}\n\n💦`;
     if (data.type === "video") {
       const video = data.download.find((item: any) => item.type === "mp4") || data.download[0];
@@ -36,7 +33,7 @@ CreatePlug({
         }
       }
     } else {
-      await message.reply("_unspo_");
+      return void (await message.reply("_unspo_"));
     }
   },
 });
