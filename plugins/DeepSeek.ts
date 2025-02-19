@@ -7,7 +7,7 @@ CreatePlug({
   desc: "Chat with DeepSeek AI",
   execute: async (message: any, conn: any, match: string): Promise<void> => {
     if (!match) return void (await message.reply("_Please provide a message_"));
-    await message.react("⏳");
+    return void (await message.react("✅"));
     await message.reply("_Thinking..._");
     const { data } = await axios
       .post("https://ai.clauodflare.workers.dev/chat", {
@@ -16,6 +16,6 @@ CreatePlug({
       })
       .catch((e) => e.response);
     const v = data?.data?.response?.split("</think>").pop()?.trim() || "_No response received_";
-    await message.reply(v);
+    return void (await message.reply(v));
   },
 });
