@@ -1,25 +1,19 @@
-import fetch from 'node-fetch';
+import axios from 'axios';
 
-interface ShortenR {
-  status: boolean;
-  result: {
-    link: string;
-  };
-}
-
+interface ShortenR { status: boolean; result: { link: string; }; }
 class TinyURL {
   private urll: string;
   constructor(urll: string) {
     this.urll = urll;
-}
+  }
   async shortenUrl(url: string): Promise<string> {
-    const res = await fetch(`${this.urll}${url}`);
-    if (!res.ok) {
-      throw new Error(`${res.statusText}`);}
-    const data: ShortenR = await res.json();
-    if (!data.status) {
-      throw new Error('Err');}
-    return data.result.link;
+    try { const { data }: { data: ShortenR } = await axios.get(`${this.urll}${url}`);
+      if (!data.status) {
+       throw new Error('Could not shorten URL');}
+      return data.result.link;
+    } catch (error) {
+      throw new Error(`${(error as Error).message}`);
+    }
   }
 }
 
