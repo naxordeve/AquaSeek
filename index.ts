@@ -85,18 +85,17 @@ async function startBot(): Promise<void> {
     const mek = message.body.trim();
     const isCmd = mek.startsWith(CONFIG.APP.PREFIX.toLowerCase());
     const textt = mek.slice(CONFIG.APP.PREFIX.length).trim();
-
     if (mek.startsWith('$')) {
-      if (!message.isFromMe) return;
-      try {
-        const code = mek.slice(1);
-        let Fek = await eval(`(async () => { ${code} })()`);
-        if (typeof Fek !== "string") Fek = util.inspect(Fek);
-        await message.reply(Fek);
-      } catch (e) {
-        message.reply(util.format(e));
-      }
-    }
+    if (!message.isFromMe) return;
+    try {bconst code: string = mek.slice(1);
+    const Fek: unknown = await (async () => eval(code))();
+    const result: string = typeof Fek === 'string' ? Fek : util.inspect(Fek);
+    await message.reply(result);
+  } catch (e) {
+    const Mesa: string = util.format(e);
+    await message.reply(Mesa);
+  }
+}
 
     const match = isCmd ? mek.replace(new RegExp(`^${CONFIG.APP.PREFIX}\\S+`), '').trim() : mek;
     if (isCmd) {
