@@ -13,10 +13,6 @@ import { commands } from './lib/index.ts';
 import CONFIG from './config';
 import useMongoAuthState from './lib/models/localdb';
 import NodeCache from 'node-cache';
-import fetch from 'node-fetch';
-
-globalThis.fetch = fetch;
-
 const store = baileys.makeInMemoryStore({ logger: P.default({ level: 'silent' }).child({ level: 'silent' }) });
 const cartel = new NodeCache({ stdTTL: 3600, checkperiod: 600 });
 
