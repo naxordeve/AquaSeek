@@ -9,9 +9,9 @@ CreatePlug({
   category: 'news',
   desc: 'Get the latest telecom news',
   execute: async (message: any, conn: any): Promise<void> => {
-    await message.react('🗣️');
+    return void (await message.react("✅"));
     const voidi = await TNewsDetails();
-    if (!voidi) return message.reply('_oops_');
+    if (!voidi) return void (await message.reply('_oops_'));
     await conn.sendMessage(message.user, {
       image: { url: voidi.image }, 
       caption: `*Telecom News:* ${voidi.title}\nLink: ${voidi.link}\n\nDescription: ${voidi.description}\n\nMade with❣️`
@@ -24,7 +24,8 @@ CreatePlug({
   category: 'Utility',
   desc: 'Get TikTok profile details',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
-    if (!match) return message.reply('_Please provide a TikTok username_');  
+    if (!match) return void (await message.reply('_Please provide a TikTok username_'));
+    return void (await message.react("✅"));
     const p = await TKAnnis(match);
     if (!p) return;
     await conn.sendMessage(message.user, {
@@ -39,19 +40,19 @@ CreatePlug({
   category: 'Utility',
   desc: 'Fetch information about an NPM package.',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
-    await message.react('📦');
-    if (!match) return message.reply('_Please provide the name of the npm package_');
+    if (!match) return void (await message.reply('_Please provide the name of the npm package_'));
+    return void (await message.react("✅"));
     const p = await APIS.npmSearch(match);
-    if (!p) return message.reply('_err_');
+    if (!p) return void (await message.reply('_err_'));
     const voidi = `
-*Package Name:* ${p.packageName}
-*Latest Version:* ${p.latestVersion}
-*Initial Version:* ${p.initialVersion}
-*Total Updates:* ${p.updatesCount}
-*Latest Dependencies Count:* ${p.latestDependenciesCount}
-*Initial Dependencies Count:* ${p.initialDependenciesCount}
-*First Published:* ${p.firstPublished}
-*Last Updated:* ${p.lastUpdated}
+*_Name_:* ${p.packageName}
+*_Version_:* ${p.latestVersion}
+*_Init v_:* ${p.initialVersion}
+*_Updates_:* ${p.updatesCount}
+*_L _D count_:* ${p.latestDependenciesCount}
+*_Init_D count_:* ${p.initialDependenciesCount}
+*_First published_:* ${p.firstPublished}
+*_Last updated_:* ${p.lastUpdated}
     `.trim();
     await conn.sendMessage(message.user, { text: voidi });
   },
@@ -62,8 +63,8 @@ CreatePlug({
   category: 'Utility',
   desc: 'Fetch information about a GitHub user',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
-    await message.react('👤');
-    if (!match) return message.reply('Please provide the git username');
+    if (!match) return void (await message.reply('Please provide the git username'));
+    return void (await message.react("✅"));
     const xastral = await APIS.GIT(match);
     if (!xastral) return;
     const msg = `
@@ -95,8 +96,8 @@ CreatePlug({
   category: 'Anime',
   desc: 'Search for anime details',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
-    await message.reply('🗣️');
-    if (!match) return message.reply('_Please provide the name of the anime_');
+    if (!match) return void (await message.reply('_Please provide the name of the anime_'));
+    return void (await message.react("✅"));
     const voidi = await AnimeS(match, 'anime');
     const res = ` **Anime Title**: ${voidi.title}\n\n**Episodes**: ${voidi.episodes}\n**Status**: ${voidi.status}\n**Genres**: ${voidi.genres.join(', ')}\n**Season**: ${voidi.season}\n**Description**: ${voidi.description}\n\nMade with❣️`;
     await conn.sendMessage(message.user, { 
@@ -111,8 +112,8 @@ CreatePlug({
   category: 'Anime',
   desc: 'Search for character details',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
-    await message.react('🗣️');
-    if (!match) return message.reply('_Please provide the name of the character_');
+    if (!match) return void (await message.reply('_Please provide the name of the character_'));
+    return void (await message.react("✅"));
     const voidi = await AnimeS(match, 'character');
     const res = `**Character Name**: ${voidi.name}\n**Native Name**: ${voidi.nativeName}\n**Description**: ${voidi.description}\n**Favourites**: ${voidi.favourites}\n**Appears In**: ${voidi.media.map((media: any) => media.title).join(', ')}\n\nMade with❣️`;
     await conn.sendMessage(message.user, { 
@@ -127,8 +128,8 @@ CreatePlug({
   category: 'Anime',
   desc: 'Search for manga details',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
-    await message.react('🗣️');
-    if (!match) return message.reply('_Please provide the name of the manga_');
+    if (!match) return void (await message.reply('_Please provide the name of the manga_'));
+    return void (await message.react("✅"));
     const magas = await AnimeS(match, 'manga');
     const res = `**Manga Title**: ${magas.title}\n**Chapters**: ${magas.chapters}\n**Volumes**: ${magas.volumes}\n**Status**: ${magas.status}\n**Genres**: ${magas.genres.join(', ')}\n**Start Date**: ${magas.startDate}\n**End Date**: ${magas.endDate}\n**Description**: ${magas.description}\n\nMade with❣️`;
     await conn.sendMessage(message.user, { 
