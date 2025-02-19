@@ -1,16 +1,25 @@
-import fetch from 'node-fetch';
+import axios from 'axios';
 
-interface LeptonResponse { result: string; status: number; message?: string; }
+interface Leptonn { result: string; status: number; message?: string; }
 class LeptonAPI {
-  private apiKey: string; private baseURL: string = 'https://api.yanzbotz.live/api/ai/lepton';
-  constructor(apiKey: string) { this.apiKey = apiKey; }
+  private apiKey: string;
+  private baseURL: string = 'https://api.yanzbotz.live/api/ai/lepton';
+  constructor(apiKey: string) {
+    this.apiKey = apiKey;
+  }
+
   async getResult(query: string): Promise<string> {
-    const url = `${this.baseURL}?query=${query}&apiKey=${this.apiKey}`;
-    const get = await fetch(url);
-    if (!get.ok) throw new Error(`${get.status}`);
-    const data: LeptonResponse = await get.json();
-    if (data.status !== 200) throw new Error(`${data.message || 'err'}`);
-    return data.result;
+    try { const url = `${this.baseURL}?query=${query}&apiKey=${this.apiKey}`;
+      const response = await axios.get<Leptonn>(url);
+      const data = response.data;
+      if (data.status !== 200) throw new Error(data.message || 'err');
+      return data.result;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        throw new Error(`Axios error: ${error.message}`);
+      }
+      throw new Error('Unknown error occurred');
+    }
   }
 }
 
