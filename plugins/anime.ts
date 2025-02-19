@@ -1,4 +1,4 @@
-import { CreatePlug } from '../lib/commands';
+import { default as CreatePlug } from '../lib/index';
 import axios from 'axios';
 import ZenlessZone from './functions/zonelesszero';
 import * as Steam from './functions/stream';
