@@ -30,13 +30,14 @@ CreatePlug({
   category: "download",
   desc: "Download a song by name",
   execute: async (message: any, conn: any, match: string): Promise<void> => {
-    if (!match) return message.reply("_Please provide a song name_");
+    if (!match) return void (await message.reply("_Please provide a song name_"));
+    return void (await message.react("✅"));
     const results = await searchSong(match);
     if (!results[0]) return;
     const toAudio = await downloadSong(results[0].link);
     if (!toAudio.media[0]) return;
     const MP3DL = toAudio.media.find((m) => m.type === "download")?.link;
-    if (!MP3DL) return message.reply("_oops_");
+    if (!MP3DL) return void (await message.reply("_oops_"));
     await conn.sendMessage(message.user, { 
       audio: { url: MP3DL }, mimetype: "audio/mpeg",
       ptt: false 
