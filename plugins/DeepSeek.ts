@@ -8,7 +8,6 @@ CreatePlug({
   execute: async (message: any, conn: any, match: string): Promise<void> => {
     if (!match) return void (await message.reply("_Please provide a message_"));
     return void (await message.react("✅"));
-    await message.reply("_Thinking..._");
     const { data } = await axios
       .post("https://ai.clauodflare.workers.dev/chat", {
         model: "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b",
