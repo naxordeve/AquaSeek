@@ -1,4 +1,4 @@
-import { CreatePlug } from '../lib/commands';
+import { CreatePlug } from '../lib/index';
 import { TNewsDetails } from './functions/tech';
 import { TKAnnis } from './functions/Tk';  
 import { AnimeS } from './functions/anime';
@@ -9,7 +9,7 @@ CreatePlug({
   category: 'news',
   desc: 'Get the latest telecom news',
   execute: async (message: any, conn: any): Promise<void> => {
-    return void (await message.react("✅"));
+    await message.react("✅");
     const voidi = await TNewsDetails();
     if (!voidi) return void (await message.reply('_oops_'));
     await conn.sendMessage(message.user, {
@@ -25,7 +25,7 @@ CreatePlug({
   desc: 'Get TikTok profile details',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
     if (!match) return void (await message.reply('_Please provide a TikTok username_'));
-    return void (await message.react("✅"));
+    await message.react("✅");
     const p = await TKAnnis(match);
     if (!p) return;
     await conn.sendMessage(message.user, {
@@ -41,7 +41,7 @@ CreatePlug({
   desc: 'Fetch information about an NPM package.',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
     if (!match) return void (await message.reply('_Please provide the name of the npm package_'));
-    return void (await message.react("✅"));
+    await message.react("✅");
     const p = await APIS.npmSearch(match);
     if (!p) return void (await message.reply('_err_'));
     const voidi = `
@@ -64,7 +64,7 @@ CreatePlug({
   desc: 'Fetch information about a GitHub user',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
     if (!match) return void (await message.reply('Please provide the git username'));
-    return void (await message.react("✅"));
+    await message.react("✅");
     const xastral = await APIS.GIT(match);
     if (!xastral) return;
     const msg = `
@@ -97,7 +97,7 @@ CreatePlug({
   desc: 'Search for anime details',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
     if (!match) return void (await message.reply('_Please provide the name of the anime_'));
-    return void (await message.react("✅"));
+    await message.react("✅");
     const voidi = await AnimeS(match, 'anime');
     const res = ` **Anime Title**: ${voidi.title}\n\n**Episodes**: ${voidi.episodes}\n**Status**: ${voidi.status}\n**Genres**: ${voidi.genres.join(', ')}\n**Season**: ${voidi.season}\n**Description**: ${voidi.description}\n\nMade with❣️`;
     await conn.sendMessage(message.user, { 
@@ -113,7 +113,7 @@ CreatePlug({
   desc: 'Search for character details',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
     if (!match) return void (await message.reply('_Please provide the name of the character_'));
-    return void (await message.react("✅"));
+    await message.react("✅");
     const voidi = await AnimeS(match, 'character');
     const res = `**Character Name**: ${voidi.name}\n**Native Name**: ${voidi.nativeName}\n**Description**: ${voidi.description}\n**Favourites**: ${voidi.favourites}\n**Appears In**: ${voidi.media.map((media: any) => media.title).join(', ')}\n\nMade with❣️`;
     await conn.sendMessage(message.user, { 
@@ -129,7 +129,7 @@ CreatePlug({
   desc: 'Search for manga details',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
     if (!match) return void (await message.reply('_Please provide the name of the manga_'));
-    return void (await message.react("✅"));
+    await message.react("✅");
     const magas = await AnimeS(match, 'manga');
     const res = `**Manga Title**: ${magas.title}\n**Chapters**: ${magas.chapters}\n**Volumes**: ${magas.volumes}\n**Status**: ${magas.status}\n**Genres**: ${magas.genres.join(', ')}\n**Start Date**: ${magas.startDate}\n**End Date**: ${magas.endDate}\n**Description**: ${magas.description}\n\nMade with❣️`;
     await conn.sendMessage(message.user, { 
