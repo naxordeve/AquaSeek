@@ -46,7 +46,7 @@ CreatePlug({
     if (!message.quoted || !message.quoted.message) {
       return void (await message.reply("_Reply to an audio or video message to identify the song_"));
     }
-    await message.react("✅"));
+    await message.react("✅");
     const buffer: Buffer = await message.quoted.download();
     const result = await Shazam(buffer);
     if (!result || result.length === 0) return;
