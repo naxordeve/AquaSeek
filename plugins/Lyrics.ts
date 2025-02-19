@@ -1,4 +1,4 @@
-import { CreatePlug } from "../lib/commands";
+import { CreatePlug } from "../lib/index";
 import * as fetch from "node-fetch";
 
 CreatePlug({
@@ -7,7 +7,7 @@ CreatePlug({
   desc: "lyrics based on the query",
   execute: async (message: any, conn: any, match: string): Promise<void> => {
     if (!match) return void (await message.reply("_Please provide a song name_"));
-    return void (await message.react("✅"));
+    await message.react("✅");
     const response = await fetch(`https://diegoson-naxordeve.hf.space/api/lyrics?q=${match}`);
     const data: any[] = await response.json();
 
