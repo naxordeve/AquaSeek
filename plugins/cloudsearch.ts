@@ -1,6 +1,6 @@
 import axios from 'axios';
 import * as cheerio from 'cheerio';
-import { CreatePlug } from '../lib/commands';
+import { default as CreatePlug } from '../lib/index';
 
 interface Track {
   url: string;
@@ -40,7 +40,7 @@ CreatePlug({
   desc: 'Search for SoundCloud tracks',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
     if (!match) return void (await message.reply('Please provide a search term'));
-    return void (await message.react("✅"));
+    await message.react("✅");
     const results = await search(match);
     if (results[0]?.title === 'No results found') return;
     const voidi = results
