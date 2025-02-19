@@ -60,13 +60,9 @@ auth();
 
 async function startBot(): Promise<void> {
   if (CONFIG.APP.MONGODB_URL && /mongo/.test(CONFIG.APP.MONGODB_URL)) {
-    await useMongoAuthState(CONFIG.APP.MONGODB_URL);
-  }
-  if (CONFIG.APP.SQLDB_URL) console.log("Configur Loaded");
-
+    await useMongoAuthState(CONFIG.APP.MONGODB_URL);}
   const auth_creds = path.join(__dirname, 'lib', 'session');
   const { state, saveCreds } = await baileys.useMultiFileAuthState(auth_creds);
-
   const conn = baileys.makeWASocket({
     logger: P.default({ level: 'silent' }),
     printQRInTerminal: false,
@@ -90,7 +86,6 @@ async function startBot(): Promise<void> {
     if (!message || !message.key || !message.body) return;
 
     if (CONFIG.APP.MODE === true && !message.isFromMe) return;
-
     const mek = message.body.trim();
     const isCmd = mek.startsWith(CONFIG.APP.PREFIX.toLowerCase());
     const textt = mek.slice(CONFIG.APP.PREFIX.length).trim();
@@ -108,7 +103,6 @@ async function startBot(): Promise<void> {
     }
 
     const match = isCmd ? mek.replace(new RegExp(`^${CONFIG.APP.PREFIX}\\S+`), '').trim() : mek;
-
     if (isCmd) {
       const pattern = new RegExp(`^(${CONFIG.APP.PREFIX})(\\S+)`);
       const commando = mek.match(pattern);
