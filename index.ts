@@ -69,10 +69,44 @@ async function startBot(): Promise<void> {
     emitOwnEvents: true,
     auth: state,
     version: (await baileys.fetchLatestBaileysVersion()).version,
+    getMessage: async (key: { remoteJid?: string; id?: string }): Promise<string | object | null> => {
+    if (store) {
+        const jid = key.remoteJid;
+        const msg_id = key.id;
+        if (jid && msg_id) {
+            const chat = store.messages[jid];
+            if (chat) {
+                const msg = chat.get(msg_id);
+                return (
+                    msg?.message?.conversation ||
+                    msg?.message?.extendedTextMessage?.text ||
+                    msg?.message?.imageMessage?.caption ||
+                    msg?.message?.videoMessage?.caption ||
+                    msg?.message || 
+                    null
+                );
+            }
+        }
+    }
+    return null;
+},
+
+getGroupMetadata: async (jid: string): Promise<any | null> => {
+    let metadata = cartel.get(jid);
+    if (metadata) {
+        return metadata;
+    }try {
+        metadata = await conn.groupMetadata(jid);
+        cartel.set(jid, metadata);
+        return metadata;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
   });
 
   store.bind(conn.ev);
-
   conn.ev.on('messages.upsert', async ({ messages }) => {
     const msg = messages[0];
     if (!msg.message) return;
