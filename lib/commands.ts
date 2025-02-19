@@ -1,9 +1,9 @@
-type ExecuteFunction = (message: any, conn: any, match: string) => Promise<void>;
+type ExecuteFunc = (message: any, conn: any, match: string) => Promise<void>;
 type Command = {
   command: string;
   category: string;
   desc: string;
-  execute: ExecuteFunction; 
+  execute: ExecuteFunc; 
   on?: string;
 };
 
