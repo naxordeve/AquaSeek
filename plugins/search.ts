@@ -1,7 +1,6 @@
 import { CreatePlug } from '../lib/commands';
 import { searchPinterest, searchWikipedia } from './functions/Pinterest';
 import BingSearch from './functions/Bingsearch';
-import fetch from 'node-fetch';
 import TinyURL from './functions/tny';
 
 CreatePlug({
