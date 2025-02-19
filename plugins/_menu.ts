@@ -1,6 +1,6 @@
 import { commands, CreatePlug } from "../lib/commands";
 import { monospace } from "../lib/fancy";
-import CONFIG from "../tsconfig";
+import CONFIG from "../config";
 
 CreatePlug({
   command: "menu",
