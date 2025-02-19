@@ -1,4 +1,4 @@
-import { CreatePlug } from '../lib/commands';
+import { CreatePlug } from '../lib/index';
 import CONFIG from '../config';
 import * as Jimp from "jimp";
 
@@ -10,7 +10,7 @@ CreatePlug({
     if (!message.isGroup) return;
     if (!message.isBotAdmin) return void (await message.reply("_I need to be an admin to perform this action_"));
     if (!message.isAdmin) return;
-    return void (await message.react("✅"));
+    await message.react("✅");
     if (!message.quoted || !message.quoted.message.imageMessage) return void (await message.reply("_Please provide an image_"));
     const buffer = await message.quoted.download();
     if (!buffer) return message.reply("_Failed to download image_");
@@ -82,7 +82,7 @@ CreatePlug({
     if (!message.isGroup) return;
     if (!message.isBotAdmin) return void (await message.reply('_not admin_'));
     if (!message.isAdmin) return;
-    return void (await message.react("✅"));
+    await message.react("✅");
     const res = await conn.groupRequestParticipantsList(message.user);
     if (!res || res.length === 0) return;
     for (const participant of res) {
@@ -269,7 +269,7 @@ CreatePlug({
     if (!message.isGroup) return;
     if (!message.isBotAdmin) return message.reply('_um not admin_');
     if (!message.isAdmin) return;
-    return void (await message.react("✅"));
+    await message.react("✅");
     if (!args) return void (await message.reply('_Please mention a member_'));
     let target: string | undefined = message.message.extendedTextMessage?.contextInfo?.mentionedJid[0] || (args.includes('@s.whatsapp.net') ? args : args + '@s.whatsapp.net');
     if (!target) return;
@@ -287,7 +287,7 @@ CreatePlug({
   desc: 'Get information about the group',
   execute: async (message: any, conn: any): Promise<void> => {
     if (!message.isGroup) return;
-    return void (await message.react("✅"));
+    await message.react("✅");
     const groupMetadata = await conn.groupMetadata(message.user);
     const name = groupMetadata.subject;
     const desc = groupMetadata.desc;
@@ -307,7 +307,7 @@ CreatePlug({
   execute: async (message: any, conn: any): Promise<void> => {
     const isAdmin = message.isAdmin;
     if (!isAdmin) return;
-    return void (await message.react("✅"));
+    await message.react("✅");
     const _invites = await conn.groupInviteCode(message.user);
     return void (await message.reply(`*Group Link*:\nhttps://chat.whatsapp.com/${_invites}`));
   }
