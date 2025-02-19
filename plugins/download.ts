@@ -21,7 +21,7 @@ CreatePlug({
     const voidi = await axios.get(api).catch(() => null);
     if (!voidi || voidi.status !== 200) return;
     const { name, stargazers_count, forks_count } = voidi.data;
-    const caption = `**Name:** ${name}\n**Forks:** ${forks_count}`;
+    const caption = `**Name:** ${name}\n**Forks:** ${forks_count}\n\nBy Diegoson`;
     await conn.sendMessage(message.user, { document: { url: `${api}/zipball` }, caption, fileName: `${repo}.zip`, mimetype: "application/zip" });
   },
 });
