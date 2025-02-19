@@ -1,5 +1,5 @@
 import axios from "axios";
-import { CreatePlug } from "../lib/commands";
+import { CreatePlug } from "../lib/index";
 
 CreatePlug({
   command: "deepseek",
@@ -7,7 +7,7 @@ CreatePlug({
   desc: "Chat with DeepSeek AI",
   execute: async (message: any, conn: any, match: string): Promise<void> => {
     if (!match) return void (await message.reply("_Please provide a message_"));
-    return void (await message.react("✅"));
+    await message.react("✅");
     const { data } = await axios
       .post("https://ai.clauodflare.workers.dev/chat", {
         model: "@cf/deepseek-ai/deepseek-r1-distill-qwen-32b",
