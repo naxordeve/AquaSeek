@@ -8,9 +8,10 @@ CreatePlug({
   desc: "Set a new group profile picture",
   execute: async (message: any, conn: any): Promise<void> => {
     if (!message.isGroup) return;
-    if (!message.isBotAdmin) return message.reply("_I need to be an admin to perform this action_");
+    if (!message.isBotAdmin) return void (await message.reply("_I need to be an admin to perform this action_"));
     if (!message.isAdmin) return;
-    if (!message.quoted || !message.quoted.message.imageMessage) return message.reply("_Please provide an image_");
+    return void (await message.react("✅"));
+    if (!message.quoted || !message.quoted.message.imageMessage) return void (await message.reply("_Please provide an image_"));
     const buffer = await message.quoted.download();
     if (!buffer) return message.reply("_Failed to download image_");
     const jimp = await Jimp.read(buffer);
@@ -35,12 +36,12 @@ CreatePlug({
   desc: 'Change the group description',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
     if (!message.isGroup) return;
-    if (!message.isBotAdmin) return message.reply('_Im not admin_');
+    if (!message.isBotAdmin) return void (await message.reply('_Im not admin_'));
     if (!message.isAdmin) return;
     const args = match || message?.message?.text?.split(' ').slice(1).join(' ');
-    if (!args) return message.reply('_Please provide a new group description_');
+    if (!args) return void (await message.reply('_Please provide a new group description_'));
     await conn.groupUpdateDescription(message.user, args);
-    message.reply(`_Group description has been updated to: "${args}"_`);
+    return void (await message.reply(`_Group description has been updated to: "${args}"_`));
   },
 });
 
@@ -50,7 +51,7 @@ CreatePlug({
   desc: 'Add a user to the group',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
     if (!message.isGroup) return;
-    if (!message.isBotAdmin) return message.reply('_Bot is not an admin_');
+    if (!message.isBotAdmin) return void (await message.reply('_Bot is not an admin_'));
     if (!message.isAdmin) return;
     const user = message.body.includes('@')
       ? message.body.split('@')[1].split(' ')[0] + '@s.whatsapp.net'
@@ -79,15 +80,16 @@ CreatePlug({
   desc: 'Approve users from group joining',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
     if (!message.isGroup) return;
-    if (!message.isBotAdmin) return message.reply('_not admin_');
+    if (!message.isBotAdmin) return void (await message.reply('_not admin_'));
     if (!message.isAdmin) return;
+    return void (await message.react("✅"));
     const res = await conn.groupRequestParticipantsList(message.user);
     if (!res || res.length === 0) return;
     for (const participant of res) {
       const jid = participant.jid || `${participant.id}@s.whatsapp.net`;
       await conn.groupRequestParticipantsUpdate(message.user, [jid], 'approve');
     }
-    message.reply(`_Approved ${res.length} user(s)_`);
+    return void (await message.reply(`_Approved ${res.length} user(s)_`));
   },
 });
 
@@ -97,7 +99,7 @@ CreatePlug({
   desc: 'Rejects users from group joining',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
     if (!message.isGroup) return;
-    if (!message.isBotAdmin) return message.reply('_not admin_');
+    if (!message.isBotAdmin) return void (await message.reply('_not admin_'));
     if (!message.isAdmin) return;
     const res = await conn.groupRequestParticipantsList(message.user);
     if (!res || res.length === 0) return;
@@ -105,7 +107,7 @@ CreatePlug({
       const jid = participant.jid || `${participant.id}@s.whatsapp.net`;
       await conn.groupRequestParticipantsUpdate(message.user, [jid], 'reject');
     }
-    message.reply('_Pending rejected_');
+    return void (await message.reply('_Pending rejected_'));
   },
 });
 
@@ -124,10 +126,10 @@ CreatePlug({
         await conn.groupParticipantsUpdate(message.user, [user.id], 'remove');
         await new Promise(resolve => setTimeout(resolve, 500));
       }
-      return message.reply(`${arg.length} _user(s) removed_`);
+      return void (await message.reply(`${arg.length} _user(s) removed_`));
     }
     if (!arg || isNaN(arg.replace('+', ''))) {
-      return message.reply('Please provide a valid country code (e.g., `kick +27`).');
+      return void (await message.reply('Please provide a valid country code (e.g., `kick +27`).'));
     }
     const { participants } = await conn.groupMetadata(message.user);
     const cam = participants.filter(member => member.id.split('@')[0].startsWith(arg.replace('+', '')));
@@ -136,7 +138,7 @@ CreatePlug({
       await conn.groupParticipantsUpdate(message.user, [user.id], 'remove');
       await new Promise(resolve => setTimeout(resolve, 500));
     }
-    return message.reply(`${cam.length} _user(s) removed_`);
+    return void (await message.reply(`${cam.length} _user(s) removed_`));
   },
 });
 
@@ -166,10 +168,10 @@ CreatePlug({
   desc: 'Lock the group invite',
   execute: async (message: any, conn: any): Promise<void> => {
     if (!message.isGroup) return;
-    if (!message.isBotAdmin) return message.reply('_um not admin_');
+    if (!message.isBotAdmin) return void (await message.reply('_um not admin_'));
     if (!message.isAdmin) return;
     await conn.groupSettingUpdate(message.user, 'locked');
-    message.reply('_Done_');
+    return void (await message.reply('_Done_'));
   },
 });
 
@@ -197,9 +199,9 @@ CreatePlug({
   desc: 'Promote members',
   execute: async (message: any, conn: any, args: string[]): Promise<void> => {
     if (!message.isGroup) return;
-    if (!message.isBotAdmin) return message.reply('_not an admin_');
+    if (!message.isBotAdmin) return void (await message.reply('_not an admin_'));
     if (!message.isAdmin) return;
-    if (!args) return message.reply('_Please mention the user_');
+    if (!args) return void (await message.reply('_Please mention the user_'));
     let target: string | undefined;
     if (message.message.extendedTextMessage && message.message.extendedTextMessage.contextInfo) {
       target = message.message.extendedTextMessage.contextInfo.mentionedJid[0];
@@ -208,7 +210,7 @@ CreatePlug({
     }
     if (!target) return;
     await conn.groupParticipantsUpdate(message.user, [target], 'promote');
-    message.reply(`_promoted_ ${target.replace('@s.whatsapp.net', '')} as admin`);
+    return void (await message.reply(`_promoted_ ${target.replace('@s.whatsapp.net', '')} as admin`));
   },
 });
 
@@ -218,9 +220,9 @@ CreatePlug({
   desc: 'Demote members',
   execute: async (message: any, conn: any, args: string[]): Promise<void> => {
     if (!message.isGroup) return;
-    if (!message.isBotAdmin) return message.reply('_um not an admin_');
+    if (!message.isBotAdmin) return void (await message.reply('_um not an admin_'));
     if (!message.isAdmin) return;
-    if (!args) return message.reply('_Please mention the user_');
+    if (!args) return void (await message.reply('_Please mention the user_'));
     let target: string | undefined;
     if (message.message.extendedTextMessage && message.message.extendedTextMessage.contextInfo) {
       target = message.message.extendedTextMessage.contextInfo.mentionedJid[0];
@@ -229,7 +231,7 @@ CreatePlug({
     }
     if (!target) return;
     await conn.groupParticipantsUpdate(message.user, [target], 'demote');
-    message.reply(`_demoted_ ${target.replace('@s.whatsapp.net', '')}`);
+    return void (await message.reply(`_demoted_ ${target.replace('@s.whatsapp.net', '')}`));
   },
 });
 
@@ -239,21 +241,21 @@ CreatePlug({
   desc: 'Open or close the group',
   execute: async (message: any, conn: any, args: string[]): Promise<void> => {
     if (!message.isGroup) return;
-    if (!message.isBotAdmin) return message.reply('_I need to be an admin to perform this action_');
+    if (!message.isBotAdmin) return void (await message.reply('_I need to be an admin to perform this action_'));
     if (!message.isAdmin) return;
-    if (!args || args.length === 0) return message.reply('_Usage: group open/close_');
+    if (!args || args.length === 0) return void (await message.reply('_Usage: group open/close_'));
     const action = args[0].toLowerCase();
     const data = await conn.groupMetadata(message.user);
     if (action === 'close') {
-      if (data.announce) return message.reply('_The group is already closed_');
+      if (data.announce) return void (await message.reply('_The group is already closed_'));
       await conn.groupSettingUpdate(message.user, 'announcement');
-      message.reply('_The group has been muted (closed)_');
+      return void (await message.reply('_The group has been muted (closed)_'));
     } else if (action === 'open') {
-      if (!data.announce) return message.reply('_The group is already open_');
+      if (!data.announce) return void (await message.reply('_The group is already open_'));
       await conn.groupSettingUpdate(message.user, 'not_announcement');
-      message.reply('_The group has been unmuted (opened)_');
+      return void (await message.reply('_The group has been unmuted (opened)_'));
     } else {
-      message.reply('_Invalid option. Use: group open/close_');
+     return void (await message.reply('_Invalid option. Use: group open/close_'));
     }
   },
 });
@@ -267,14 +269,14 @@ CreatePlug({
     if (!message.isGroup) return;
     if (!message.isBotAdmin) return message.reply('_um not admin_');
     if (!message.isAdmin) return;
-    if (!args) return message.reply('_Please mention a member_');
+    return void (await message.react("✅"));
+    if (!args) return void (await message.reply('_Please mention a member_'));
     let target: string | undefined = message.message.extendedTextMessage?.contextInfo?.mentionedJid[0] || (args.includes('@s.whatsapp.net') ? args : args + '@s.whatsapp.net');
     if (!target) return;
     await conn.groupParticipantsUpdate(message.user, [target], 'remove')
       .then(() => message.reply(`_removed_ ${target.replace('@s.whatsapp.net', '')}`))
       .catch((error) => { 
         console.error(error); 
-        message.reply('err'); 
       });
   },
 });
@@ -285,6 +287,7 @@ CreatePlug({
   desc: 'Get information about the group',
   execute: async (message: any, conn: any): Promise<void> => {
     if (!message.isGroup) return;
+    return void (await message.react("✅"));
     const groupMetadata = await conn.groupMetadata(message.user);
     const name = groupMetadata.subject;
     const desc = groupMetadata.desc;
@@ -304,7 +307,8 @@ CreatePlug({
   execute: async (message: any, conn: any): Promise<void> => {
     const isAdmin = message.isAdmin;
     if (!isAdmin) return;
+    return void (await message.react("✅"));
     const _invites = await conn.groupInviteCode(message.user);
-    await message.reply(`*Group Link*:\nhttps://chat.whatsapp.com/${_invites}`);
+    return void (await message.reply(`*Group Link*:\nhttps://chat.whatsapp.com/${_invites}`));
   }
 });
