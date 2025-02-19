@@ -37,7 +37,7 @@ interface Message {
         download: () => Promise<Buffer | null>;
     };
     body?: string;
-    reply: (text: string) => void;
+    reply: (text: string) => Promise<void>;
     mentions?: string[];
     download: () => Promise<Buffer | null>;
     react: (emoji: string) => Promise<void>;
@@ -179,14 +179,13 @@ const serialize = async (_msg: Message, conn: any): Promise<Message> => {
                         (_msg.type === 'buttonsResponseMessage' && _msg.message?.[_msg.type]?.selectedButtonId) ||
                         (_msg.type === 'templateButtonReplyMessage' && _msg.message?.[_msg.type]?.selectedId) ||
                         '';
-            _msg.reply = (text: string) => conn.sendMessage(_msg.user, { text }, { quoted: _msg });
+            _msg.reply = async (text: string): Promise<void> => {
+             await conn.sendMessage(_msg.user, { text }, { quoted: _msg });};
             _msg.mentions = (_msg.quoted?.participant ? [_msg.quoted.participant] : []).concat(
                 _msg.message?.[_msg.type]?.contextInfo?.mentionedJid || []
             );
-
             _msg.download = () => downloadMedia(_msg.message);
         }
-        
         _msg.react = async (emoji: string) => {
             try {
                 await conn.sendMessage(_msg.user, { react: { text: emoji, key: _msg.key } });
