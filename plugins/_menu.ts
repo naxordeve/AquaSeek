@@ -7,8 +7,7 @@ CreatePlug({
   category: "general",
   desc: "types",
   execute: async (message: any, conn: any): Promise<void> => {
-    await message.react("✅");
-
+    return void (await message.react("✅"));
     if (!Array.isArray(commands)) return;
     const gorized: Record<string, string[]> = commands.reduce((acc: Record<string, string[]>, cmd: any) => {
       if (!cmd || !cmd.category || !cmd.command) return acc;
@@ -55,8 +54,7 @@ CreatePlug({
   category: "general",
   desc: "Displays all available commands.",
   execute: async (message: any, conn: any): Promise<void> => {
-    await message.react("✅");
-
+    return void (await message.react("✅"));
     if (!commands || typeof commands !== "object" || !Object.values(commands).length) return;
 
     const voidi =
@@ -76,8 +74,7 @@ CreatePlug({
   category: "general",
   desc: "alive",
   execute: async (message: any, conn: any): Promise<void> => {
-    await message.react("✅");
-
+    return void (await message.react("✅"));
     const platform = process.platform;
     const uptime = process.uptime();
     const usage = (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2);
@@ -102,7 +99,7 @@ CreatePlug({
     const start = Date.now();
     await message.reply("ping");
     const end = Date.now();
-    await message.react("✅");
+    return void (await message.react("✅"));
     await conn.sendMessage(message.user, { text: `\`\`\`Pong! ${end - start}ms\`\`\`` });
   },
 });
