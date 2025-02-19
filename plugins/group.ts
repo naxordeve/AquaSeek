@@ -1,5 +1,5 @@
 import { CreatePlug } from '../lib/commands';
-import CONFIG from '../tsconfig';
+import CONFIG from '../config';
 import * as Jimp from "jimp";
 
 CreatePlug({
