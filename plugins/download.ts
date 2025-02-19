@@ -1,6 +1,5 @@
-import { CreatePlug } from '../lib/commands';
+import { CreatePlug } from '../lib/index';
 import axios from 'axios';
-import fetch from 'node-fetch';
 import CONFIG from '../config';
 import { Func } from './functions/fbdl';
 import { Ring } from './functions/Ring';
@@ -16,7 +15,7 @@ CreatePlug({
     match = match || message.message.text;
     const eg = me.exec(match);
     if (!eg) return void (await message.reply('_invalid repo_'));
-    return void (await message.react("✅"));
+    await message.react("✅");
     const [_, username, repo] = eg;
     const api = `https://api.github.com/repos/${username}/${repo.replace(/\.git$/, "")}`;
     const voidi = await axios.get(api).catch(() => null);
@@ -32,9 +31,9 @@ CreatePlug({
   category: 'download',
   desc: 'Download media from SnackVideo',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
-    match = match || message.message.text;
+    match = match || message.quoted.message.text;
     if (!match) return void (await message.reply('_Please provide a valid url_'));
-    return void (await message.react("✅"));
+    await message.react("✅");
     const voidi = await APIUtils.SnackVideo(match);
     if (voidi) {
       await conn.sendMessage(message.user, {
@@ -52,9 +51,9 @@ CreatePlug({
   category: 'download',
   desc: 'Download media from SeeGore',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
-    match = match || message.message.text;
+    match = match || message.quoted.message.text;
     if (!match) return void (await message.reply('_Please provide a valid SeeGore url_'));
-    return void (await message.react("✅"));
+    await message.react("✅"));
     const voidi = await APIUtils.SeeGore(match);
     if (voidi) {
       await conn.sendMessage(message.user, {
@@ -73,7 +72,7 @@ CreatePlug({
   desc: 'send ringtones based on a query',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
     if (!match) return void (await message.reply('Please provide a search query'));
-    return void (await message.react("✅"));
+    await message.react("✅");
     const results = await Ring(match);
     if (!results?.length) return;
     const ringtone = results[0];
@@ -90,7 +89,7 @@ CreatePlug({
   execute: async (message: any, conn: any, match: string): Promise<void> => {
     if (!match) return void (await message.reply('_Please provide app name_'));
     match = match || message.quoted.message.text;
-    return void (await message.react("✅"));
+    await message.react("✅");
     const search = `https://bk9.fun/search/apk?q=${match}`;
     const smd = await fetch(search).then((res) => res.json());
     if (!smd || !smd.BK9 || smd.BK9.length === 0) return;
@@ -109,7 +108,7 @@ CreatePlug({
   execute: async (message: any, conn: any, match: string): Promise<void> => {
     match = match || message.message.text;
     if (!match) return void (await message.reply('_Please provide a Facebook video URL_'));
-    return void (await message.react("✅"));
+    await message.react("✅");
     const voidi = await Func(match);
     if (!voidi) return void (await message.reply('_err_'));
     const smd = voidi["720p"] || voidi["360p"];
@@ -126,7 +125,7 @@ CreatePlug({
   execute: async (message: any, conn: any, match: string): Promise<void> => {
     match = match || message.quoted.message.text;
     if (!match) return void (await message.reply('_provide SoundCloud url_'));
-    return void (await message.react("✅"));
+    await message.react("✅");
     const result = await SoundCloud(match);
     if (!result.success) return;
     await conn.sendMessage(message.user, {
@@ -150,7 +149,7 @@ CreatePlug({
   execute: async (message: any, conn: any, match: string): Promise<void> => {
     match = match || message.quoted.message.text;
     if (!match) return void (await message.reply('Provide a YouTube url'));
-    return void (await message.react("✅"));
+    await message.react("✅");
     const result = await YtPost(match);
     if (!result.success) return;
     const caption = result.content ? `${result.content}\n${result.postld}\nMade with❣️` : 'Made with❣️';
@@ -168,7 +167,7 @@ CreatePlug({
   execute: async (message: any, conn: any, match: string): Promise<void> => {
     match = match || message.quoted.message.text;
     if (!match) return void (await message.reply('Provide a Pinterest url'));
-    return void (await message.react("✅"));
+    await message.react("✅");
     const result = await Pinterest(match);
     if (!result.success) return;
     const caption = result.id ? `Post ID: ${result.id}\n\n${result.createdAt}\nMade with❣️` : 'Made with❣️';
@@ -185,7 +184,7 @@ CreatePlug({
   desc: 'Fetches Lahelu post details',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
     if (!match) return void (await message.reply('Provide a Lahelu url'));
-    return void (await message.react("✅"));
+    await message.react("✅");
     const result = await Lahelu(match);
     if (!result.success) return;
     const caption = result.title ? `${result.title}\nMade with❣️` : 'Made with❣️';
@@ -215,7 +214,7 @@ CreatePlug({
   execute: async (message: any, conn: any, match: string): Promise<void> => {
     match = match || message.quoted.message.text;
     if (!match) return void (await message.reply('Provide a CapCut url'));
-    return void (await message.react("✅"));
+    await message.react("✅");
     const result = await CapCut(match);
     if (!result.success) return;
     const caption = result.title ? `${result.title}\nMade with❣️` : 'Made with❣️';
