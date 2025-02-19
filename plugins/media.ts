@@ -1,5 +1,5 @@
 import { Sticker } from 'wa-sticker-formatter';
-import { CreatePlug } from '../lib/commands';
+import { CreatePlug } from '../lib/index';
 import CONFIG from '../config';
 import * as axios from 'axios';
 
@@ -25,7 +25,7 @@ CreatePlug({
         return void (await message.reply('_translate language_'));
         const text = message.quoted.message.conversation;
         if (!match) return void (await message.reply('_Specify a language code. Example: translate zu_'));
-        return void (await message.react("✅"));
+        await message.react("✅");
         return void (await message.reply('_Translating..._'));
         const translatedText = await translate(text, match.trim()).catch(() => null);
         if (translatedText) {
@@ -55,7 +55,7 @@ CreatePlug({
     execute: async (message: any, conn: any): Promise<void> => {
         if (!message.quoted?.message?.imageMessage) 
         return void (await message.reply('_Reply to an image to upscale it_'));
-        return void (await message.react("✅"));
+        await message.react("✅");
         return void (await message.reply('_Processing image, please wait..._'));
         const buffer = await message.quoted.download();
         const upscaledImage = await Upscale(buffer).catch(() => null);
@@ -88,7 +88,7 @@ CreatePlug({
     execute: async (message: any, conn: any): Promise<void> => {
         if (!message.quoted?.message?.imageMessage) 
          return void (await message.reply('_Reply to an image to remove its background_'));
-        return void (await message.react("✅"));
+         await message.react("✅");
         return void (await message.reply('_Processing image, please wait..._'));
         const buffer = await message.quoted.download();
         const bgRemovedUrl = await removebg(buffer).catch(() => null);
@@ -107,7 +107,7 @@ CreatePlug({
     execute: async (message: any, conn: any): Promise<void> => {
         if (!message.quoted?.message) 
         return void (await message.reply('_Reply to an image, GIF, or video to create a sticker_'));
-        return void (await message.react("✅"));
+        await message.react("✅");
         const buffer = await message.quoted.download();
         if (!buffer) return;
         const pack = CONFIG.APP.STICKER_PACKNAME || 'Sticker Pack';
@@ -132,7 +132,7 @@ CreatePlug({
     execute: async (message: any, conn: any, match: string): Promise<void> => {
         if (!message.quoted?.message) 
         return void (await message.reply('_Reply to a sticker_'));
-        return void (await message.react("✅"));
+        await message.react("✅");
         let pack = CONFIG.APP.STICKER_PACKNAME || 'Diego';
         let author = 'NᴀxᴏʀDᴇᴠɪ';
         if (match) {
@@ -164,7 +164,7 @@ CreatePlug({
     desc: 'Flux image generator',
     execute: async (message: any, conn: any, match: string): Promise<void> => {
         if (!match) return void (await message.reply('_Please provide a prompt_'));
-        return void (await message.react("✅"));
+        await message.react("✅");
         const imageUrl = `https://api.siputzx.my.id/api/ai/flux?prompt=${encodeURIComponent(match)}`;
         return void (await message.reply('_Loading..._'));
         await conn.sendMessage(message.user, {
@@ -180,7 +180,7 @@ CreatePlug({
     desc: 'Stable Diffusion image generator',
     execute: async (message: any, conn: any, match: string): Promise<void> => {
         if (!match) return void (await message.reply('_Please provide a prompt_'));
-        return void (await message.react("✅"));
+        await message.react("✅");
         const imageUrl = `https://api.siputzx.my.id/api/ai/stable-diffusion?prompt=${encodeURIComponent(match)}`;
         return void (await message.reply('_Loading..._'));
         await conn.sendMessage(message.user, {
