@@ -1,4 +1,4 @@
-import { CreatePlug } from '../lib/commands';
+import { default as CreatePlug } from '../lib/index';
 import axios from 'axios';
 
 interface Song { title: string; duration: string; thumbnail: string; link: string; }
@@ -7,12 +7,11 @@ interface DownloadTB {
   media: { type: string; size: string; link: string }[]; 
 }
 const Metadata = async (query: string): Promise<Song[]> => {
-  const { data } = await axios.get(`https://diegoson-naxordeve.hf.space/tubidy/search?q=${query}`);
-  return data;
-};
+const { data } = await axios.get(`https://diegoson-naxordeve.hf.space/tubidy/search?q=${query}`);
+return data;};
 const downloads = async (url: string): Promise<DownloadTB> => {
-  const { data } = await axios.get(`https://diegoson-naxordeve.hf.space/tubidy/dl?url=${url}`);
-  return data;
+const { data } = await axios.get(`https://diegoson-naxordeve.hf.space/tubidy/dl?url=${url}`);
+return data;
 };
 
 CreatePlug({
