@@ -1,5 +1,5 @@
 import axios from "axios";
-import { CreatePlug } from "../lib/commands";
+import { default as CreatePlug } from "../lib/index";
 
 CreatePlug({
   command: "ssweb",
@@ -8,7 +8,7 @@ CreatePlug({
   execute: async (message: any, conn: any, match: string): Promise<void> => {
     match = match || message.quoted?.message?.conversation;
     if (!match || !match.startsWith("http")) return void (await message.reply("_Please provide a valid URL_"));
-    return void (await message.react("✅"));
+    await message.react("✅"));
     const screenshotUrl = `https://bk9.fun/tools/screenshot?url=${match}&device=phone`;
     try { const response = await axios.get(screenshotUrl, { responseType: "arraybuffer" });
       if (response.status !== 200) return;
@@ -31,7 +31,7 @@ CreatePlug({
     const ttsUrl = `https://bk9.fun/tools/tts-beast?q=${match}`;
     try { const response = await axios.get(ttsUrl, { responseType: "arraybuffer" });
       if (response.status !== 200) return;
-      return void (await message.react("✅"));
+      await message.react("✅"));
       await conn.sendMessage(message.user, {
         audio: response.data,
         mimetype: "audio/mpeg",
