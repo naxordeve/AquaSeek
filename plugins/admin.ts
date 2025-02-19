@@ -1,4 +1,4 @@
-import { CreatePlug } from "../lib/commands";
+import { CreatePlug } from "../lib/index";
 
 CreatePlug({
   command: "block",
