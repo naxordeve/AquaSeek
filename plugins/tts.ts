@@ -1,4 +1,4 @@
-import { CreatePlug } from '../lib/commands';
+import { default as CreatePlug } from '../lib/index';
 import gTTS from 'gtts';
 
 CreatePlug({
