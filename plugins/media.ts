@@ -1,6 +1,6 @@
 import { Sticker } from 'wa-sticker-formatter';
 import { CreatePlug } from '../lib/commands';
-import CONFIG from '../tsconfig';
+import CONFIG from '../config';
 import * as axios from 'axios';
 
 async function translate(query: string = "", lang: string): Promise<string> {
