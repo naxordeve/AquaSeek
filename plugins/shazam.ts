@@ -44,13 +44,12 @@ CreatePlug({
   desc: "Identify a song from an audio message.",
   execute: async (message: any, conn: any): Promise<void> => {
     if (!message.quoted || !message.quoted.message) {
-      return await message.reply("_Reply to an audio or video message to identify the song_");
+      return void (await message.reply("_Reply to an audio or video message to identify the song_"));
     }
-
+    return void (await message.react("✅"));
     const buffer: Buffer = await message.quoted.download();
     const result = await Shazam(buffer);
     if (!result || result.length === 0) return;
-
     for (const song of result) {
       const responseText = `*🎧Title:* ${song.title}\n` +
                            `*👤Artist:* ${song.artist}\n` +
