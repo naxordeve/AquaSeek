@@ -8,7 +8,7 @@ CreatePlug({
   execute: async (message: any, conn: any, match: string): Promise<void> => {
     match = match || message.quoted.text;
     if (!match) return void (await message.reply("_Please provide a valid twitter url_"));
-    return void (await message.react("✅"));
+    await message.react("✅");
     const data = await twitter(match);
     if (!data || !Array.isArray(data.download) || data.download.length === 0) {
       return;
