@@ -29,13 +29,13 @@ CreatePlug({
     desc: 'Uploads media and returns a URL',
     execute: async (message: any, conn: any): Promise<void> => {
         if (!message.quoted || !message.quoted.message) {
-            return await message.reply('_Reply to an image, video, document, or mp3_');
+            return void (await message.reply('_Reply to an image, video, document, or mp3_'));
         }
         const buffer = await message.quoted.download();
         if (!buffer) return;
-        await message.reply('_Uploading..._');
+        return void (await message.reply('_Uploading..._'));
         const url = await uploadToCatbox(buffer);
-        await message.reply(url);
+        return void (await message.reply(url));
     },
 });
 
@@ -44,8 +44,8 @@ CreatePlug({
     category: 'game',
     desc: 'Search for games on Steam',
     execute: async (message: any, conn: any, match: string): Promise<void> => {
-        if (!match) return await message.reply('_Use: steam game_name_');
-        await message.reply('_Searching for game..._');
+        if (!match) return void (await message.reply('_Use: steam game_name_'));
+        return void (await message.reply('_Searching for game..._'));
         const results = await Steam.search(match).catch(() => null);
         if (!results || results.length === 0) return;
         const games = results
@@ -54,7 +54,7 @@ CreatePlug({
                     `*${index + 1}. ${game.name}*\n🆔 ID: ${game.id}\n💰 Price: ${game.price}\n⭐ Score: ${game.score}\n🖥️ Platform: ${game.platform}\nhttps://store.steampowered.com/app/${game.id})\n`
             )
             .join('\n');
-        await message.reply(`*Steam Game Search:*\n\n${games}`);
+        return void (await message.reply(`*Steam Game Search:*\n\n${games}`));
     },
 });
 
@@ -63,25 +63,23 @@ CreatePlug({
     category: 'game',
     desc: 'Get detailed info of a Steam game by ID',
     execute: async (message: any, conn: any, match: string): Promise<void> => {
-        if (!match) return await message.reply('_Use: steaminfo game_id_');
-        await message.reply('_Fetching game details..._');
+        if (!match) return void (await message.reply('_Use: steaminfo game_id_'));
+        return void (await message.reply('_Fetching game details..._'));
         const gameDetails = await Steam.detail(match).catch(() => null);
         if (!gameDetails || !gameDetails.metadata.title) return;
-
         let gameInfo = `*${gameDetails.metadata.title}*\n\n`;
         gameInfo += `📅 Release Date: ${gameDetails.metadata.release}\n`;
         gameInfo += `🎮 Genre: ${gameDetails.metadata.genre.join(', ')}\n`;
         gameInfo += `👨‍💻 Developer: ${gameDetails.metadata.developer.join(', ')}\n`;
         gameInfo += `📝 Description: ${gameDetails.metadata.description.slice(0, 500)}...\n\n`;
         gameInfo += `https://store.steampowered.com/app/${match})\n`;
-
         if (gameDetails.screenshot.length > 0) {
             await conn.sendMessage(message.user, {
                 image: { url: gameDetails.screenshot[0] },
                 caption: gameInfo,
             });
         } else {
-            await message.reply(gameInfo);
+            return void (await message.reply(gameInfo));
         }
 
         if (gameDetails.movies.length > 0) {
@@ -96,11 +94,11 @@ CreatePlug({
     category: 'game',
     desc: 'Lists all Zenless Zone Zero characters',
     execute: async (message: any, conn: any): Promise<void> => {
-        await message.reply('_Fetching character list..._');
+       return void (await message.reply('_Fetching character list..._'));
         const charList = await ZenlessZone.list().catch(() => null);
         if (!charList || charList.length === 0) return;
         const result = charList.map((ch: any) => `*${ch.name}* - [Info](${ch.url})`).join('\n');
-        await message.reply(`*Zenless Zone Zero:*\n\n${result}`);
+        return void (await message.reply(`*Zenless Zone Zero:*\n\n${result}`));
     },
 });
 
@@ -109,8 +107,8 @@ CreatePlug({
     category: 'game',
     desc: 'Get details of a specific Zenless Zone Zero character',
     execute: async (message: any, conn: any, match: string): Promise<void> => {
-        if (!match) return await message.reply('_Use: zzzchara character_name_');
-        await message.reply('_Fetching character info..._');
+        if (!match) return void (await message.reply('_Use: zzzchara character_name_'));
+        return void (await message.reply('_Fetching character info..._'));
         const charData = await ZenlessZone.chara(match).catch(() => null);
         if (!charData || !charData.info.name) return;
         let charInfo = `*${charData.info.name}*\nElement: ${charData.info.element}\n`;
