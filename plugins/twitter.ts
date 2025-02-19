@@ -1,5 +1,5 @@
 import { twitter } from "./functions/twitter";
-import { CreatePlug } from "../lib/commands";
+import { default as CreatePlug } from "../lib/index";
 
 CreatePlug({
   command: "twitter",
