@@ -22,7 +22,7 @@ CreatePlug({
     const isTik = url.match(tikrex);
     const isYT = url.match(ytrex);
     if (isIg) {
-      await message.reply("_Please wait..._");
+     return void (await message.reply("_Please wait..._"));
       const insta = await getInstagramReelDownloadURL(isIg[0]);
       return insta
         ? conn.sendMessage(message.user, { 
@@ -33,9 +33,9 @@ CreatePlug({
     }
 
     if (isFB) {
-      await message.reply("_Please wait..._");
+      return void (await message.reply("_Please wait..._"));
       const get = await Func(isFB[0]);
-      if (!get) return message.reply("_err_");
+      if (!get) return void (await message.reply("_err_"));
       const videoUrl = get["720p"] || get["360p"];
       if (!videoUrl) return;
       return conn.sendMessage(message.user, { 
@@ -45,9 +45,9 @@ CreatePlug({
     }
 
     if (isTik) {
-      await message.reply("_Please wait..._");
+     return void (await message.reply("_Please wait..._"));
       const tiktok = await getTikV3(isTik[0]);
-      if (!tiktok || !tiktok.dlv3) return message.reply("_err_");
+      if (!tiktok || !tiktok.dlv3) return void (await message.reply("_err_"));
       return conn.sendMessage(message.user, { 
         video: { url: tiktok.dlv3 }, 
         caption: `*Title:* ${tiktok.title}\n*Source:* ${isTik[0]}\n\n💦` 
@@ -55,7 +55,7 @@ CreatePlug({
     }
 
     if (isYT) {
-      await message.reply("_Please wait..._");
+      return void (await message.reply("_Please wait..._"));
       try {
         const response = await axios.get(`https://diegoson-naxordeve.hf.space/tomp3?url=${isYT[0]}`);
         if (response.data && response.data.link) {
@@ -65,7 +65,7 @@ CreatePlug({
           }, { quoted: message });
         }
       } catch (error) {
-        return message.reply("_err_");
+        return void (await message.reply("_err_"));
       }
     }
   }
