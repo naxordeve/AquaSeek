@@ -12,7 +12,7 @@
   },
   "include": [
     "lib/**/*.ts",
-    "index.ts",
+    "*.ts",
     "plugins/**/*.ts"
   ],
   "exclude": ["node_modules", "dist"]
