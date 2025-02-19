@@ -1,6 +1,6 @@
 import { CreatePlug } from '../lib/index';
 import { ChatGPT, GeminiAI } from './functions/gpt';
-import { Yousearch, BlackBox, AoyoContent, Venice, Mistral } from './functions/naxor';
+import { Yousearch, BlackBox, Venice, Mistral } from './functions/naxor';
 import { getMorphic } from './functions/morphic';
 import { Diffuser } from './functions/diffuser';
 
