@@ -3,7 +3,7 @@ import * as path from 'path';
 
 async function getPlugins(): Promise<string[]> {
     const commands: string[] = [];
-    const dir: string = path.join(__dirname, '..', 'plugins');
+    const dir: string = path.join(__dirname, '..', '..', 'plugins');
     if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir, { recursive: true });
     }
