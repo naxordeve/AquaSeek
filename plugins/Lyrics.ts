@@ -6,7 +6,8 @@ CreatePlug({
   category: "search",
   desc: "lyrics based on the query",
   execute: async (message: any, conn: any, match: string): Promise<void> => {
-    if (!match) return message.reply("_Please provide a song name_");
+    if (!match) return void (await message.reply("_Please provide a song name_"));
+    return void (await message.react("✅"));
     const response = await fetch(`https://diegoson-naxordeve.hf.space/api/lyrics?q=${match}`);
     const data: any[] = await response.json();
 
@@ -14,6 +15,6 @@ CreatePlug({
     
     const song = data[0]; 
     const Messag = `🎶 *${song.trackName}*\nby *${song.artistName}*\n\n${song.plainLyrics}`;
-    message.reply(Messag);
+    return void (message.reply(Messag));
   },
 });
