@@ -1,4 +1,4 @@
-import { CreatePlug } from '../lib/commands';
+import { CreatePlug } from '../lib/index';
 import * as Jimp from 'jimp';
 
 CreatePlug({
@@ -10,7 +10,7 @@ CreatePlug({
     if (!message.quoted || !message.quoted.message.imageMessage) {
       return void (await message.reply('_Please provide an image_'));
     }
-    return void (await message.react("✅"));
+    await message.react("✅");
     const sk = await message.quoted.download();
     const v = await Jimp.read(sk);
     const min = v.getWidth();
