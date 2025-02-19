@@ -1,6 +1,6 @@
-import { CreatePlug } from "../lib/commands";
+import { default as CreatePlug } from "../lib/index";
 import { Func } from "./functions/fbdl";
-import { extractUrlFromText } from "../lib/index";
+import { default as extractUrlFromText } from "../lib/index";
 import { getInstagramReelDownloadURL } from "./functions/insta_reels";
 import { getTikV3 } from "./functions/tiktokv3";
 import axios from "axios";
