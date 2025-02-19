@@ -80,8 +80,15 @@ async function startBot(): Promise<void> {
     msg.message = Object.keys(msg.message)[0] === 'ephemeralMessage' ? msg.message.ephemeralMessage.message : msg.message;
     const message = await serialize(msg, conn);
     if (!message || !message.key || !message.body) return;
-
-    if (CONFIG.APP.MODE === true && !message.isFromMe) return;
+    const x: string | undefined = message.key.remoteJid;
+  if ( x && 
+     message.sender !== x && ['protocolMessage', 'reactionMessage'].includes(message.type) && 
+        x === 'status@broadcast') {
+    if (!Object.keys(store.groupMetadata).length) {
+    store.groupMetadata = await conn.groupFetchAllParticipating();
+    }
+  return;
+}  if (CONFIG.APP.MODE === true && !message.isFromMe) return;
     const mek = message.body.trim();
     const isCmd = mek.startsWith(CONFIG.APP.PREFIX.toLowerCase());
     const textt = mek.slice(CONFIG.APP.PREFIX.length).trim();
