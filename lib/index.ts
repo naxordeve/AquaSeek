@@ -1,5 +1,4 @@
-export function extractUrlFromText(text: string): string[] {
-    const urlRegex: RegExp = /https?:\/\/[^\s]+/g;
-    const matches: string[] | null = text.match(urlRegex);
-    return matches || [];
-}
+export * from './wa_models/commands';
+export * from './wa_models/fancy';
+export * from './wa_models/extract';
+export * from './wa_models/plugins';
