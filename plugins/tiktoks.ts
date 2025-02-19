@@ -1,4 +1,4 @@
-import { CreatePlug } from "../lib/commands";
+import { CreatePlug } from "../lib/index";
 import TikTokS from "./functions/tiktoks";
 
 CreatePlug({
@@ -8,7 +8,7 @@ CreatePlug({
   execute: async (message: any, conn: any, match: string): Promise<void> => {
     match = match || message.message.text;
     if (!match) return void (await message.reply("_Please provide a search query_"));
-    return void (await message.react("✅"));
+    await message.react("✅"));
     const searcher = new TikTokS("https://api.diioffc.web.id/api/search/tiktok");
     const results = await searcher.search(match);
     if (results.error) return;
