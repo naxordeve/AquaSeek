@@ -1,75 +1,74 @@
-import fetch from 'node-fetch';
+import axios from 'axios';
 
-interface ApiResponse<T> {
+interface ApiGet<T> {
   success: boolean;
   message?: string;
   data?: T;
 }
 
 export const ApiHandlers = {
-  SoundCloud: async (url: string): Promise<ApiResponse<{ title: string; thumbnail: string; audioUrl: string }>> => {
+  SoundCloud: async (url: string): Promise<ApiGet<{ title: string; thumbnail: string; audioUrl: string }>> => {
     const search = `https://api.siputzx.my.id/api/d/soundcloud?url=${url}`;
-    const res = await fetch(search);
-    if (!res.ok) return { success: false, message: `${res.status}` };
-    const data = await res.json();
-    return data.status
-      ? { success: true, data: { title: data.data.title, thumbnail: data.data.thumbnail, audioUrl: data.data.url } }
-      : { success: false, message: 'err' };
+    try { const res = await axios.get(search);
+      const data = res.data;
+      return data.status
+        ? { success: true, data: { title: data.data.title, thumbnail: data.data.thumbnail, audioUrl: data.data.url } }
+        : { success: false, message: 'err' };
+    } catch (error) {
+      return { success: false, message: error.message };
+    }
   },
-
-  CapCut: async (capcutUrl: string): Promise<ApiResponse<any>> => {
+  CapCut: async (capcutUrl: string): Promise<ApiGet<any>> => {
     const _api = `https://api.siputzx.my.id/api/d/capcut?url=${capcutUrl}`;
-    return Apiget(_api);
+    return getApiget(_api);
   },
-
-  MusicApple: async (musicAppleUrl: string): Promise<ApiResponse<any>> => {
+  MusicApple: async (musicAppleUrl: string): Promise<ApiGet<any>> => {
     const _api = `https://api.siputzx.my.id/api/d/musicapple?url=${musicAppleUrl}`;
-    return Apiget(_api);
+    return getApiget(_api);
   },
-
-  AppleMusicSearch: async (query: string): Promise<ApiResponse<{ title: string; artist: string; link: string; image: string }[]>> => {
+  AppleMusicSearch: async (query: string): Promise<ApiGet<{ title: string; artist: string; link: string; image: string }[]>> => {
     const _api = `https://api.siputzx.my.id/api/s/applemusic?query=${query}`;
-    const response = await fetch(_api);
-    if (!response.ok) return { success: false, message: `${response.status}` };
-    const data = await response.json();
-    return data.status
-      ? {
-          success: true,
-          data: data.data.result.map((item: any) => ({
-            title: item.title,
-            artist: item.artist,
-            link: item.link,
-            image: item.image,
-          })),
-        }
-      : { success: false, message: 'err' };
+    try { const response = await axios.get(_api);
+      const data = response.data;
+      return data.status
+        ? {
+            success: true,
+            data: data.data.result.map((item: any) => ({
+              title: item.title,
+              artist: item.artist,
+              link: item.link,
+              image: item.image,
+            })),
+          }
+        : { success: false, message: 'err' };
+    } catch (error) {
+      return { success: false, message: error.message };
+    }
   },
-
-  YtPost: async (ytUrl: string): Promise<ApiResponse<any>> => {
+  YtPost: async (ytUrl: string): Promise<ApiGet<any>> => {
     const _api = `https://api.siputzx.my.id/api/d/ytpost?url=${ytUrl}`;
     return getApiget(_api);
   },
-
   Pinterest: async (pinterestUrl: string): Promise<ApiResponse<any>> => {
     const _api = `https://api.siputzx.my.id/api/d/pinterest?url=${pinterestUrl}`;
     return getApiget(_api);
   },
-
-  SaveFrom: async (videoUrl: string): Promise<ApiResponse<any>> => {
+  SaveFrom: async (videoUrl: string): Promise<ApiGet<any>> => {
     const _api = `https://api.siputzx.my.id/api/d/savefrom?url=${videoUrl}`;
     return getApiget(_api);
   },
-
-  Lahelu: async (laheluUrl: string): Promise<ApiResponse<any>> => {
+  Lahelu: async (laheluUrl: string): Promise<ApiGet<any>> => {
     const _api = `https://api.siputzx.my.id/api/d/lahelu?url=${laheluUrl}`;
-    return Apiget(_api);
+    return getApiget(_api);
   },
 };
 
-async function Apiget(apiUrl: string): Promise<ApiResponse<any>> {
-  const response = await fetch(apiUrl);
-  if (!response.ok) return { success: false, message: `${response.status}` };
-  const data = await response.json();
-  return data.status ? { success: true, data: data.data } : { success: false, message: 'err' };
-    }
-    
+async function getApiget(apiUrl: string): Promise<ApiGet<any>> {
+  try { const response = await axios.get(apiUrl);
+    const data = response.data;
+    return data.status ? { success: true, data: data.data } : { success: false, message: 'err' };
+  } catch (error) {
+    return { success: false, message: error.message };
+  }
+        }
+                    
