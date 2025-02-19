@@ -87,7 +87,7 @@ async function startBot(): Promise<void> {
     const textt = mek.slice(CONFIG.APP.PREFIX.length).trim();
     if (mek.startsWith('$')) {
     if (!message.isFromMe) return;
-    try {bconst code: string = mek.slice(1);
+    try { const code: string = mek.slice(1);
     const Fek: unknown = await (async () => eval(code))();
     const result: string = typeof Fek === 'string' ? Fek : util.inspect(Fek);
     await message.reply(result);
