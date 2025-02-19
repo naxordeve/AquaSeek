@@ -1,4 +1,4 @@
-import { CreatePlug } from '../lib/commands';
+import { CreatePlug } from '../lib/index';
 
 CreatePlug({
   command: 'neonglitch',
@@ -7,7 +7,7 @@ CreatePlug({
   execute: async (message: any, conn: any, match: string): Promise<void> => {
     const maker = match;
     if (!maker) return void (await message.reply("Please provide text to generate a neon glitch image"));
-    return void (await message.react("✅"));
+    await message.react("✅");
     const api = `https://vapis.my.id/api/neonglitch?q=${maker}`;
     await conn.sendMessage(message.user, { image: { url: api }, caption: "*Here is your neon glitch*" });
   },
@@ -19,7 +19,7 @@ CreatePlug({
   desc: 'Generate a 3D flag text image',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
     if (!match) return void (await message.reply("Please provide text to generate a 3D flag image"));
-    return void (await message.react("✅"));
+    await message.react("✅");
     const api = `https://vapis.my.id/api/flag3dtext?q=${match}`;
     await conn.sendMessage(message.user, { image: { url: api }, caption: "*Here is your 3D flag*" });
   },
@@ -31,7 +31,7 @@ CreatePlug({
   desc: 'Generate a pixel glitch text image',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
     if (!match) return void (await message.reply("Please provide text to generate a pixel glitch image"));
-    return void (await message.react("✅"));
+    await message.react("✅");
     const api = `https://vapis.my.id/api/pixelglitch?q=${match}`;
     await conn.sendMessage(message.user, { image: { url: api }, caption: "*Here is your pixel glitch*" });
   },
@@ -43,7 +43,7 @@ CreatePlug({
   desc: 'Generate a logo with your input text',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
     if (!match) return void (await message.reply("Please provide text to generate a logo"));
-    return void (await message.react("✅"));
+    await message.react("✅");
     const api = `https://vapis.my.id/api/logomaker?q=${match}`;
     await conn.sendMessage(message.user, { image: { url: api }, caption: "*Here is your logo*" });
   },
@@ -55,7 +55,7 @@ CreatePlug({
   desc: 'Generate an image with your input text written on it',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
     if (!match) return void (await message.reply("Please provide text to generate an image"));
-    return void (await message.react("✅"));
+    await message.react("✅");
     const api = `https://vapis.my.id/api/writetext?q=${match}`;
     await conn.sendMessage(message.user, { image: { url: api }, caption: "*Here is your text*" });
   },
@@ -67,7 +67,7 @@ CreatePlug({
   desc: 'Generate a sand summer text image with your input',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
     if (!match) return void (await message.reply("Please provide text to generate a sand summer image"));
-    return void (await message.react("✅"));
+    await message.react("✅");
     const api = `https://vapis.my.id/api/sandsummer?q=${match}`;
     await conn.sendMessage(message.user, { image: { url: api }, caption: "*Here is your sand summer*" });
   },
