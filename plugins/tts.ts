@@ -7,7 +7,7 @@ CreatePlug({
     desc: 'speech',
     execute: async (message: any, conn: any, match: string): Promise<void> => {
         if (!match) return void (await message.reply('_Need text_'));
-        return void (await message.react("✅"));
+        await message.react("✅");
         const tts = new gTTS(match, 'en');
         const path = '/tmp/tts.mp3';
         tts.save(path, async (err: Error) => {
