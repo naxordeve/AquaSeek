@@ -9,7 +9,7 @@ import * as fs from 'fs';
 import * as http from 'http';
 import { default as getPlugins } from './lib/plugins';
 import { serialize } from './lib/client';
-import { commands } from './lib/commands';
+import { commands } from './lib/index.ts';
 import CONFIG from './config';
 import useMongoAuthState from './lib/models/localdb';
 import NodeCache from 'node-cache';
