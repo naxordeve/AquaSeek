@@ -82,21 +82,29 @@ CreatePlug({
   }
 });
 
+import axios from 'axios';
+
 CreatePlug({
   command: 'apk',
   category: 'download',
   desc: 'Download APK',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
     if (!match) return void (await message.reply('_Please provide app name_'));
-    match = match || message.quoted.message.text;
+    match = match || message.quoted?.message?.text;
     await message.react("✅");
     const search = `https://bk9.fun/search/apk?q=${match}`;
-    const smd = await fetch(search).then((res) => res.json());
-    if (!smd || !smd.BK9 || smd.BK9.length === 0) return;
+    const { data: smd } = await axios.get(search);
+    if (!smd?.BK9?.length) return;
     const down = `https://bk9.fun/download/apk?id=${smd.BK9[0].id}`;
-    const voidi = await fetch(down).then((res) => res.json());
-    if (!voidi || !voidi.BK9 || !voidi.BK9.dllink) return message.reply('_err');
-    const detail = { document: { url: voidi.BK9.dllink }, fileName: voidi.BK9.name, mimetype: "application/vnd.android.package-archive", caption: `*${voidi.BK9.name}*\nMade with❣️` };
+    const { data: voidi } = await axios.get(down);
+    if (!voidi?.BK9?.dllink) return message.reply('_err');
+    const detail = {
+      document: { url: voidi.BK9.dllink },
+      fileName: voidi.BK9.name,
+      mimetype: "application/vnd.android.package-archive",
+      caption: `*${voidi.BK9.name}*\nMade with❣️`
+    };
+
     await conn.sendMessage(message.user, detail, { quoted: message });
   },
 });
