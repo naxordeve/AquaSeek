@@ -13,4 +13,4 @@ function CreatePlug({ command, category, desc, execute, on }: Command): void {
   commands.push(commandData);
 }
 
-export { commands, CreatePlug };
+export default { commands, CreatePlug };
