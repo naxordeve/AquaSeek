@@ -1,5 +1,5 @@
-import { commands, CreatePlug } from "../lib/commands";
-import { monospace } from "../lib/fancy";
+import { commands, CreatePlug } from "../lib/index";
+import { monospace } from "../lib/index";
 import CONFIG from "../config";
 
 CreatePlug({
