@@ -9,8 +9,8 @@ CreatePlug({
   category: 'Artificial',
   desc: 'Generate an image based on a prompt',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
-    await message.react('🎨');
-    if (!match) return message.reply('Please provide a prompt');
+    if (!match) return void (message.reply('Please provide a prompt'));
+    return void (await message.react("✅"));
     const voidi = await Diffuser(match);
     await conn.sendMessage(message.user, { image: voidi, caption: 'Diffuser\nMade with❣️' });
   }
@@ -21,12 +21,12 @@ CreatePlug({
   category: 'Artificial',
   desc: 'morphic ai hehe',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
-    await message.react('🗣️');
-    if (!match) return message.reply('_Need a prompt_');
+    if (!match) return void (message.reply('_Need a prompt_'));
+    return void (await message.react("✅"));
     const voidi = await getMorphic(match);
-    if (voidi.error) return message.reply(` ${voidi.error}`);
+    if (voidi.error) return void (await message.reply(` ${voidi.error}`));
     const _msg = `\n\n**${voidi.result}**\n\n**${voidi.related.join('\n')}**`;
-    await message.reply(_msg);
+    return void (await message.reply(_msg));
   }
 });
 
@@ -35,10 +35,10 @@ CreatePlug({
   category: 'Artificial',
   desc: 'Ask Gemini AI anything',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
-    await message.react('🗣️');
-    if (!match) return message.reply('_Please provide a query_');
+    if (!match) return void (await message.reply('_Please provide a query_'));
+    return void (await message.react("✅"));
     const voidi = await GeminiAI(match);
-    return message.reply(voidi);
+    return void (await message.reply(voidi));
   }
 });
 
@@ -47,10 +47,10 @@ CreatePlug({
   category: 'Artificial',
   desc: 'Ask ChatGPT anything',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
-    if (!match) return message.reply('_Please provide a prompt_');
-    await message.react('🗣️');
+    if (!match) return void (await message.reply('_Please provide a prompt_'));
+    return void (await message.react("✅"));
     const voidi = await ChatGPT(match);
-    return message.reply(voidi);
+    return void (await message.reply(voidi));
   }
 });
 
@@ -59,10 +59,10 @@ CreatePlug({
   category: 'Artificial',
   desc: '',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
-    await message.react('💡');
-    if (!match) return message.reply('Please provide a query');
+    if (!match) return void (await message.reply('Please provide a query'));
+    return void (await message.react("✅"));
     const voidi = await Yousearch(match);
-    return message.reply(voidi);
+    return void (await message.reply(voidi));
   }
 });
 
@@ -71,10 +71,10 @@ CreatePlug({
   category: 'Artificial',
   desc: 'Interact with the Venice AI',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
-    await message.react('💬');
-    if (!match) return message.reply('Please provide a prompt');
+    if (!match) return void (await message.reply('Please provide a prompt'));
+    return void (await message.react("✅"));
     const voidi = await Venice(match);
-    return message.reply(voidi);
+    return void (await message.reply(voidi));
   }
 });
 
@@ -83,22 +83,10 @@ CreatePlug({
   category: 'Artificial',
   desc: 'bbb_',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
-    await message.react('📦');
-    if (!match) return message.reply('_Please provide content_');
+    if (!match) return void (await message.reply('_Please provide content_'));
+    return void (await message.react("✅"));
     const voidi = await BlackBox(match);
-    return message.reply(voidi);
-  }
-});
-
-CreatePlug({
-  command: 'aoyo',
-  category: 'Artificial',
-  desc: 'Fetch information using the Aoyo',
-  execute: async (message: any, conn: any, match: string): Promise<void> => {
-    await message.react('📜');
-    if (!match) return message.reply('Please provide content');
-    const voidi = await AoyoContent(match);
-    return message.reply(voidi);
+    return void (await message.reply(voidi));
   }
 });
 
@@ -107,9 +95,9 @@ CreatePlug({
   category: 'Artificial',
   desc: 'Interact with the Mistral-7B Instruct',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
-    await message.react('🤖');
-    if (!match) return message.reply('Please provide content');
+    if (!match) return void (await message.reply('Please provide content'));
+    return void (await message.react("✅"));
     const res = await Mistral(match);
-    return message.reply(res);
+    return void (await message.reply(res));
   }
 });
