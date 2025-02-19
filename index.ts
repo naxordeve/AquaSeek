@@ -7,7 +7,7 @@ import * as util from 'util';
 import { File } from 'megajs';
 import * as fs from 'fs';
 import * as http from 'http';
-import { getPlugins } from './lib/plugins';
+import { default as getPlugins } from './lib/plugins';
 import { serialize } from './lib/client';
 import { commands } from './lib/commands';
 import CONFIG from './config';
