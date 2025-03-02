@@ -1,4 +1,4 @@
-import { CreatePlug } from '../lib/index';
+import { CreatePlug, getLang } from '../lib/index';
 import * as Jimp from 'jimp';
 
 CreatePlug({
@@ -7,8 +7,9 @@ CreatePlug({
   desc: 'fullpp profile',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
     if (!message.isFromMe) return;
+    const msgs = getLang();
     if (!message.quoted || !message.quoted.message.imageMessage) {
-      return void (await message.reply('_Please provide an image_'));
+      return void (await message.reply(msgs.fullpp_msg));
     }
     await message.react("✅");
     const sk = await message.quoted.download();
