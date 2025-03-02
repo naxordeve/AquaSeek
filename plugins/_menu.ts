@@ -20,14 +20,14 @@ CreatePlug({
       const now = new Date();
       const date = now.toLocaleDateString("en-ZA", { timeZone: "Africa/Johannesburg" });
       const time = now.toLocaleTimeString("en-ZA", { timeZone: "Africa/Johannesburg" });
-
+      var toStar = "✧";
       return `╭──╼【 ${monospace(CONFIG.APP.BOTNAME.toUpperCase())} 】\n` +
-             `┃ ✦ Prefix  : ${CONFIG.APP.PREFIX}\n` +
-             `┃ ✦ User    : ${message.pushName}\n` +
-             `┃ ✦ Mode    : ${CONFIG.APP.MODE}\n` +
-             `┃ ✦ Date    : ${date}\n` +
-             `┃ ✦ Time    : ${time}\n` +
-             `┃ ✦ Version : ${CONFIG.APP.VERSION}\n` +
+             `┃ ${toStar} Prefix  : ${CONFIG.APP.PREFIX}\n` +
+             `┃ ${toStar} User    : ${message.pushName}\n` +
+             `┃ ${toStar} Mode    : ${CONFIG.APP.MODE}\n` +
+             `┃ ${toStar} Date    : ${date}\n` +
+             `┃ ${toStar} Time    : ${time}\n` +
+             `┃ ${toStar} Version : ${CONFIG.APP.VERSION}\n` +
              `╰──────────╼`;
     };
 
