@@ -1,4 +1,4 @@
-import { CreatePlug, getLang } from '../lib/index';
+import { CreatePlug, getLang, extractUrlFromText } from '../lib/index';
 import axios from 'axios';
 import CONFIG from '../config';
 import { Func } from './functions/fbdl';
@@ -12,7 +12,7 @@ CreatePlug({
   desc: 'Clone a GitHub repository as a zip file',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
     const me = /(?:https?:\/\/|git@)github\.com[\/:]([^\/\s]+)\/([^\/\s]+)(?:\.git)?/;
-    match = match || message.message?.conversation;
+    match =  extractUrlFromText(match || message.message?.conversation);
     const msgs = getLang();
     const eg = me.exec(match);
     if (!eg) return void (await message.reply(msgs.git_msg));
@@ -32,7 +32,7 @@ CreatePlug({
   category: 'download',
   desc: 'Download media from SnackVideo',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
-    match = match || message.quoted.message?.conversation;
+    match = extractUrlFromText(match || message.quoted.message?.conversation);
     const msgs = getLang();
     if (!match) return void (await message.reply(msgs.snack_msg));
     await message.react("✅");
@@ -53,7 +53,7 @@ CreatePlug({
   category: 'download',
   desc: 'Download media from SeeGore',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
-    match = match || message.quoted.message?.conversation;
+    match = extractUrlFromText(match || message.quoted.message?.conversation);
     const msgs = getLang();
     if (!match) return void (await message.reply(msgs.seegro_msg));
     await message.react("✅");
@@ -117,7 +117,7 @@ CreatePlug({
   category: 'download',
   desc: 'Download Facebook videos',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
-    match = match || (message.message?.conversation);
+    match = extractUrlFromText(match || message.message?.conversation);
     const msgs = getLang();
     if (!match) return void (await message.reply(msgs.fb_msg));
     await message.react("✅");
@@ -135,7 +135,7 @@ CreatePlug({
   category: 'download',
   desc: 'SoundCloud audio download',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
-    match = match || (message.quoted.message?.conversation);
+    match = extractUrlFromText(match || message.quoted.message?.conversation);
     if (!match) return void (await message.reply(msgs.soundcloud));
     await message.react("✅");
     const result = await SoundCloud(match);
@@ -159,7 +159,7 @@ CreatePlug({
   category: 'download',
   desc: 'Fetches YouTube post details',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
-    match = match || (message.quoted.message?.conversation);
+    match = extractUrlFromText(match || message.quoted.message?.conversation);
     const msgs = getLang();
     if (!match) return void (await message.reply(msgs.ytpost_url));
     await message.react("✅");
@@ -178,7 +178,7 @@ CreatePlug({
   category: 'download',
   desc: 'Fetches Pinterest video details.',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
-    match = match || (message.quoted.message?.conversation);
+    match = extractUrlFromText(match || message.quoted.message?.conversation);
     const msgs = getLang();
     if (!match) return void (await message.reply(msgs.pinter_msg));
     await message.react("✅");
@@ -197,7 +197,7 @@ CreatePlug({
   category: 'download',
   desc: 'Fetches CapCut video details',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
-    match = match || (message.quoted.message?.conversation);
+    match = extractUrlFromText(match || message.quoted.message?.conversation);
     const msgs = getLang();
     if (!match) return void (await message.reply(msgs.capcut_msg));
     await message.react("✅");
