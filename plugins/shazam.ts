@@ -91,15 +91,7 @@ async function getDeezer(url: string): Promise<string | null> {
 function toTime(ms: number): string {
   const minutes = Math.floor(ms / 60000) % 60;
   const seconds = Math.floor(ms / 1000) % 60;
-  return [minutes, seconds].map((v) => v.toString().padStart(2, "0")).join(":");
-}
-
-interface Song {
-  title: string;
-  artist: string;
-  score: number;
-  release: string;
-  duration: string;
-  url: string;
-        }
+  return [minutes, seconds].map((v) => v.toString().padStart(2, "0")).join(":");}
+interface Song {title: string; artist: string; score: number; release: string; duration: string; url: string;
+      }
     
