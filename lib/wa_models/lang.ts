@@ -107,4 +107,4 @@ const getLang = (): Language => {
     return languages[lang] || languages['zulu'];  
 };
 
-export default getLang;
+export default  { getLang };
