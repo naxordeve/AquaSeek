@@ -6,7 +6,7 @@ CreatePlug({
   category: "search",
   desc: "Search for TikToker",
   execute: async (message: any, conn: any, match: string): Promise<void> => {
-    match = match || message.message?.text;
+    match = match || message.message?.conversation;
     const msgs = getLang();
     if (!match) return void (await message.reply(msgs.query_msg));
     await message.react("✅");
