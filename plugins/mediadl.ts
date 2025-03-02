@@ -1,4 +1,4 @@
-import { default as CreatePlug } from '../lib/index';
+import { CreatePlug, getLang } from '../lib/index';
 import { Func } from './functions/media';
 import tiktokdl from './functions/tiktokdl';
 import LeptonAPI from './functions/LeptonAPI';
@@ -8,7 +8,8 @@ CreatePlug({
   category: 'Artificial',
   desc: 'lepton ai',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
-    if (!match) return void (await message.reply('Please provide a prompt'));
+    const msgs = getLang();
+    if (!match) return void (await message.reply(msgs.gpt_msg));
     await message.react("✅");
     const apiKey = 'jawa';
     const lepton = new LeptonAPI(apiKey);
@@ -27,7 +28,8 @@ CreatePlug({
   category: 'download',
   desc: 'Download TikTok videos',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
-    if (!match) return void (await message.reply('_Please provide a TikTok URL_'));
+    const msgs = getLang();
+    if (!match) return void (await message.reply(msgs.tiktok_mgs));
     await message.react("✅");
     const videos = await tiktokdl(match).catch((error: Error) => message.reply(`${error.message}`));
     if (videos) {
@@ -44,7 +46,8 @@ CreatePlug({
   category: 'download',
   desc: 'Download Instagram videos',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
-    if (!match) return void (await message.reply('_Please provide an Instagram video URL_'));
+    const msgs = getLang();
+    if (!match) return void (await message.reply(msgs.instagram_msg));
     await message.react("✅");
     const result = await Func(match, 'instagram');
     if (result.platform === 'instagram' && result.mediaUrl) {
