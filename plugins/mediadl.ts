@@ -1,4 +1,4 @@
-import { CreatePlug, getLang } from '../lib/index';
+import { CreatePlug, getLang, extractUrlFromText } from '../lib/index';
 import { Func } from './functions/media';
 import tiktokdl from './functions/tiktokdl';
 import LeptonAPI from './functions/LeptonAPI';
@@ -29,6 +29,7 @@ CreatePlug({
   desc: 'Download TikTok videos',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
     const msgs = getLang();
+    match = extractUrlFromText(match || message.message?.conversation); 
     if (!match) return void (await message.reply(msgs.tiktok_mgs));
     await message.react("✅");
     const videos = await tiktokdl(match).catch((error: Error) => message.reply(`${error.message}`));
@@ -47,6 +48,7 @@ CreatePlug({
   desc: 'Download Instagram videos',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
     const msgs = getLang();
+    match = extractUrlFromText(match || message.message?.conversation); 
     if (!match) return void (await message.reply(msgs.instagram_msg));
     await message.react("✅");
     const result = await Func(match, 'instagram');
