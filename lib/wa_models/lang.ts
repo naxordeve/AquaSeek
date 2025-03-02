@@ -24,7 +24,17 @@ const languages: Record<string, Language> = {
       ytmp3_msg: "Please provide an YouTube url",
       ytmp3_invalid: "_Provide a valid url_",
         error_msg: "An error occurred. Please try again later",
-        gpt_prompt: "What would you like me to do?"
+        gpt_msg: "What would you like me to do?",
+        gpt_prompt: "What would you like me to do?",
+        seegro_msg: "Please provide a SeeGero url",
+        snack_msg: "Please provide a SnackVideo url",
+        ytpost_url: "Please provide the YouTube post url",
+        git_msg: "Please provide the GitHub repository url",
+        soundcloud: "Please provide a SoundCloud url",
+        apk_msg: "Please provide an APK name",
+        capcut_msg: "Please provide a CapCut url",
+        fullpp_msg: "Please provide the image"
+
     },
     zulu: {
         fb_msg: "Sicela unikeze i-URL ye-Facebook",
@@ -38,7 +48,15 @@ const languages: Record<string, Language> = {
       ytmp3_msg: "Cela unikeze i-url ye youtube",
       ytmp3_invalid: "_i url oyinikile ayilungang_",
         error_msg: "Kuvele iphutha. Ngicela uzame futhi",
-        gpt_prompt: "Ufunani ukuthi ngikwenzeleni?"
+        gpt_msg: "Ufunani ukuthi ngikwenzeleni?",
+        seegro_msg: "Sicela unikeze i-URL ye-SeeGero",
+        snack_msg: "Sicela unikeze i-URL ye-SnackVideo",
+        ytpost_url: "Sicela unikeze i-URL ye-YouTube post",
+        git_msg: "Sicela unikeze i-URL ye-Github repo",
+        soundcloud_msg: "Sicela unikeze i-URL ye-SoundCloud",
+        apk_msg: "Sicela unikeze igama leApp",
+        capcut_msg: "Sicela unikeze i-URL ye-CapCu",
+        fullpp_msg: "Sicela unikeze isthombe"
     },
     sotho: {
         fb_msg: "Ka kopo fana ka URL ea Facebook",
@@ -50,7 +68,8 @@ const languages: Record<string, Language> = {
         ytdl_msg: "Ka kopo fana ka URL ea YouTube",
         ytdl_invalid: "URL ea YouTube ha e sebetse",
         error_msg: "Ho na le phoso. Ka kopo leka hape",
-        gpt_prompt: "O batla ke etse'ng?"
+        gpt: "O batla ke etse'ng?"
+        
     },
     pedi: {
         fb_msg: "Ka kgopela o neele URL ya Facebook",
@@ -62,7 +81,7 @@ const languages: Record<string, Language> = {
         ytdl_msg: "Ka kgopela o neele URL ya YouTube",
         ytdl_invalid: "URL ya YouTube ga e a loka",
         error_msg: "Go diragetse phošo. Ka kgopela leka gape",
-        gpt_prompt: "O nyaka ke dire eng?"
+        gpt: "O nyaka ke dire eng?"
     },
     shona: {
         fb_msg: "Ndokumbira upe URL yeFacebook",
@@ -74,7 +93,7 @@ const languages: Record<string, Language> = {
         ytdl_msg: "Ndokumbira upe URL yeYouTube",
         ytdl_invalid: "URL yeYouTube yawapa haina kunaka",
         error_msg: "Pane dambudziko. Ndokumbira uedze zvakare",
-        gpt_prompt: "Unoda kuti ndiitei?"
+        gpt: "Unoda kuti ndiitei?"
     },
     indo: {
         fb_msg: "Silakan berikan URL Facebook",
@@ -86,7 +105,7 @@ const languages: Record<string, Language> = {
         ytdl_msg: "Silakan berikan URL YouTube",
         ytdl_invalid: "URL YouTube yang diberikan tidak valid",
         error_msg: "Terjadi kesalahan. Silakan coba lagi nanti",
-        gpt_prompt: "Apa yang bisa saya bantu?"
+        gpt: "Apa yang bisa saya bantu?"
     },
     urdu: {
         fb_msg: "براہ کرم فیس بک کا یو آر ایل فراہم کریں۔",
@@ -98,7 +117,7 @@ const languages: Record<string, Language> = {
         ytdl_msg: "براہ کرم یوٹیوب کا یو آر ایل فراہم کریں۔",
         ytdl_invalid: "غلط یوٹیوب یو آر ایل فراہم کیا گیا ہے۔",
         error_msg: "ایک خرابی پیش آگئی ہے۔ براہ کرم دوبارہ کوشش کریں۔",
-        gpt_prompt: "آپ کیا چاہتے ہیں کہ میں کروں؟"
+        gpt: "آپ کیا چاہتے ہیں کہ میں کروں؟"
     }
 };
 
