@@ -1,3 +1,4 @@
+
 import { CreatePlug } from "../lib/index"; 
 import acrcloud from "acrcloud";
 import axios from "axios";
@@ -21,12 +22,14 @@ CreatePlug({
     const buffer: Buffer = await message.quoted.download();
     const song = await FinderBro(buffer);
     if (!song) return;
-    const toBool = `*Title:* ${song.title}\n` +
+    const toBool = `╭───────────⊷
+       *Title:* ${song.title}\n` +
       `*Artist:* ${song.artist}\n` +
       `*Release Date:* ${song.release}\n` +
       `*Duration:* ${song.duration}\n` +
       `*Score:* ${song.score}\n` +
-      `*Url:* ${song.url}\n`;
+      `*Url:* ${song.url}
+      ╰───────────⊷\n`;
     const toThumb = await getThumbnail(song);
     if (toThumb) {
       await conn.sendMessage(message.user, {
