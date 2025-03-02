@@ -21,6 +21,9 @@ CreatePlug({
       const date = now.toLocaleDateString("en-ZA", { timeZone: "Africa/Johannesburg" });
       const time = now.toLocaleTimeString("en-ZA", { timeZone: "Africa/Johannesburg" });
       var toStar = "✧";
+      const memoryUsage = process.memoryUsage();
+      const usedMemoryMB = (memoryUsage.heapUsed / 1024 / 1024).toFixed(2);
+      const totalMemoryMB = (memoryUsage.heapTotal / 1024 / 1024).toFixed(2);
       return `╭──╼【 ${monospace(CONFIG.APP.BOTNAME.toUpperCase())} 】\n` +
              `┃ ${toStar} Prefix  : ${CONFIG.APP.PREFIX}\n` +
              `┃ ${toStar} User    : ${message.pushName}\n` +
@@ -28,6 +31,7 @@ CreatePlug({
              `┃ ${toStar} Date    : ${date}\n` +
              `┃ ${toStar} Time    : ${time}\n` +
              `┃ ${toStar} Version : ${CONFIG.APP.VERSION}\n` +
+             `┃ ${toStar} Memory  : ${usedMemoryMB}MB / ${totalMemoryMB}MB\n` +
              `╰──────────╼`;
     };
 
