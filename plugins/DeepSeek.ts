@@ -1,12 +1,13 @@
 import axios from "axios";
-import { CreatePlug } from "../lib/index";
+import { CreatePlug, getLang } from "../lib/index";
 
 CreatePlug({
   command: "deepseek",
   category: "Artificial",
   desc: "Chat with DeepSeek AI",
   execute: async (message: any, conn: any, match: string): Promise<void> => {
-    if (!match) return void (await message.reply("_Please provide a message_"));
+    const msgs = getLang();
+    if (!match) return void (await message.reply(msgs.deepseek_msg));
     await message.react("✅");
     const { data } = await axios
       .post("https://ai.clauodflare.workers.dev/chat", {
