@@ -11,31 +11,18 @@ CreatePlug({
     const urls: string[] = extractUrlFromText(message.body);
     if (!urls.length) return;
 
-    const igrex = /(?:https?:\/\/)?(?:www\.)?instagram\.com\/[^\s]+/i;
     const fbrex = /(?:https?:\/\/)?(?:www\.)?(?:facebook\.com|fb\.watch)\/[^\s]+/i;
     const tikrex = /(?:https?:\/\/)?(?:www\.)?tiktok\.com\/[^\s]+/i;
     const ytrex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be)\/[^\s]+/i;
 
     const url = urls[0];
-    const isIg = url.match(igrex);
     const isFB = url.match(fbrex);
     const isTik = url.match(tikrex);
     const isYT = url.match(ytrex);
-    if (isIg) {
-     return void (await message.reply("_Please wait..._"));
-      const insta = await getInstagramReelDownloadURL(isIg[0]);
-      return insta
-        ? conn.sendMessage(message.user, { 
-            video: { url: insta }, 
-            caption: `*Source:* ${isIg[0]}\n\n💦`
-          }, { quoted: message })
-        : message.reply("_err_");
-    }
 
     if (isFB) {
-      return void (await message.reply("_Please wait..._"));
       const get = await Func(isFB[0]);
-      if (!get) return void (await message.reply("_err_"));
+      if (!get) return void (await message.reply(""));
       const videoUrl = get["720p"] || get["360p"];
       if (!videoUrl) return;
       return conn.sendMessage(message.user, { 
@@ -45,9 +32,8 @@ CreatePlug({
     }
 
     if (isTik) {
-     return void (await message.reply("_Please wait..._"));
       const tiktok = await getTikV3(isTik[0]);
-      if (!tiktok || !tiktok.dlv3) return void (await message.reply("_err_"));
+      if (!tiktok || !tiktok.dlv3) return void (await message.reply(""));
       return conn.sendMessage(message.user, { 
         video: { url: tiktok.dlv3 }, 
         caption: `*Title:* ${tiktok.title}\n*Source:* ${isTik[0]}\n\n💦` 
@@ -55,8 +41,7 @@ CreatePlug({
     }
 
     if (isYT) {
-      return void (await message.reply("_Please wait..._"));
-      try {
+        try {
         const response = await axios.get(`https://diegoson-naxordeve.hf.space/tomp3?url=${isYT[0]}`);
         if (response.data && response.data.link) {
           return conn.sendMessage(message.user, { 
@@ -65,7 +50,7 @@ CreatePlug({
           }, { quoted: message });
         }
       } catch (error) {
-        return void (await message.reply("_err_"));
+        return void (await message.reply(""));
       }
     }
   }
