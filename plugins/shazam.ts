@@ -22,7 +22,8 @@ CreatePlug({
     const buffer: Buffer = await message.quoted.download();
     const song = await FinderBro(buffer);
     if (!song) return;
-    const toBool = `╭───────────⊷
+    const toBool = `⟨⟨ Shazam Finder⟩⟩\n
+      ╭───────────⊷
        *Title:* ${song.title}\n` +
       `*Artist:* ${song.artist}\n` +
       `*Release Date:* ${song.release}\n` +
