@@ -7,7 +7,7 @@ CreatePlug({
   category: "general",
   desc: "types",
   execute: async (message: any, conn: any): Promise<void> => {
-    if (!Array.isArray(commands)) return;
+    if (Object.prototype.toString.call(commands) !== '[object Array]') return;
     const gorized: Record<string, string[]> = commands.reduce((acc: Record<string, string[]>, cmd: any) => {
       if (!cmd || !cmd.category || !cmd.command) return acc;
       if (!acc[cmd.category]) acc[cmd.category] = [];
