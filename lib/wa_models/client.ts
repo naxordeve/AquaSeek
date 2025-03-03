@@ -1,4 +1,5 @@
 import { monospace } from "./fancy";
+import madann from "../../maradan/madan.json" assert { type: "json" };
 
 const toUsage = () => {
     const memoryUsage = process.memoryUsage();
@@ -11,9 +12,9 @@ const getCurrentDateTime = () => {
     const now = new Date();
     return {
         date: now.toLocaleDateString("en-ZA", { timeZone: "Africa/Johannesburg" }),
-        time: now.toLocaleTimeString("en-ZA", { timeZone: "Africa/Johannesburg" }),
+        time: now.toLocaleTimeString("en-ZA", { timeZone: "Africa/Johannesburg" })
     };
-};
+};  //var madann = toSt
 
 export const getSystemList = (
     botName: string,
@@ -24,17 +25,17 @@ export const getSystemList = (
 ): string => {
     const { date, time } = getCurrentDateTime();
     const memory = toUsage();
-    const toStar = "✧";
 
-    return [
-        `╭──╼【 ${monospace(botName.toUpperCase())} 】`,
-        `┃ ${toStar} Prefix  : ${prefix}`,
-        `┃ ${toStar} User    : ${pushName}`,
-        `┃ ${toStar} Mode    : ${mode}`,
-        `┃ ${toStar} Date    : ${date}`,
-        `┃ ${toStar} Time    : ${time}`,
-        `┃ ${toStar} Version : ${version}`,
-        `┃ ${toStar} Memory  : ${memory}`,
-        `╰──────────╼`
-    ].join("\n");
+    let _CXL_MENU = madann.systemListTemp;
+    _CXL_MENU = _CXL_MENU
+        .replace("{BOT_NAME}", monospace(botName.toUpperCase()))
+        .replace("{PREFIX}", prefix)
+        .replace("{USER}", pushName)
+        .replace("{MODE}", mode)
+        .replace("{DATE}", date)
+        .replace("{TIME}", time)
+        .replace("{VERSION}", version)
+        .replace("{MEMORY}", memory);
+
+    return _CXL_MENU;
 };
