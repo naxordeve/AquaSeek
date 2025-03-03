@@ -30,7 +30,7 @@ CreatePlug({
   execute: async (message: any, conn: any, match: string): Promise<void> => {
     const msgs = getLang();
     match = extractUrlFromText(match || message.message?.conversation); 
-    if (!match) return void (await message.reply(msgs.tiktok_mgs));
+    if (!match) return void (await message.reply(msgs.tiktok_msg));
     await message.react("✅");
     const videos = await tiktokdl(match).catch((error: Error) => message.reply(`${error.message}`));
     if (videos) {
@@ -49,7 +49,7 @@ CreatePlug({
   execute: async (message: any, conn: any, match: string): Promise<void> => {
     const msgs = getLang();
     match = extractUrlFromText(match || message.message?.conversation); 
-    if (!match) return void (await message.reply(msgs.instagram_msg));
+    if (!match) return void (await message.reply(msgs.insta_msg));
     await message.react("✅");
     const result = await Func(match, 'instagram');
     if (result.platform === 'instagram' && result.mediaUrl) {
