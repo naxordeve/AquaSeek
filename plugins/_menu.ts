@@ -24,15 +24,17 @@ CreatePlug({
         );
 
     const getCategory = (category: string, cmds: string[]): string => {
-            return `╭───╼【 *${monospace(category.toUpperCase())}* 】\n` +
-                   cmds.map(cmd => `┃ ∘ \`\`\`${cmd.toLowerCase()}\`\`\``).join("\n") +
-                   `\n╰──────────╼\n`;
-        };
+    return `╭───╼【 *${monospace(category.toUpperCase())}* 】\n` +
+           cmds.map(cmd => `┃ ∘ \`\`\`${cmd.toLowerCase()}\`\`\``).join("\n") +
+           `\n╰──────────╼\n`;
+};
 
-        let msg = _ctx + "\n\n";
-        for (const [category, cmds] of Object.entries(categorized)) {
-            msg += getCategory(category, cmds) + "\n";
-      }
+let msg = _ctx + "\n\n";
+for (const [category, cmds] of Object.entries(categorized)) {
+    if (Object.prototype.hasOwnProperty.call(categorized, category)) {
+        msg += getCategory(category, cmds) + "\n";
+     }
+  }
     
     const sent = await conn.sendMessage(message.user, { text: msg.trim() }, { quoted: message });
     if (!sent) {
