@@ -1,4 +1,4 @@
-import { commands, CreatePlug } from "../lib/index";
+import { commands, CreatePlug, getSystemList } from "../lib/index";
 import { monospace } from "../lib/index";
 import CONFIG from "../config";
 
@@ -7,7 +7,6 @@ CreatePlug({
   category: "general",
   desc: "types",
   execute: async (message: any, conn: any): Promise<void> => {
-    await message.react("✅");
     if (!Array.isArray(commands)) return;
     const gorized: Record<string, string[]> = commands.reduce((acc: Record<string, string[]>, cmd: any) => {
       if (!cmd || !cmd.category || !cmd.command) return acc;
@@ -16,39 +15,28 @@ CreatePlug({
       return acc;
     }, {});
 
-    const namo = (): string => {
-      const now = new Date();
-      const date = now.toLocaleDateString("en-ZA", { timeZone: "Africa/Johannesburg" });
-      const time = now.toLocaleTimeString("en-ZA", { timeZone: "Africa/Johannesburg" });
-      var toStar = "✧";
-      const memoryUsage = process.memoryUsage();
-      const usedMemoryMB = (memoryUsage.heapUsed / 1024 / 1024).toFixed(2);
-      const totalMemoryMB = (memoryUsage.heapTotal / 1024 / 1024).toFixed(2);
-      return `╭──╼【 ${monospace(CONFIG.APP.BOTNAME.toUpperCase())} 】\n` +
-             `┃ ${toStar} Prefix  : ${CONFIG.APP.PREFIX}\n` +
-             `┃ ${toStar} User    : ${message.pushName}\n` +
-             `┃ ${toStar} Mode    : ${CONFIG.APP.MODE}\n` +
-             `┃ ${toStar} Date    : ${date}\n` +
-             `┃ ${toStar} Time    : ${time}\n` +
-             `┃ ${toStar} Version : ${CONFIG.APP.VERSION}\n` +
-             `┃ ${toStar} Memory  : ${usedMemoryMB}MB / ${totalMemoryMB}MB\n` +
-             `╰──────────╼`;
-    };
+    const _ctx = getSystemList(
+            CONFIG.APP.BOTNAME,
+            CONFIG.APP.PREFIX,
+            message.pushName,
+            CONFIG.APP.MODE,
+            CONFIG.APP.VERSION
+        );
 
-    const _cxl = (category: string, cmds: string[]): string => {
-      return `╭───╼【 *${monospace(category.toUpperCase())}* 】\n` +
-             cmds.map((cmd) => `┃ ∘ \`\`\`${cmd.toLowerCase()}\`\`\``).join("\n") + "\n" +
-             `╰──────────╼`;
-    };
+    const getCategory = (category: string, cmds: string[]): string => {
+            return `╭───╼【 *${monospace(category.toUpperCase())}* 】\n` +
+                   cmds.map(cmd => `┃ ∘ \`\`\`${cmd.toLowerCase()}\`\`\``).join("\n") +
+                   `\n╰──────────╼\n`;
+        };
 
-    let msg = namo() + "\n\n";
-    for (const [category, cmds] of Object.entries(gorized)) {
-      msg += _cxl(category, cmds) + "\n\n";
-    }
-    msg += `made with❣️`;
+        let msg = _ctx + "\n\n";
+        for (const [category, cmds] of Object.entries(categorized)) {
+            msg += getCategory(category, cmds) + "\n";
+      }
+    
     const sent = await conn.sendMessage(message.user, { text: msg.trim() }, { quoted: message });
     if (!sent) {
-      await message.reply("err");
+      await message.reply(msgs.error_msg);
     }
   },
 });
