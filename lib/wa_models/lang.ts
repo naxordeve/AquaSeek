@@ -8,7 +8,11 @@ type Language = {
     ytdl_msg: string; ytdl_invalid: string;
     ytmp3_msg: string; ytmp3_invalid: string;
     error_msg: string;
-    gpt_prompt: string;
+    gpt_msg: string;  seegro_msg: string;
+    snack_msg: string; ytpost_url: string;
+    git_msg: string; soundcloud: string;
+    apk_msg: string; capcut_msg: string;
+    fullpp_msg: string; deepseek_msg: string;
 };
 
 const languages: Record<string, Language> = {
@@ -25,7 +29,7 @@ const languages: Record<string, Language> = {
       ytmp3_invalid: "_Provide a valid url_",
         error_msg: "An error occurred. Please try again later",
         gpt_msg: "What would you like me to do?",
-        gpt_prompt: "What would you like me to do?",
+        deepseek_msg: "Hello lm DeepSeek R-1 how can l assist you😊",
         seegro_msg: "Please provide a SeeGero url",
         snack_msg: "Please provide a SnackVideo url",
         ytpost_url: "Please provide the YouTube post url",
@@ -49,6 +53,7 @@ const languages: Record<string, Language> = {
       ytmp3_invalid: "_i url oyinikile ayilungang_",
         error_msg: "Kuvele iphutha. Ngicela uzame futhi",
         gpt_msg: "Ufunani ukuthi ngikwenzeleni?",
+        deepseek_msg: "Sawubona igama lami nguDeepSeek R-1 ngingaksiza ngani😊",
         seegro_msg: "Sicela unikeze i-URL ye-SeeGero",
         snack_msg: "Sicela unikeze i-URL ye-SnackVideo",
         ytpost_url: "Sicela unikeze i-URL ye-YouTube post",
