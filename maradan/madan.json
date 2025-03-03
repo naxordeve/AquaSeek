@@ -1,0 +1,3 @@
+{
+    "systemListTemp": "╭──╼【 {BOT_NAME} 】\n┃ ✧ Prefix  : {PREFIX}\n┃ ✧ User    : {USER}\n┃ ✧ Mode    : {MODE}\n┃ ✧ Date    : {DATE}\n┃ ✧ Time    : {TIME}\n┃ ✧ Version : {VERSION}\n┃ ✧ Memory  : {MEMORY}\n╰──────────╼"
+}
