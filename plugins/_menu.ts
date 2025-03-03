@@ -1,4 +1,4 @@
-import { commands, CreatePlug, getSystemList } from "../lib/index";
+import { commands, CreatePlug, getSystemList, getLang } from "../lib/index";
 import { monospace } from "../lib/index";
 import CONFIG from "../config";
 
@@ -14,7 +14,7 @@ CreatePlug({
       acc[cmd.category].push(cmd.command);
       return acc;
     }, {});
-
+    const msgs = getLang();
     const _ctx = getSystemList(
             CONFIG.APP.BOTNAME,
             CONFIG.APP.PREFIX,
