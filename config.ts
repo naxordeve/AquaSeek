@@ -6,8 +6,8 @@ import dotenv from 'dotenv';
 dotenv.config({ path: path.resolve(__dirname, `${process.env.NODE_ENV || 'development'}.env`) });
 const getEnv = (key: string, defaultValue: string = ''): string => process.env[key] || defaultValue;
 const toBool = (x: string): boolean => ['true', 'on'].includes(x.toLowerCase());
-const packageJsonPath: string = path.resolve(__dirname, '../package.json');
-const packageJson: { version: string } = JSON.parse(readFileSync(packageJsonPath, 'utf-8'));
+const pkgPath: string = path.resolve(__dirname, '../package.json');
+const packageJson: { version: string } = JSON.parse(readFileSync(pkgPath, 'utf-8'));
 
 const CONFIG = {
   APP: {
@@ -17,7 +17,6 @@ const CONFIG = {
       'MONGODB_URL',
       'mongodb+srv://whatsbixby:whatsbixby@cluster0.idp3t.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
     ),
-    SQLDB_URL,
     BRANCH: getEnv('BRANCH', 'master'),
     VERSION: packageJson.version,
     env: getEnv('NODE_ENV', 'development'),
