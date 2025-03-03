@@ -92,7 +92,7 @@ CreatePlug({
   desc: 'Download APK',
   execute: async (message: any, conn: any, match: string): Promise<void> => {
     const msgs = getLang();
-    if (!match) return void (await message.reply(msgs.app_msg));
+    if (!match) return void (await message.reply(msgs.apk_msg));
     match = match || message.quoted?.message?.conversation;
     await message.react("✅");
     const search = `https://bk9.fun/search/apk?q=${match}`;
