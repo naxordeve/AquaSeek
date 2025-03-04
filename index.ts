@@ -8,7 +8,7 @@ import { File } from 'megajs';
 import * as fs from 'fs';
 import * as http from 'http';
 import { default as getPlugins } from './lib/index.ts';
-import { serialize } from './lib/Message.ts';
+import { serialize } from './lib/index.ts';
 import { commands } from './lib/index.ts';
 import CONFIG from './config';
 import useMongoAuthState from './lib/models/localdb';
@@ -110,7 +110,6 @@ getGroupMetadata: async (jid: string): Promise<any | null> => {
   conn.ev.on('messages.upsert', async ({ messages }) => {
     const msg = messages[0];
     if (!msg.message) return;
-
     msg.message = Object.keys(msg.message)[0] === 'ephemeralMessage' ? msg.message.ephemeralMessage.message : msg.message;
     const message = await serialize(msg, conn);
     if (!message || !message.key || !message.body) return;
@@ -122,12 +121,12 @@ getGroupMetadata: async (jid: string): Promise<any | null> => {
     store.groupMetadata = await conn.groupFetchAllParticipating();
     }
   return;
-}  if (CONFIG.APP.MODE === true && !message.isFromMe) return;
+}  if (CONFIG.APP.MODE === true && !message.isSelf) return;
     const mek = message.body.trim();
     const isCmd = mek.startsWith(CONFIG.APP.PREFIX.toLowerCase());
     const textt = mek.slice(CONFIG.APP.PREFIX.length).trim();
     if (mek.startsWith('$')) {
-    if (!message.isFromMe) return;
+    if (!message.isSelf) return;
     try { const code: string = mek.slice(1);
     const Fek: unknown = await (async () => eval(code))();
     const result: string = typeof Fek === 'string' ? Fek : util.inspect(Fek);
