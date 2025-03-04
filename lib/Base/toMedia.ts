@@ -1,3 +1,5 @@
+import { downloadContentFromMessage } from '@whiskeysockets/baileys';
+
 export default function downloadMedia = async (_msg: Message): Promise<Buffer | null> => {
     try {
         let type = Object.keys(_msg || {})[0];
