@@ -6,7 +6,6 @@ import * as path from 'path';
 import * as util from 'util';
 import { File } from 'megajs';
 import * as fs from 'fs';
-import * as http from 'http';
 import { default as getPlugins } from './lib/index.ts';
 import { serialize } from './lib/index.ts';
 import { commands } from './lib/index.ts';
@@ -14,21 +13,11 @@ import { getGoFileDownload } from './lib/auth';
 import CONFIG from './config';
 import useMongoAuthState from './lib/models/localdb';
 import NodeCache from 'node-cache';
-const store = baileys.makeInMemoryStore({ logger: P.default({ level: 'silent' }).child({ level: 'silent' }) });
+import { fileURLToPath } from 'url';
+const store  baileys.makeInMemoryStore({ logger: P.default({ level: 'silent' }).child({ level: 'silent' }) });
 const cartel = new NodeCache({ stdTTL: 3600, checkperiod: 600 });
-
-if (process.env.PLATFORM === 'koyeb') {
-  http.createServer((req, res) => {
-    if (req.method === 'GET' && req.url === '/') {
-      res.writeHead(200, { 'Content-Type': 'text/html' });
-      res.end('<h1>AquaSeek running 💦</h1>');
-    } else {
-      res.writeHead(404);
-      res.end('not found');
-    }
-  }).listen(process.env.PORT || 8080, () => console.log(`running at http://localhost:${process.env.PORT || 8080}`));
-}
-
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const spkg = path.join(__dirname, 'lib', 'session', 'creds.json');
 const pr = 'AquaSeek~';
