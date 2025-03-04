@@ -1,6 +1,6 @@
 import { proto, getContentType, jidNormalizerUser } from '@whiskeysockets/baileys';
 import { getMessage } from './Base/Message';
-import { downloadMedia } from './Base/tMedia';
+import { downloadMedia } from './Base/toMedia';
 
 export const serialize = (m: proto.IWebMessageInfo, conn: any): getMessage => {
     const msg = m as getMessage;
@@ -101,7 +101,7 @@ export const serialize = (m: proto.IWebMessageInfo, conn: any): getMessage => {
             (msg.type === 'templateButtonReplyMessage' && msg.message?.templateButtonReplyMessage?.selectedId) ||
             '';
 
-        msg.reply = async (text: string): Promise<void>=> {
+        msg.reply = async (text: string): Promise<void> => {
             await conn.sendMessage(msg.user!,{ text },{ quoted: msg });
         };
 
