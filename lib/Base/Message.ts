@@ -13,4 +13,5 @@ export interface getMessage extends proto.IWebMessageInfo {
     download?: () => Promise<Buffer>;
     isAdmin?: boolean;
     isBotAdmin?: boolean;
+    react: (emoji: string) => Promise<void>;
 }
