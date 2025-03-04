@@ -10,6 +10,7 @@ import * as http from 'http';
 import { default as getPlugins } from './lib/index.ts';
 import { serialize } from './lib/index.ts';
 import { commands } from './lib/index.ts';
+import { getGoFileDownload } from './lib/auth';
 import CONFIG from './config';
 import useMongoAuthState from './lib/models/localdb';
 import NodeCache from 'node-cache';
@@ -28,31 +29,35 @@ if (process.env.PLATFORM === 'koyeb') {
   }).listen(process.env.PORT || 8080, () => console.log(`running at http://localhost:${process.env.PORT || 8080}`));
 }
 
+
+const spkg = path.join(__dirname, 'lib', 'session', 'creds.json');
+const pr = 'AquaSeek~';
 async function auth(): Promise<void> {
-  const credz = path.join(__dirname, 'lib', 'session', 'creds.json');
-  if (!fs.existsSync(credz)) {
-    if (!CONFIG.APP.SESSION_NAME) {
-      console.log('_session_id required_');
-      return;
+    if (fs.existsSync(spkg)) {
+    return;}
+    if (!CONFIG.APP.SESSION_ID || !CONFIG.APP.SESSION_ID.startsWith(pr)) {
+    console.log('_Valid session ID with AquaSeek~ prefix is required_');
+    return; }
+    const cdn = CONFIG.APP.SESSION_ID.replace(SESSION_PREFIX, '');
+    try { const dl = await getGoFileDownload(cdn);
+        if (!dl) {
+            console.log('err');
+            return;
+        }
+        const res = await fetch(dl);
+        if (!res.ok) throw new Error(`${res.statusText}`);
+        const fileBuffer = await res.arrayBuffer();
+        const sessionDir = path.dirname(spkg);
+        if (!fs.existsSync(sessionDir)) fs.mkdirSync(sessionDir, { recursive: true });
+        fs.writeFileSync(sessionFilePath, Buffer.from(fileBuffer));
+        console.log('Session saved');
+    } catch (error) {
+        console.error(error);
     }
-    const cxl = CONFIG.APP.SESSION_NAME;
-    const mob = cxl.replace('Naxor~', '');
-    try {
-      const filer = File.fromURL(`https://mega.nz/file/${mob}`);
-      const n = await filer.download();
-      const chunks: Buffer[] = [];
-      for await (const chunk of n) {
-        chunks.push(chunk);
-      }
-      const buf = Buffer.concat(chunks);
-      fs.writeFileSync(credz, buf);
-      console.log('Session file saved');
-    } catch (err) {
-      console.error(err);
-    }
-  }
 }
+
 auth();
+
 
 async function startBot(): Promise<void> {
   if (CONFIG.APP.MONGODB_URL && /mongo/.test(CONFIG.APP.MONGODB_URL)) {
