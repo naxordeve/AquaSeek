@@ -102,12 +102,12 @@ export const serialize = (m: proto.IWebMessageInfo, conn: any): getMessage => {
             '';
 
         msg.reply = async (text: string) => {
-            await conn.sendMessage(
-                msg.user!,
-                { text },
-                { quoted: msg }
-            );
+            await conn.sendMessage(msg.user!,{ text },{ quoted: msg });
         };
+
+        msg.react = async (emoji: string) => {
+                await conn.sendMessage(msg.user, { react: { text: emoji, key: msg.key } });
+         }};
 
         msg.mentions = [];
         if (msg.quoted?.participant) {
