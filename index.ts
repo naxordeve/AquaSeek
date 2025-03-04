@@ -33,20 +33,19 @@ async function auth(): Promise<void> {
             console.log('err');
             return;
         }
-        const res = await fetch(dl);
-        if (!res.ok) throw new Error(`${res.statusText}`);
-        const fileBuffer = await res.arrayBuffer();
+        const res = await axios.get(dl, { responseType: 'arraybuffer' });
+        const buffer = Buffer.from(res.data);
         const sessionDir = path.dirname(spkg);
-        if (!fs.existsSync(sessionDir)) fs.mkdirSync(sessionDir, { recursive: true });
-        fs.writeFileSync(sessionFilePath, Buffer.from(fileBuffer));
-        console.log('Session saved');
-    } catch (error) {
+       if (!fs.existsSync(sessionDir)) {
+       fs.mkdirSync(sessionDir, { recursive: true });}
+       fs.writeFileSync(sessionFilePath, buffer);
+       console.log('Session saved');
+  } catch (error) {
         console.error(error);
     }
 }
 
 auth();
-
 
 async function startBot(): Promise<void> {
   if (CONFIG.APP.MONGODB_URL && /mongo/.test(CONFIG.APP.MONGODB_URL)) {
