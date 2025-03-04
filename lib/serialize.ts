@@ -101,7 +101,7 @@ export const serialize = (m: proto.IWebMessageInfo, conn: any): getMessage => {
             (msg.type === 'templateButtonReplyMessage' && msg.message?.templateButtonReplyMessage?.selectedId) ||
             '';
 
-        msg.reply = async (text: string) => {
+        msg.reply = async (text: string): Promise<void>=> {
             await conn.sendMessage(msg.user!,{ text },{ quoted: msg });
         };
 
