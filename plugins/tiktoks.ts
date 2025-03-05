@@ -1,4 +1,4 @@
-import { CreatePlug } from "../lib/index";
+import { CreatePlug, getLang } from "../lib/index";
 import TikTokS from "./functions/tiktoks";
 
 CreatePlug({
