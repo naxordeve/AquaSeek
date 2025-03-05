@@ -19,7 +19,7 @@ function CreatePlug({
 }: Omit<Command, 'permission' | 'command'> & { fromMe?: boolean, command: string | string[] }): void {
     const irismd = typeof command === 'string' ? [command] : command;
     for (const cmd of irismd) {
-        const commandData: Command = { 
+        const maradan: Command = { 
             command: cmd,
             category, 
             desc, 
@@ -27,7 +27,7 @@ function CreatePlug({
             on, 
             permission: fromMe 
         };
-        commands.push(commandData);
+        commands.push(maradan);
     }
 }
 
