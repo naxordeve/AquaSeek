@@ -1,4 +1,5 @@
 import { CreatePlug, getLang } from '../lib/index';
+import { exec } from 'child_process';
 
 CreatePlug({
     command: ['reboot', 'kill'],
@@ -13,3 +14,32 @@ CreatePlug({
         pm2.restart('aquaseek');  
     },
 });
+
+CreatePlug({
+    command: ['pm2status', 'pm2s'],
+    category: 'admin',
+    desc: 'Show PM2 process status',
+    fromMe: true,
+    execute: async (message: any, conn: any, match: string): Promise<void> => {
+        if(!message.isSelf) return;
+        const pm2 = await import('pm2');
+        pm2.list((err, processList) => {
+            const status = processList.map(proc => `${proc.name}: ${proc.pm2_env?.status}`).join('\n');
+            message.reply(`${status}`);
+        });
+    },
+});
+
+CreatePlug({
+    command: 'disk',
+    category: 'admin',
+    desc: 'Check server disk usage',
+    fromMe: true,
+    execute: async (message: any, conn: any, match: string): Promise<void> => {
+        if(!message.isSelf) return;
+        exec('df -h', (err, stdout) => {
+            message.reply(`*_Disk usage:_*\n${stdout}`);
+        });
+    },
+});
+    
