@@ -2,6 +2,32 @@ import { CreatePlug, getLang } from '../lib/index';
 import { exec } from 'child_process';
 
 CreatePlug({
+    command: ['update', 'up'],
+    category: 'admin',
+    desc: 'Update bot from Git',
+    fromMe: true,
+    execute: async (message: any, conn: any, match: string): Promise<void> => {
+        if(!message.isSelf) return;
+        await message.reply(msgs.update);
+        exec('git pull', async (err, stdout, stderr) => {
+            if (err) {
+              await message.reply(msgs.error_msg);
+                exec(`git pull https://github.com/naxordeve/AquaSeek.git master`, (fallbackErr, fallbackOut, fallbackErrOut) => {
+                    if (fallbackErr) { message.reply(`${fallbackErrOut}`);
+                    } else {
+                        message.reply(`\n${fallbackOut}`);
+                        exec('pm2 restart aquaseek');
+                    }
+                });
+            } else {
+                message.reply(`_Updated Dun:_\n${stdout}`);
+                exec('pm2 restart aquaseek');
+            }
+        });
+    },
+});
+
+CreatePlug({
     command: ['reboot', 'kill'],
     category: 'admin',
     desc: 'Reboot the bot',
