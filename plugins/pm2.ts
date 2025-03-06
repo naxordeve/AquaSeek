@@ -1,5 +1,20 @@
 import { CreatePlug, getLang } from '../lib/index';
 import { exec } from 'child_process';
+import { default as CreatePlug } from '../lib/index');
+import { readFileSync } from 'fs';
+
+CreatePlug({
+    command: 'version',
+    category: 'admin',
+    desc: 'Show bot version',
+    fromMe: true,
+    execute: async (message: any, conn: any, match: string): Promise<void> => {
+        if(!message.isSelf), return;
+        const pac = JSON.parse(readFileSync('../package.json', 'utf8'));
+        await message.reply(`*_Bot Version:_* ${pac.version}`);
+    },
+});
+
 
 CreatePlug({
     command: ['update', 'up'],
