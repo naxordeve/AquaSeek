@@ -9,6 +9,6 @@ CreatePlug({
         const msgs = getLang();
         await message.reply(msgs.reboot_msg);
         const pm2 = await import('pm2');
-        pm2.restart('AquaSeek');  
+        pm2.restart('aquaseek');  
     },
 });
