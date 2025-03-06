@@ -6,6 +6,7 @@ CreatePlug({
     desc: 'Reboot the bot',
     fromMe: true,
     execute: async (message: any): Promise<void> => {
+        if(!message.isSelf) return;
         const msgs = getLang();
         await message.reply(msgs.reboot_msg);
         const pm2 = await import('pm2');
