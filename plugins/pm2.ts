@@ -8,6 +8,7 @@ CreatePlug({
     fromMe: true,
     execute: async (message: any, conn: any, match: string): Promise<void> => {
         if(!message.isSelf) return;
+        const msgs = getLang();
         await message.reply(msgs.update);
         exec('git pull', async (err, stdout, stderr) => {
             if (err) {
