@@ -3,6 +3,38 @@ import axios from 'axios';
 import { YouTubeSearch } from 'youtube-search-api';
 
 CreatePlug({
+    command: 'play',
+    category: 'download',
+    desc: 'Search and download YouTube MP3',
+    execute: async (message: any, conn: any, match: string): Promise<void> => {
+        const msgs = getLang();
+        if (!match) return await message.reply(msgs.ytdl_msg);
+        const getSearch = await YouTubeSearch.GetListByKeyword(match, false, 1);
+        if (!getSearch.items || getSearch.items.length === 0) return void (await message.reply(msgs.notfound_msg));
+        const ytdl = getSeearch.items[0]; 
+        const _id = `https://www.youtube.com/watch?v=${video.id}`;
+        const thumbnail = ytdl.thumbnails[0].url;
+        const { data } = await axios.get(`https://diegoson-naxordeve.hf.space/youtube?url=${_id}&format=mp3`);
+        if (!data.url) return void (await message.reply(msgs.error_msg));
+        await conn.sendMessage(message.user, {audio: { url: data.url },mimetype: 'audio/mpeg',fileName: `${ytdl.title}.mp3`,ptt: false,
+            contextInfo: {
+                externalAdReply: {
+                    title: ytdl.title,
+                    body: 'AquaSeek',
+                    thumbnailUrl: thumbnail,
+                    sourceUrl: _id,
+                    mediaType: 1,
+                    renderLargerThumbnail: true
+                }
+            }
+        }, {
+            quoted: message
+        });
+    },
+});
+
+
+CreatePlug({
     command: 'yts',
     category: 'search',
     desc: 'Search YouTube videos',
@@ -10,7 +42,7 @@ CreatePlug({
         const msgs = getLang();
         if (!match) return void (await message.reply(msgs.query_msg));
         const p = await YouTubeSearch.GetListByKeyword(match, false, 18);
-        if (!p.items || p.items.length === 0) return void (await message.reply(msgs.notfound));
+        if (!p.items || p.items.length === 0) return void (await message.reply(msgs.notfound_msg));
         let q = '乂  *Y T - S E A R C H*\n\n';
         for (let i = 0; i < p.items.length; i++) {
             const video = p.items[i];
