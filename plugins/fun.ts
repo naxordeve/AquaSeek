@@ -1,4 +1,4 @@
-import { default as CreatePlug } from '../lib/index';
+import { CreatePlug, getLang } from '../lib/index';
 import axios from 'axios';
 
 CreatePlug({
@@ -21,4 +21,19 @@ CreatePlug({
             const _joke = `${css.data.setup}\n\n${css.data.punchline}`;
             await message.reply(_joke);
             }
+});
+
+CreatePlug({
+    command: 'hack',
+    category: 'fun',
+    desc: 'Fake hack someone for fun',
+    execute: async (message: any, conn: any, match: string): Promise<void> => {
+        const msgs = getLang();
+        if (!match) return void (await message.reply(msgs.mention_user));
+        await message.reply(msgs.wait_msg);
+        setTimeout(async () => await message.reply(msgs.bypass), 2000);
+        setTimeout(async () => await message.reply(msgs.pass), 4000);
+        setTimeout(async () => await message.reply(msgs.send), 6000);
+        setTimeout(async () => await message.reply(msgs.complete), 8000);
+    },
 });
