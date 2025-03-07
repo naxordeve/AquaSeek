@@ -1,6 +1,46 @@
 import { CreatePlug, getLang } from '../lib/index';
 import axios from 'axios';
 
+const tomeme = [
+    'https://meme-api.com/gimme',
+    'https://api.imgflip.com/get_memes',
+    'https://some-random-api.com/meme', 
+    'https://meme-api.deta.dev/' 
+];
+
+async function Getem(): Promise<{ url: string, title: string } | null> {
+    for (const api of tomeme) {
+        try {
+            const { data } = await axios.get(api);
+            if (api.includes('imgflip')) {
+                const meme = data.data.memes[Math.floor(Math.random() * data.data.memes.length)];
+                return { url: meme.url, title: meme.name };
+            } else if (api.includes('some-random-api')) {
+                return { url: data.image, title: 'Random Meme' };
+            } else {
+                return { url: data.url, title: data.title || 'Meme' };
+            }
+        } catch (err) {
+          }
+    }
+    return null; 
+}
+
+CreatePlug({
+    command: 'meme',
+    category: 'fun',
+    desc: 'Get a random meme from multiple sources',
+    execute: async (message: any, conn: any, match: string): Promise<void> => {
+        const meme = await Getem();
+        const msgs = getLang();
+        if (!meme) return void (await message.reply(msgs.error_msg));
+        await conn.sendMessage(message.user, {
+            image: { url: meme.url },
+            caption: meme.title
+        });
+    },
+});
+
 CreatePlug({
     command: 'quote',
     category: 'fun',
