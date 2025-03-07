@@ -1,6 +1,5 @@
 import { CreatePlug, getLang } from '../lib/index';
 import { exec } from 'child_process';
-import { default as CreatePlug } from '../lib/index');
 import { readFileSync } from 'fs';
 
 CreatePlug({
