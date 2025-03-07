@@ -1,6 +1,16 @@
 import { CreatePlug, getLang } from '../lib/index';
 import axios from 'axios';
 
+CreatePlug({
+    command: 'catfact',
+    category: 'fun',
+    desc: 'Get random cat fact',
+    execute: async (message: any, conn: any, match: string): Promise<void> => {
+        const { data } = await axios.get('https://catfact.ninja/fact');
+        await message.reply(`*🐱 Cat Fact:*\n\n${data.fact}\n_By catninja_`);
+    }
+});
+
 const tomeme = [
     'https://meme-api.com/gimme',
     'https://api.imgflip.com/get_memes',
