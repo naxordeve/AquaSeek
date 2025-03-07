@@ -13,8 +13,9 @@ type Language = {
     git_msg: string; soundcloud: string;
     apk_msg: string; capcut_msg: string;
     fullpp_msg: string; deepseek_msg: string;
-    reboot_msg: string; update_now: string;
-};
+    reboot_msg: string; update_now: string; bypass: string; pass: string;
+    send: string; complete: string; wait_msg: string;
+}; 
 
 const languages: Record<string, Language> = {
     en: {
@@ -26,18 +27,24 @@ const languages: Record<string, Language> = {
         tiktok_invalid: "Invalid TikTok url provided",
         ytdl_msg: "Please provide a song name",
         ytdl_invalid: "Invalid sorry_",
+        pass: "Extracting passwords...",
         ytmp3_msg: "Please provide an YouTube url",
+        bypass: "Bypassing firewalls...",
         ytmp3_invalid: "_Provide a valid url_",
         error_msg: "An error occurred. Please try again later",
         gpt_msg: "What would you like me to do?",
         deepseek_msg: "Hello lm DeepSeek R-1 how can l assist you😊",
         seegro_msg: "Please provide a SeeGero url",
         snack_msg: "Please provide a SnackVideo url",
+        wait_msg: "Please wait a sec...",
+        mention_user: "Please mention a user",
         ytpost_url: "Please provide the YouTube post url",
         git_msg: "Please provide the GitHub repository url",
         soundcloud: "Please provide a SoundCloud url",
         apk_msg: "Please provide an APK name",
         capcut_msg: "Please provide a CapCut url",
+        send: "Sending data to server...",
+        complete: "Hacking complete 😈👿☠️",
         fullpp_msg: "Please provide the image",
         reboot_msg: "Rebooting...",
         update_now: "Please wait currently updating"
@@ -64,6 +71,7 @@ const languages: Record<string, Language> = {
         soundcloud_msg: "Sicela unikeze i-URL ye-SoundCloud",
         apk_msg: "Sicela unikeze igama leApp",
         capcut_msg: "Sicela unikeze i-URL ye-CapCu",
+        wait_msg: "Cela ume kancane...",
         fullpp_msg: "Sicela unikeze isthombe",
         reboot_msg: "Ima kancane ngisa-rebooter...",
         update_now: "Cela ume kancane ngisa updater"
