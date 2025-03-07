@@ -13,6 +13,7 @@ type Language = {
     git_msg: string; soundcloud: string;
     apk_msg: string; capcut_msg: string;
     fullpp_msg: string; deepseek_msg: string;
+    reboot_msg: string; update_now: string;
 };
 
 const languages: Record<string, Language> = {
@@ -25,8 +26,8 @@ const languages: Record<string, Language> = {
         tiktok_invalid: "Invalid TikTok url provided",
         ytdl_msg: "Please provide a song name",
         ytdl_invalid: "Invalid sorry_",
-      ytmp3_msg: "Please provide an YouTube url",
-      ytmp3_invalid: "_Provide a valid url_",
+        ytmp3_msg: "Please provide an YouTube url",
+        ytmp3_invalid: "_Provide a valid url_",
         error_msg: "An error occurred. Please try again later",
         gpt_msg: "What would you like me to do?",
         deepseek_msg: "Hello lm DeepSeek R-1 how can l assist you😊",
@@ -37,7 +38,9 @@ const languages: Record<string, Language> = {
         soundcloud: "Please provide a SoundCloud url",
         apk_msg: "Please provide an APK name",
         capcut_msg: "Please provide a CapCut url",
-        fullpp_msg: "Please provide the image"
+        fullpp_msg: "Please provide the image",
+        reboot_msg: "Rebooting...",
+        update_now: "Please wait currently updating"
 
     },
     zulu: {
@@ -61,7 +64,9 @@ const languages: Record<string, Language> = {
         soundcloud_msg: "Sicela unikeze i-URL ye-SoundCloud",
         apk_msg: "Sicela unikeze igama leApp",
         capcut_msg: "Sicela unikeze i-URL ye-CapCu",
-        fullpp_msg: "Sicela unikeze isthombe"
+        fullpp_msg: "Sicela unikeze isthombe",
+        reboot_msg: "Ima kancane ngisa-rebooter...",
+        update_now: "Cela ume kancane ngisa updater"
     },
     sotho: {
         fb_msg: "Ka kopo fana ka URL ea Facebook",
@@ -98,7 +103,9 @@ const languages: Record<string, Language> = {
         ytdl_msg: "Ndokumbira upe URL yeYouTube",
         ytdl_invalid: "URL yeYouTube yawapa haina kunaka",
         error_msg: "Pane dambudziko. Ndokumbira uedze zvakare",
-        gpt: "Unoda kuti ndiitei?"
+        gpt: "Unoda kuti ndiitei?",
+        reboot_msg: "Rebooting...",
+        update_now: "Mira kashoma ndiri ku-updater"
     },
     indo: {
         fb_msg: "Silakan berikan URL Facebook",
