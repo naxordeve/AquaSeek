@@ -8,7 +8,7 @@ CreatePlug({
     desc: 'Search and download YouTube MP3',
     execute: async (message: any, conn: any, match: string): Promise<void> => {
         const msgs = getLang();
-        if (!match) return await message.reply(msgs.ytdl_msg);
+        if (!match) return void (await message.reply(msgs.ytdl_msg));
         const getSearch = await YouTubeSearch.GetListByKeyword(match, false, 1);
         if (!getSearch.items || getSearch.items.length === 0) return void (await message.reply(msgs.notfound_msg));
         const ytdl = getSeearch.items[0]; 
