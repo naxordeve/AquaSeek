@@ -1,4 +1,4 @@
-import { CreatePlug, monospace } from '../lib/index';
+import { CreatePlug, monospace, getLang } from '../lib/index';
 import axios from 'axios';
 
 CreatePlug({
@@ -6,6 +6,7 @@ CreatePlug({
     category: 'download',
     desc: 'Download APK files',
     execute: async (message: any, conn: any, match: string): Promise<void> => {
+        const msgs = getLang();
         if (!match) return void (await message.reply(msgs.apk_msg));
         const { data } = await axios.get(`https://diegoson-naxordeve.hf.space/download/apk?q=${match}`);
         if (!data.download) return void (await message.reply(msgs.app_not));
