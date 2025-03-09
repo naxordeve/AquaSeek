@@ -173,6 +173,10 @@ getGroupMetadata: async (jid: string): Promise<any | null> => {
     }
   });
 
+  conn.ev.on("group-participants.update", async (update) => {
+  await SettingsDB(conn, update);
+});
+    
   conn.ev.on('connection.update', async (update) => {
     const { connection } = update;
     if (connection === 'open') {
