@@ -1,5 +1,5 @@
 import { WASocket, GroupMetadata } from "@whiskeysockets/baileys";
-import { getSettings } from "./database";
+import { getSettings } from "./database/settings";
 
 function monospace(text: string): string {
   return text
