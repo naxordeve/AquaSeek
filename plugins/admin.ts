@@ -1,11 +1,11 @@
 import { CreatePlug } from "../lib/index";
 
 CreatePlug({
-  command: "block",
+  command: ["block", "blok"],
   category: "admin",
   desc: "Block a user",
   execute: async (message: any, conn: any): Promise<void> => {
-    if (!message.isFromMe) return;
+    if (!message.isSelf) return;
     const target = message.quoted
       ? message.quoted.sender
       : !message.isGroup
@@ -25,7 +25,7 @@ CreatePlug({
   category: "admin",
   desc: "Unblock a user",
   execute: async (message: any, conn: any): Promise<void> => {
-    if (!message.isFromMe) return;
+    if (!message.isSelf) return;
     const target = message.quoted
       ? message.quoted.sender
       : !message.isGroup
