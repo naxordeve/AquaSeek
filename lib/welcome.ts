@@ -30,7 +30,7 @@ export async function SettingsDB(sock: WASocket, update: any) {
   const mc = groupMetadata.participants.length;
   for (const participant of participants) {
     const num = participant.replace("@s.whatsapp.net", "");
-    const At = new Date().toLocaleString("en-US", { timeZone: "UTC" });
+    const At = new Date().toLocaleString("en-US", { timeZone: "Africa/Johannesburg" });
     const _pp = await getProfilePicture(sock, participant);
     let message = "";
     if (action === "add") {
