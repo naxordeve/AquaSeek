@@ -4,7 +4,7 @@ import { YouTubeSearch } from 'youtube-search-api';
 
 
 CreatePlug({
-    command: "ytmp4",
+    command: ["ytmp4", "ytv"],
     category: "download",
     desc: "Download YouTube MP4",
     execute: async (message: any, conn: any, match: string): Promise<void> => {
