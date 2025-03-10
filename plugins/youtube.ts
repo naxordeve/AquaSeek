@@ -2,6 +2,33 @@ import { CreatePlug, getLang, monospace } from '../lib/index';
 import axios from 'axios';
 import { YouTubeSearch } from 'youtube-search-api';
 
+
+CreatePlug({
+    command: "ytmp4",
+    category: "download",
+    desc: "Download YouTube MP4",
+    execute: async (message: any, conn: any, match: string): Promise<void> => {
+        const msgs = getLang();
+        if (!match) return void (await message.reply(msgs.ytmp4_msg));
+        const velyn_api = `https://velyn.vercel.app/api/downloader/ytmp4v2?url=${match}`;
+        const get = await axios.get(velyn_api);
+        const data = get.data;
+        const video_info = data?.data?.basicInfo ?? null;
+        const vid = data?.data?.advancedInfo?.videoMp4 ?? null;
+        if (!video_info || !vid) return void (await message.reply(msgs.error_msg));
+        const caption = `*${monospace("Title:")}* ${video_info.title}\n*${monospace("Author:"}* ${video_info.author?.name ?? "aquaseek"}\n*${monospace("Duration:")}* ${video_info.duration}\n*${monospace("Views:")}* ${video_info.views}`;
+        await conn.sendMessage(message.user, {video: { url: vid },
+            caption,
+            jpegThumbnail: await getBuffer(video_info.thumbnail),
+        });
+    },
+});
+
+async function getBuffer(url: string): Promise<Buffer> {
+    const res = await axios.get(url, { responseType: "arraybuffer" });
+    return Buffer.from(res.data, "binary");
+}
+
 CreatePlug({
     command: 'play',
     category: 'download',
